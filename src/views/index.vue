@@ -133,15 +133,21 @@ export default {
         },
         {
           optionName: "打印服务",
-          iconClassName: "el-icon-setting",
+          iconClassName: "el-icon-printer",
           index: '2',
           disabled: false, // 是否禁用
           childList: [
             {
-              optionName: '打印页',
+              optionName: '打印页(PDF)',
               index: '2-1',
-              routerName: "printindex",
-              iconClassName: "el-icon-s-shop"
+              routerName: "printPDF",
+              iconClassName: "el-icon-document"
+            },
+            {
+              optionName: '打印页(Word)',
+              index: '2-2',
+              routerName: "printWord",
+              iconClassName: "el-icon-notebook-2"
             }
           ]
         }

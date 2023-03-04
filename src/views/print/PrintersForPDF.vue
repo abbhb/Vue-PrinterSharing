@@ -14,11 +14,11 @@
 <!--  </el-upload>-->
   <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
     <div style="display: flex;flex-direction: row">
-      <div class="yuanjiao shupin" v-if="hengshu==='1'" :style="formData==undefined?'':'background-color: #3a8ee6;'">
+      <div class="yuanjiao shupin" v-if="hengshu==='1'" :style="formData==undefined?'':'background-color: #be0010;'">
         <span>需要保证pdf文件内本来就为竖屏</span>
         <span v-if="formData!=undefined">已选择文件</span>
       </div>
-      <div class="yuanjiao hengpin" v-else-if="hengshu==='0'" :style="formData==undefined?'':'background-color: #3a8ee6;'">
+      <div class="yuanjiao hengpin" v-else-if="hengshu==='0'" :style="formData==undefined?'':'background-color: #be0010;'">
         <span>需要保证pdf文件内本来就为横屏</span>
         <span v-if="formData!=undefined">已选择文件</span>
       </div>
@@ -32,7 +32,8 @@
           <i>横竖:</i>
           <el-radio v-model="hengshu" label="0">横</el-radio>
           <el-radio v-model="hengshu" label="1">竖</el-radio>
-        </div><div class="upmargin">
+        </div>
+        <div class="upmargin">
           <i>大小:</i>
           <el-select v-model="printBigValue" placeholder="请选择大小">
             <el-option
@@ -43,6 +44,14 @@
             </el-option>
           </el-select>
         </div>
+        <div class="upmargin">
+          <i>打印页码:</i>
+          <el-input style="width: 40%" v-model="numberOfPrintedPages" placeholder="输入格式(1-3)"></el-input>
+        </div>
+        <div class="upmargin">
+          <span style="width: 80%;font-style: oblique;font-weight: 100;font-size: 8px;">注:(默认全打印:all,输入格式为1-3,不支持逗号分割多段,多段请手动)</span>
+        </div>
+
       </div>
     </div>
 
@@ -66,7 +75,7 @@
 import {postUploadForPDF} from "@/api/login";
 
 export default {
-  name: "Printers.vue",
+  name: "PrintersForPDF.vue",
   data(){
     return{
       headerObj: {
@@ -75,7 +84,7 @@ export default {
       },
       printNum:1,
       hengshu: '0',//默认横着打
-      formData:undefined,
+      formData:undefined,//实际传输的file文件
       isPost:false,//是否正在打印
       printBigOptions: [{
         value: '3',
@@ -90,7 +99,8 @@ export default {
         value: '2',
         label: '拉伸'
       }],
-      printBigValue: '3',
+      printBigValue: '3',//打印大小配置
+      numberOfPrintedPages:'all',//页码，字符串传递,默认全都打印
     }
   },
   created() {
@@ -173,7 +183,7 @@ export default {
 
 <style scoped>
 .caozuoqu {
-  border: #3b96f5 1px solid;
+  border: #be0010 1px solid;
   padding: 2rem 2rem 2rem 2rem;
   border-radius: 2rem;
 }
@@ -184,7 +194,7 @@ i {
   margin-top: 1rem;
 }
 .yuanjiao {
-  border: #3b96f5 1px solid;
+  border: #be0010 1px solid;
   border-radius: 2rem;
 }
 .shupin {

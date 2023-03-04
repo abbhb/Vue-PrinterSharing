@@ -4,7 +4,8 @@ import index from "@/views/index";
 import login from "@/views/login/login";
 import UserInfo from "@/views/user/UserInfo";
 import ChangePassword from "@/views/user/ChangePassword";
-import Print from "@/views/print/Printers.vue";
+import PrintersForPDF from "@/views/print/PrintersForPDF.vue";
+import PrintersForWord from "@/views/print/PrintersForWord.vue";
 export default [
 	{
 		path: '/',
@@ -70,9 +71,18 @@ export default [
 				}
 			},
 			{
-				path: '/printindex',
-				name: 'printindex',
-				component: Print,
+				path: '/printPDF',
+				name: 'printPDF',
+				component: PrintersForPDF,
+				meta:{
+					requireAuth: false,
+					needrole:false
+				}
+			},
+			{
+				path: '/printWord',
+				name: 'printWord',
+				component: PrintersForWord,
 				meta:{
 					requireAuth: false,
 					needrole:false

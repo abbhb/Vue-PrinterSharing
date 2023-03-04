@@ -39,6 +39,16 @@ export function postUploadForPDF (file,numberOfPrintedPages,printingDirection) {
         }
     })
 }
+export function postUploadForWord (file,numberOfPrintedPages,printingDirection) {
+    return request({
+        url: '/printer/uploadword?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection,
+        method: 'post',
+        data: file,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
 
 
 export function updataforuser(id,username,name,sex,idNumber,phone){
