@@ -28,6 +28,19 @@ export function checkToken(){
     });
 }
 
+// 文件上传
+export function postUploadForPDF (file,numberOfPrintedPages,printingDirection) {
+    return request({
+        url: '/printer/uploadpdf?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection,
+        method: 'post',
+        data: file,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
+
+
 export function updataforuser(id,username,name,sex,idNumber,phone){
     return request({
         url:'/user/updataforuser',

@@ -4,7 +4,7 @@ import index from "@/views/index";
 import login from "@/views/login/login";
 import UserInfo from "@/views/user/UserInfo";
 import ChangePassword from "@/views/user/ChangePassword";
-import Print from "@/views/print/Print.vue";
+import Print from "@/views/print/Printers.vue";
 export default [
 	{
 		path: '/',
