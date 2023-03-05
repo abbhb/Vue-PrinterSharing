@@ -12,6 +12,6 @@ module.exports = {
         },
     },
     //这个在打包时必须打开
-    // publicPath:'./'
+    publicPath:'./'
 
 }

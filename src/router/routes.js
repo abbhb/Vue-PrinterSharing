@@ -5,7 +5,6 @@ import login from "@/views/login/login";
 import UserInfo from "@/views/user/UserInfo";
 import ChangePassword from "@/views/user/ChangePassword";
 import PrintersForPDF from "@/views/print/PrintersForPDF.vue";
-import PrintersForWord from "@/views/print/PrintersForWord.vue";
 export default [
 	{
 		path: '/',
@@ -78,16 +77,7 @@ export default [
 					requireAuth: false,
 					needrole:false
 				}
-			},
-			{
-				path: '/printWord',
-				name: 'printWord',
-				component: PrintersForWord,
-				meta:{
-					requireAuth: false,
-					needrole:false
-				}
-			},
+			}
 
 		]
 	},

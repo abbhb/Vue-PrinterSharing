@@ -5,7 +5,7 @@ import routes from "./routes";
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-	mode: 'history',//改为history模式，去除url里的#，history模式里不方便打包
+	mode: 'hash',//改为history模式，去除url里的#，history模式里不方便打包
 	routes
 });
 

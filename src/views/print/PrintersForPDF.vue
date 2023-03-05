@@ -15,11 +15,13 @@
   <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
     <div style="display: flex;flex-direction: row">
       <div class="yuanjiao shupin" v-if="hengshu==='1'" :style="formData==undefined?'':'background-color: #be0010;'">
-        <span>需要保证pdf文件内本来就为竖屏</span>
+        <span>需要保证原文件内本来就为竖屏</span>
+        <span>目前仅支持pdf[pdf],word格式[docx]直接打印(推荐使用PDF).</span>
         <span v-if="formData!=undefined">已选择文件</span>
       </div>
       <div class="yuanjiao hengpin" v-else-if="hengshu==='0'" :style="formData==undefined?'':'background-color: #be0010;'">
-        <span>需要保证pdf文件内本来就为横屏</span>
+        <span>需要保证原文件内本来就为横屏</span>
+        <span>目前仅支持pdf[*.pdf],word格式[*.docx]直接打印(推荐使用PDF).</span>
         <span v-if="formData!=undefined">已选择文件</span>
       </div>
       <div class="caozuoqu" style="display: flex;flex-direction: column;align-items: center;margin-left: 2rem">
@@ -45,11 +47,11 @@
           </el-select>
         </div>
         <div class="upmargin">
-          <i>打印页码:</i>
-          <el-input style="width: 40%" v-model="numberOfPrintedPages" placeholder="输入格式(1-3)"></el-input>
+          <i>打印页数:</i>
+          <el-input style="width: 40%" v-model="numberOfPrintedPagesIndex" placeholder="输入格式X"></el-input>
         </div>
         <div class="upmargin">
-          <span style="width: 80%;font-style: oblique;font-weight: 100;font-size: 8px;">注:(默认全打印:all,输入格式为1-3,不支持逗号分割多段,多段请手动)</span>
+          <span style="width: 80%;font-style: oblique;font-weight: 100;font-size: 8px;">注:(仅支持1-X页,输入5就是1-5,all就是全部)</span>
         </div>
 
       </div>
@@ -87,20 +89,20 @@ export default {
       formData:undefined,//实际传输的file文件
       isPost:false,//是否正在打印
       printBigOptions: [{
-        value: '3',
+        value: 3,
         label: '自动适应'
       }, {
-        value: '0',
+        value: 0,
         label: '实际大小'
       }, {
-        value: '1',
+        value: 1,
         label: '缩小'
       }, {
-        value: '2',
+        value: 2,
         label: '拉伸'
       }],
-      printBigValue: '3',//打印大小配置
-      numberOfPrintedPages:'all',//页码，字符串传递,默认全都打印
+      printBigValue: 3,//打印大小配置
+      numberOfPrintedPagesIndex:'all',//页码，字符串传递,默认全都打印
     }
   },
   created() {
@@ -135,9 +137,11 @@ export default {
       }
       //请求未完成前不允许多次请求
       this.isPost = true
-      // console.log(this.formData)
+      console.log(this.printBigValue)
       let elLoadingComponent = this.openFullScreen2();
-      const res = await postUploadForPDF(this.formData, this.printNum, this.hengshu);
+
+
+      const res = await postUploadForPDF(this.formData, this.printNum, this.hengshu,this.printBigValue,this.numberOfPrintedPagesIndex);
       elLoadingComponent.close();
       if (String(res.code) === '1') {
         this.$message.success(res.msg)
@@ -161,8 +165,8 @@ export default {
       let file = this.$refs.file.files[0]
       const suffix = file.name.split('.')[1]
       const size = file.size / 1024 / 1024 < 8
-      if (!['pdf'].includes(String(suffix))) {
-        this.$message.error('上传只支持 pdf')
+      if (!['pdf','docx'].includes(String(suffix))) {
+        this.$message.error('上传只支持 pdf和docx')
         this.$refs.file.clearFiles()
         return false
       }

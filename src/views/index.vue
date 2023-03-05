@@ -138,16 +138,10 @@ export default {
           disabled: false, // 是否禁用
           childList: [
             {
-              optionName: '打印页(PDF)',
+              optionName: '共享打印',
               index: '2-1',
               routerName: "printPDF",
               iconClassName: "el-icon-document"
-            },
-            {
-              optionName: '打印页(Word)',
-              index: '2-2',
-              routerName: "printWord",
-              iconClassName: "el-icon-notebook-2"
             }
           ]
         }

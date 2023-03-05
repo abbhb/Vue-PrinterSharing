@@ -29,9 +29,9 @@ export function checkToken(){
 }
 
 // 文件上传
-export function postUploadForPDF (file,numberOfPrintedPages,printingDirection) {
+export function postUploadForPDF (file,numberOfPrintedPages,printingDirection,printBigValue,numberOfPrintedPagesIndex) {
     return request({
-        url: '/printer/uploadpdf?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection,
+        url: '/printer/uploadpdf?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection+'&printBigValue='+printBigValue+'&numberOfPrintedPagesIndex='+numberOfPrintedPagesIndex,
         method: 'post',
         data: file,
         headers: {
