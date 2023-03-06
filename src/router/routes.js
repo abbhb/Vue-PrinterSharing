@@ -5,6 +5,8 @@ import login from "@/views/login/login";
 import UserInfo from "@/views/user/UserInfo";
 import ChangePassword from "@/views/user/ChangePassword";
 import PrintersForPDF from "@/views/print/PrintersForPDF.vue";
+import UserManagement from "@/views/admin/UserManagement.vue";
+import TempRegistration from "@/views/login/TempRegistration.vue";
 export default [
 	{
 		path: '/',
@@ -34,6 +36,15 @@ export default [
 		}
 	},
 	{
+		path: '/registration',
+		name: 'registration',
+		component: TempRegistration,
+		meta:{
+			requireAuth: false,
+			needrole:false
+		}
+	},
+	{
 		path: '/404',
 		name: 'NotFound',
 		component: NotFound,
@@ -47,7 +58,7 @@ export default [
 		name: 'index',
 		component: index,
 		meta:{
-			requireAuth: false,
+			requireAuth: true,
 			needrole:false
 		},
 		children: [
@@ -56,7 +67,7 @@ export default [
 				name: 'userinfo',
 				component: UserInfo,
 				meta:{
-					requireAuth: false,
+					requireAuth: true,
 					needrole:false
 				}
 			},
@@ -65,7 +76,7 @@ export default [
 				name: 'changepassword',
 				component: ChangePassword,
 				meta:{
-					requireAuth: false,
+					requireAuth: true,
 					needrole:false
 				}
 			},
@@ -74,8 +85,18 @@ export default [
 				name: 'printPDF',
 				component: PrintersForPDF,
 				meta:{
-					requireAuth: false,
+					requireAuth: true,
 					needrole:false
+				}
+			},
+			{
+				path: '/UserManagement',
+				name: 'UserManagement',
+				component: UserManagement,
+				meta:{
+					requireAuth: true,
+					needrole:true,
+					roles:[1]
 				}
 			}
 

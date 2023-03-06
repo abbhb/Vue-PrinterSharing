@@ -8,8 +8,7 @@ export function inject(service) {
             // console.log(config, 'config')
             config.headers['Content-Type'] = 'application/json' // 关键所在
             config.headers.Authorization = localStorage.getItem("token")
-            config.headers.type = "back"//后端，方便处理拦截器
-            config.headers.userid = localStorage.getItem('userid')
+            config.headers.userId = localStorage.getItem('userId')
             // console.log(sessionStorage.getItem("token"))
             // 可以进行token验证
             return config;

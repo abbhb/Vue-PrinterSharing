@@ -85,7 +85,7 @@ export default {
         userid:localStorage.getItem('userid')
       },
       printNum:1,
-      hengshu: '0',//默认横着打
+      hengshu: '1',//默认竖着着打
       formData:undefined,//实际传输的file文件
       isPost:false,//是否正在打印
       printBigOptions: [{
@@ -187,8 +187,9 @@ export default {
 
 <style scoped>
 .caozuoqu {
-  border: #be0010 1px solid;
+  border: #ffffff 1px solid;
   padding: 2rem 2rem 2rem 2rem;
+  background-color: #ffffff;
   border-radius: 2rem;
 }
 i {
@@ -198,7 +199,8 @@ i {
   margin-top: 1rem;
 }
 .yuanjiao {
-  border: #be0010 1px solid;
+  border: #ffffff 1px solid;
+  background-color: #ffffff;
   border-radius: 2rem;
 }
 .shupin {

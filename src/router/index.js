@@ -13,14 +13,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	console.log("to")
 	console.log(to)
-	next()	//放行
 	if (to.meta.requireAuth) { // 判断跳转的路由是否需要登录
 		if (localStorage.getItem('token')) { // vuex.state判断token是否存在,后台会校验是否过期
 			if (to.meta.needrole){
-				console.log(to.meta.roles)
-				console.log(localStorage.getItem("type"))
+				// console.log(to.meta.roles)
+				// console.log(localStorage.getItem("permission"))
 				var roles = to.meta.roles
-				var per = localStorage.getItem("type")
+				var per = localStorage.getItem("permission")
 				console.log(roles.includes(Number(per)))
 				if(roles.includes(Number(per))){
 

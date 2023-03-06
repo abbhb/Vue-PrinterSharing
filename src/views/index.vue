@@ -2,12 +2,13 @@
   <div class="home">
     <header class="header">
       <div class="left">
-        AI服务平台
-        <el-button
-            @click="onMenuCollapse"
-            circle
-            :icon="menuCollapse? 'el-icon-s-unfold' : 'el-icon-s-fold'"
-        ></el-button>
+        <span class="style-logo-NxwZ7"><img src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/bce33f56b383437993fd4c08175660da~tplv-uwbnlip3yd-image.image" alt="logo"></span>
+        <span>AI服务平台</span>
+<!--        <el-button-->
+<!--            @click="onMenuCollapse"-->
+<!--            circle-->
+<!--            :icon="menuCollapse? 'el-icon-s-unfold' : 'el-icon-s-fold'"-->
+<!--        ></el-button>-->
       </div>
       <div class="right" style="display: flex;flex-direction: row;align-items: center;">
         <div style="margin-right: 30px;font-size: 12px;color: rgba(255,255,255,0.78)">
@@ -39,8 +40,8 @@
               :unique-opened="true"
               :default-openeds="defaultUnfoldedMenu"
               select="1-1"
-              background-color="#545c64"
-              text-color="#fff"
+              background-color="#ffffff"
+              text-color="#5c5c5c"
               active-text-color="#ffd04b"
           >
             <div v-for="(item) in menuData " :key="item.index">
@@ -132,9 +133,23 @@ export default {
           ]
         },
         {
+          optionName: "管理系统",
+          iconClassName: "el-icon-setting",
+          index: '2',
+          disabled: false, // 是否禁用
+          childList: [
+            {
+              optionName: '用户管理',
+              index: '2-1',
+              routerName: "UserManagement",
+              iconClassName: "el-icon-user"
+            }
+          ]
+        },
+        {
           optionName: "打印服务",
           iconClassName: "el-icon-printer",
-          index: '2',
+          index: '3',
           disabled: false, // 是否禁用
           childList: [
             {
@@ -154,13 +169,33 @@ export default {
       showPhotoMenu:false,
       name:'11',
       userInfo:{},
+      screenWidth: document.body.clientWidth,
     };
   },
+  watch:{
+    screenWidth(newVal) {
+      console.log('newVal', newVal);
+      if (newVal<=1000){
+        this.menuCollapse = true;
+      }else {
+        this.menuCollapse = false;
+      }
+
+    }
+
+  },
   created() {
+
+    const that = this;
+    window.onresize = () => {
+      window.screenWidth = document.body.clientWidth;
+      that.screenWidth = window.screenWidth;
+    };
+
+
     this.defaultUnfoldedMenu = [
       localStorage.getItem("defaultUnfoldedMenu")
     ];
-    this.menuCollapse = JSON.parse(localStorage.getItem("menuCollapse"));
     this.tags = JSON.parse(localStorage.getItem("tagsNavList")) || [];
     const userInfo = window.localStorage.getItem('userInfo')
     if (userInfo){
@@ -173,8 +208,6 @@ export default {
   methods: {
     // 收取菜单按钮
     onMenuCollapse() {
-      this.menuCollapse = !this.menuCollapse;
-      localStorage.setItem("menuCollapse", this.menuCollapse);
       this.defaultUnfoldedMenu = [
         localStorage.getItem("defaultUnfoldedMenu")
       ];
@@ -281,6 +314,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+body{
+  font-size: 14px;
+  font-family: Inter, "-apple-system", BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "noto sans", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
 .home {
   height: 100%;
   overflow: hidden;
@@ -289,20 +327,28 @@ export default {
   display: flex;
   flex-direction: column;
   .header {
-    background-color: #545c64;
+    background-color: #ffffff;
     height: 40px;
-    padding: 10px 20px;
-    margin-bottom: 5px;
+    padding: 8px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     .left {
-      font-size: 25px;
-      color: #fff;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      color: RGB(29,33,41);
+      font-weight:600;
+      font-size:20px;
+      text-overflow:ellipsis;
+      font-family: 'system-ui';
+
     }
     .right {
+
       .warp {
-        margin-right: 20px;
+        //margin-right: 0px;
+
       }
     }
   }
@@ -313,28 +359,29 @@ export default {
     .tac {
       flex: 1;
       display: flex;
-      height: 96%;
+      height: 100%;
       box-sizing: border-box;
       .col1 {
-        margin-right: 5px;
-        background-color: #545c64;
+        //border: rgba(129, 164, 190, 0.86) 0.01rem;
+        //background-color: #ffffff;
+        background-color: #ffffff;
       }
       .col2 {
         flex: 1;
-        background-color: #fff;
+        background-color: #f2f3f5;
         padding: 0 15px 15px 15px;
         border-radius: 5px;
         margin-right: 5px;
-        height: 100%;
+        height: 96%;
         overflow: auto;
         .col2_header {
           position: relative;
           width: 85%;
-          height: 50px;
+          height: 3rem;
           overflow: hidden;
-          border-bottom: 2px solid #eee;
-          background-color: #fff;
-          padding: 10px;
+          //border-bottom: 1px solid rgba(238, 238, 238, 0.24);
+          background-color: #f2f3f5;
+          padding: 1rem;
           display: flex;
           align-items: center;
           box-sizing: border-box;
@@ -342,11 +389,13 @@ export default {
           position: fixed;
           .item {
             margin-right: 8px;
+
+
           }
         }
         .warp {
           margin: 15px;
-          padding-top: 55px;
+          padding-top: 2.3rem;
         }
       }
     }
@@ -358,12 +407,32 @@ export default {
   width: 200px;
   min-height: 400px;
 }
+
 // 下拉菜单
 .el-dropdown-link {
   cursor: pointer;
-  color: #fff;
+  color: #5c5c5c;
 }
 .el-icon-arrow-down {
   font-size: 12px;
 }
+.style-logo-NxwZ7 {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  border-radius: 2px;
+}
+//点击后样式
+.el-menu-item.is-active {
+  background-color: #d0d8e7 !important;
+  color: #fff;
+  span {
+    color: #165DFF !important;
+  }
+  i {
+    color: #3a8ee6;
+  }
+}
+
 </style>

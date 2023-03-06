@@ -1,40 +1,106 @@
 <template>
-  <div class="login" id="login-app">
-    <div class="login-box">
-      <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="">
-      <div class="login-form">
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" >
-          <div class="login-form-title">
-<!--            <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" style="width:139px;height:42px;" alt="" />-->
-                <span>AI综合服务平台</span>
-          </div>
-          <el-form-item prop="username">
-            <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号" maxlength="20"
-                      prefix-icon="iconfont icon-user" />
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input v-model="loginForm.password" type="password" placeholder="密码" prefix-icon="iconfont icon-lock" maxlength="20"
-                      @keyup.enter.native="handleLogin" />
-          </el-form-item>
-          <el-form-item style="width:100%;">
-            <el-button :loading="loading" class="login-btn" size="medium" type="primary" style="width:100%;"
-                       @click.native.prevent="handleLogin">
-              <span v-if="!loading">登录</span>
-              <span v-else>登录中...</span>
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </div>
+<div style="display: flex;flex-direction: column;">
+  <span>临时注册，丑点就丑点吧，后续集成到登录页加动画</span>
+
+  <el-form
+      ref="classData"
+      :model="classData"
+      :rules="rules"
+      :inline="true"
+      label-width="180px"
+      class="demo-classData"
+  >
+    <div>
+      <el-form-item
+          label="用户名称:"
+          prop="name"
+      >
+        <el-input
+            v-model="classData.name"
+            placeholder="请填写用户昵称"
+            maxlength="20"
+        />
+      </el-form-item>
+      <el-form-item
+          label="用户名:"
+          prop="username"
+      >
+        <el-input
+            v-model="classData.username"
+            placeholder="请填写用户名"
+            maxlength="26"
+        />
+      </el-form-item>
+      <el-form-item
+          label="用户密码:"
+          prop="password"
+      >
+        <el-input
+            :disabled="this.action==='edit'"
+            v-model="classData.password"
+            type="password"
+            :placeholder="this.action==='edit'?'密码不可编辑':'请填写用户密码'"
+            maxlength="32"
+        />
+      </el-form-item>
+      <el-form-item
+          label="手机号:"
+          prop="phone"
+      >
+        <el-input
+            v-model="classData.phone"
+            placeholder="请填写用户手机号"
+            maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item
+          label="身份证号:"
+          prop="idNumber"
+      >
+        <el-input
+            v-model="classData.idNumber"
+            placeholder="请填写用户身份证号"
+            maxlength="18"
+        />
+      </el-form-item>
+      <el-form-item label="用户性别：" prop="sex">
+        <el-select v-model="classData.sex" placeholder="请选择用户性别">
+          <el-option
+              v-for="item in sexoptions"
+              :key="item.label"
+              :label="item.label"
+              :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
     </div>
-  </div>
+
+
+    <div>
+    </div>
+
+  </el-form>
+
+  <span
+      slot="footer"
+      class="dialog-footer"
+  >
+    <el-button
+        type="primary"
+        size="medium"
+        @click="submitForm()"
+    >注册</el-button>
+        </span>
+</div>
 </template>
 
 <script>
-
-import {loginApi,checkToken} from "@/api/login";
+import {checkToken, loginApi} from "@/api/login";
 import router from "@/router";
+
 export default {
-  name: "login",
+  name: "TempRegistration"
+  ,
   el: '#login-app',
   data() {
     return {
@@ -112,7 +178,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .login {
   display: flex;

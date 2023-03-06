@@ -28,6 +28,31 @@ export function checkToken(){
     });
 }
 
+export function createUser(data){
+    return request({
+        url:'/user/create',
+        method:'post',
+        data:data
+    });
+}
+
+export function getUserList(params){
+    return request({
+        url:'/user/get',
+        method:'get',
+        params
+    });
+}
+
+export function delUserList(params){
+    return request({
+        url:'/user/delete',
+        method:'delete',
+        params
+    });
+}
+
+
 // 文件上传
 export function postUploadForPDF (file,numberOfPrintedPages,printingDirection,printBigValue,numberOfPrintedPagesIndex) {
     return request({
@@ -51,25 +76,25 @@ export function postUploadForWord (file,numberOfPrintedPages,printingDirection) 
 }
 
 
-export function updataforuser(id,username,name,sex,idNumber,phone){
+export function updataforuser(data){
     return request({
         url:'/user/updataforuser',
-        method:'post',
-        data:{
-            id:String(id),
-            username:String(username),
-            name:String(name),
-            sex:String(sex),
-            idNumber:String(idNumber),
-            phone:String(phone)
-        }
+        method:'put',
+        data
+    });
+}
+export function updatauserstatus(data){
+    return request({
+        url:'/user/updatauserstatus',
+        method:'put',
+        data
     });
 }
 
 export function changePassWord(id,username,password,newpassword,checknewpassword){
     return request({
         url:'/user/changepassword',
-        method:'post',
+        method:'put',
         data:{
             id:String(id),
             username:String(username),
