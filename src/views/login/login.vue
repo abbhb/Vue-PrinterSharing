@@ -16,14 +16,26 @@
             <el-input v-model="loginForm.password" type="password" placeholder="密码" prefix-icon="iconfont icon-lock" maxlength="20"
                       @keyup.enter.native="handleLogin" />
           </el-form-item>
+
           <el-form-item style="width:100%;">
-            <el-button :loading="loading" class="login-btn" size="medium" type="primary" style="width:100%;"
-                       @click.native.prevent="handleLogin">
-              <span v-if="!loading">登录</span>
-              <span v-else>登录中...</span>
-            </el-button>
+
+            <div>
+              <el-button :loading="loading" class="login-btn" size="medium" type="primary" style="width:100%;"
+                         @click.native.prevent="handleLogin">
+                <span v-if="!loading">登录</span>
+                <span v-else>登录中...</span>
+              </el-button>
+              <el-button :loading="loading" class="login-btn" size="medium" type="primary" style="width:100%;"
+                         @click.native.prevent="handleRe">
+                <span>注册(临时使用)</span>
+
+              </el-button>
+            </div>
+
           </el-form-item>
         </el-form>
+
+
       </div>
     </div>
   </div>
@@ -91,6 +103,9 @@ export default {
           }
         }
       })
+    },
+    handleRe() {
+      router.push({name:'registration'})
     },
     async checkToken() {
       const res = await checkToken()

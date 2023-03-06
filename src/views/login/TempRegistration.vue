@@ -91,6 +91,16 @@
         @click="submitForm()"
     >注册</el-button>
         </span>
+  <span
+      slot="footer"
+      class="dialog-footer"
+  >
+    <el-button
+        type="primary"
+        size="medium"
+        @click="ret()"
+    >返回登录</el-button>
+        </span>
 </div>
 </template>
 
@@ -189,6 +199,9 @@ export default {
   mounted() {
   },
   methods: {
+    ret(){
+      router.push({name:'login'})
+    },
     async submitForm() {
       this.$refs["classData"].validate(async (valid) => {  //开启校验
         if (valid) {   // 如果校验通过，请求接口，允许提交表单
