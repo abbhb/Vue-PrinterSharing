@@ -95,190 +95,414 @@
 </template>
 
 <script>
-import {checkToken, loginApi} from "@/api/login";
+import * as Api from "@/api/login";
 import router from "@/router";
 
 export default {
-  name: "TempRegistration"
-  ,
-  el: '#login-app',
+  name: "TempRegistration",
   data() {
     return {
-      loginForm:{
-        username: '',
-        password: ''
+      sexoptions:[{label:"男",value:"男"},{label:"女",value:"女"}],
+      classData: {
+        idNumber: '',
+        sex:'男',
+        name: '',//用户名
+        username:'',
+        phone:'',
+        password:'',
+        status:'1',//默认启用
+        avatar:'',//url
+        permission:'2',//默认为用户
       },
-      loading: false
     }
   },
   computed: {
-    loginRules() {
-      const validateUsername = (rule, value, callback) => {
-        if (value.length < 1 ) {
-          callback(new Error('请输入用户名'))
-        } else {
-          callback()
-        }
-      }
-      const validatePassword = (rule, value, callback) => {
-        if (value.length < 6) {
-          callback(new Error('密码必须在6位以上'))
-        } else {
-          callback()
-        }
-      }
+    rules () {
       return {
-        'username': [{ 'validator': validateUsername, 'trigger': 'blur' }],
-        'password': [{ 'validator': validatePassword, 'trigger': 'blur' }]
+        'name': [
+          {'required': true, 'message': '请填写用户名称', 'trigger': ['blur','change']}
+        ],
+        'username': [
+          {'required': true, 'message': '请输入用户名', 'trigger': ['blur','change']}
+        ],
+        'password': [
+          {
+            'required': true,
+            // 'message': '请填写用户密码',
+            validator: (rules, value, callback) => {
+              if (!value) {
+                this.$message.error("请填写用户密码")
+                callback(new Error('请填写用户密码'))
+
+              }
+              callback()
+            },
+            'trigger': ['blur']
+          },
+        ],
+        'phone': [
+          {
+            'required': true,
+            // 'message': '请填写用户密码',
+            validator: (rules, value, callback) => {
+              if (!value) {
+                this.$message.error("请填写用户手机号")
+                callback(new Error('请填写用户手机号'))
+              } else {
+                if (!/^1[34578]\d{9}$/.test(value)){
+                  this.$message.error("格式错误")
+                  callback(new Error('格式错误'))
+                }
+                callback()
+
+              }
+            },
+            'trigger': ['blur']
+          },
+        ],
+        'idNumber': [
+          {
+            'required': true,
+            // 'message': '请填写用户密码',
+            validator: (rules, value, callback) => {
+              if (!value) {
+                this.$message.error("请填写用户身份证号")
+                callback(new Error('请填写用户身份证号'))
+              }else {
+                if (!/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)/.test(value)){
+                  this.$message.error("格式错误")
+                  callback(new Error('格式错误'))
+                }
+                callback()
+              }
+            },
+            'trigger': ['blur']
+          },
+        ],
       }
     }
   },
   created() {
-    this.checkToken()
+
+
+  },
+  mounted() {
   },
   methods: {
-    async handleLogin() {
-      this.$refs.loginForm.validate(async (valid) => {
-        if (valid) {
-          this.loading = true
-          const res = await loginApi(this.loginForm.username,this.loginForm.password)
+    async submitForm() {
+      this.$refs["classData"].validate(async (valid) => {  //开启校验
+        if (valid) {   // 如果校验通过，请求接口，允许提交表单
+          let data = {}
+          if (!this.classData.name) {
+            this.$message.error("请你输入完整")
+            return false;
+          }
+          if (!this.classData.sex) {
+            this.$message.error("请你输入完整")
+            return false;
+          }
+          if (!this.classData.password) {
+            this.$message.error("请你输入完整")
+            return false;
+          }
+          if (!this.classData.permission) {
+            this.$message.error("请你输入完整")
+            return false;
+          }
+          if (!this.classData.phone) {
+            this.$message.error("请你输入完整")
+            return false;
+          }
+          if (!this.classData.status) {
+            this.$message.error("请你输入完整")
+            return false;
+          }
+          if (!this.classData.username) {
+            this.$message.error("请你输入完整")
+            return false;
+          }
+          if (!this.classData.idNumber) {
+            this.$message.error("请你输入身份证号")
+            return false;
+          }
+          data.name = this.classData.name
+          data.sex = this.classData.sex
+          data.avatar = this.classData.avatar
+          data.password = this.classData.password
+          data.permission = this.classData.permission
+          data.phone = this.classData.phone
+          data.status = this.classData.status
+          data.username = this.classData.username
+          data.idNumber = this.classData.idNumber
+          const res = await Api.createUser(data)
           if (String(res.code) === '1') {
-            localStorage.setItem('userInfo',JSON.stringify(res.data))
-            localStorage.setItem("permission",res.data.permission)
-            localStorage.setItem('userId',String(res.data.id))
-            localStorage.setItem('token',res.data.token)
-            router.push({name:'index'})
+            this.$message.success(res.msg)
+            router.push({"path":'/login'})
 
           } else {
             this.$message.error(res.msg)
-            sessionStorage.setItem("userLastStoreId","")
-
-            this.loading = false
           }
+          console.log(res)
+        } else {   //校验不通过
+          return false;
         }
-      })
+      });
     },
-    async checkToken() {
-      const res = await checkToken()
-
-      if (String(res.code) === '1'){
-        console.log("验证")
-
-        localStorage.setItem("type",res.data.permissions)
-        localStorage.setItem('userInfo',JSON.stringify(res.data))
-        localStorage.setItem('userid',String(res.data.id))
-        // localStorage.setItem('token',res.data.token)
-        router.push({name:'index'})
-      }else {
-        sessionStorage.setItem("userLastStoreId","")
-        // this.$message.error(res.msg)
-        //此处就不提示token校验失败了，可能第一次本来就没有token
-      }
-    }
   }
 }
 </script>
-<style scoped>
-.login {
+
+<style>
+.sdss {
+  background-color: #fff;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: #333;
-}
-.login-box {
-  width: 1000px;
-  height: 474.38px;
-  border-radius: 8px;
-  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  min-height: 35rem;
+  padding: 1rem 1rem 1rem 1rem;
 }
 
-.login-box img {
-  width: 60%;
-  height: auto;
+.selectInput {
+  position: relative;
+  width: 100%;
+  min-width: 100px;
 }
-
-.title {
-  margin: 0px auto 30px auto;
+.selectInput .flavorSelect {
+  position: absolute;
+  width: 100%;
+  padding: 0 10px;
+  border-radius: 3px;
+  border: solid 1px #807974;
+  line-height: 30px;
   text-align: center;
-  color: #707070;
+  background: rgba(255, 255, 255, 0.98);
+  top: 50px;
+  z-index: 99;
 }
-.login-form {
-  background: #ffffff;
-  width: 40%;
-  border-radius: 0px 8px 8px 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.selectInput .flavorSelect .items {
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  line-height: 15px;
+  /*border-bottom: solid 1px #a85151;*/
+  /*color: #383737;*/
+  /*padding: 1px 1px 1px 1px;*/
 }
-.login-form .el-form {
-  width: 214px;
-  height: 307px;
-}
-.login-form .el-form-item {
-  margin-bottom: 30px;
-}
-.login-form .el-form-item.is-error .el-input__inner {
-  border: 0 !important;
-  border-bottom: 1px solid #fd7065 !important;
-  background: #fff !important;
-}
-.login-form .input-icon {
-  height: 32px;
-  width: 18px;
-  margin-left: -2px;
-}
-.login-form .el-input__inner {
-  border: 0;
-  border-bottom: 1px solid #e9e9e8;
-  border-radius: 0;
+.selectInput .flavorSelect .none {
   font-size: 14px;
-  font-weight: 400;
-  color: #333333;
-  height: 32px;
-  line-height: 32px;
 }
-.login-form .el-input__prefix {
-  left: 0;
+#user-management .uploadImg .el-form-item__label::before{
+  content: '*';
+  color: #F56C6C;
+  margin-right: 4px;
 }
-.login-form .el-input--prefix .el-input__inner {
-  padding-left: 26px;
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
-.login-form .el-input__inner::placeholder {
-  color: #aeb5c4;
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
 }
-.login-form .el-form-item--medium .el-form-item__content {
-  line-height: 32px;
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
 }
-.login-form .el-input--medium .el-input__icon {
-  line-height: 32px;
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
-.login-btn {
-  border-radius: 17px;
-  padding: 11px 20px !important;
-  margin-top: 10px;
-  font-weight: 500;
-  font-size: 14px;
-  border: 0;
-  background-color: #ffc200;
+.dashboard-container {
+  padding: 20px;
 }
-.login-btn:hover,
-.login-btn:focus {
-  /* background: #FFC200; */
-  /* color: #ffffff; */
+.container {
+  background: #fff;
+  position: relative;
+  z-index: 1;
+  padding: 30px 28px;
+  border-radius: 4px;
 }
-.login-form-title {
-  height: 36px;
+.container .tableBar {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  justify-content: space-between;
 }
-.login-form-title .title-label {
-  font-weight: 500;
-  font-size: 20px;
-  color: #333333;
+.container .tableBox {
+  width: 100%;
+  border: solid 2px #f3f4f7;
+  border-radius: 2px;
+}
+.container .tableBox .el-image img {
+  width: 40px;
+  border-radius: 5px;
+}
+.container .pageList {
+  text-align: center;
+  margin-top: 30px;
+}
+.tableLab .span-btn {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 0 20px;
+  color: #818693;
+  border-right: solid 1px #d8dde3;
+}
+.container .tableLab .el-button {
   margin-left: 10px;
+}
+.el-table-column--selection .cell {
+  padding-left: 10px;
+}
+/* 添加 */
+.addBrand-container .avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.addBrand-container .avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.addBrand-container .avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 200px;
+  height: 160px;
+  line-height: 160px;
+  text-align: center;
+}
+.addBrand-container .avatar {
+  width: 160px;
+  height: 160px;
+  display: block;
+}
+.addBrand-container .el-form--inline .el-form-item__content {
+  width: 293px;
+}
+.addBrand-container .el-input {
+  width: 293px;
+}
+.addBrand-container {
+  margin: 30px;
+}
+.addBrand-container .container {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  padding: 30px;
+  border-radius: 4px;
+  min-height: 500px;
+}
+.addBrand-container .container .subBox {
+  padding-top: 30px;
+  text-align: center;
+  border-top: solid 1px #f3f4f7;
+}
+.flavorBox {
+  width: 777px;
+}
+.flavorBox .addBut {
+  background: #ffc200;
+  display: inline-block;
+  padding: 0px 20px;
+  border-radius: 3px;
+  line-height: 40px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #333333;
+  font-weight: 500;
+}
+.flavorBox .flavor {
+  border: solid 1px #dfe2e8;
+  border-radius: 3px;
+  padding: 15px;
+  background: #fafafb;
+}
+.flavorBox .flavor .title {
+  color: #606168;
+}
+.flavorBox .flavor .cont .items {
+  display: flex;
+  margin: 10px 0;
+}
+.flavorBox .flavor .cont .items .itTit {
+  width: 150px;
+  margin-right: 15px;
+}
+.flavorBox .flavor .cont .items .itTit input {
+  width: 100%;
+  line-height: 40px;
+  border-radius: 3px;
+  padding: 0 10px;
+}
+.flavorBox .flavor .cont .items .labItems {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 3px;
+  min-height: 39px;
+  border: solid 1px #d8dde3;
+  background: #fff;
+  padding: 0 5px;
+}
+.flavorBox .flavor .cont .items .labItems span {
+  display: inline-block;
+  color: #f19c59;
+  margin: 5px;
+  line-height: 26px;
+  height: 26px;
+  padding: 0 10px;
+  background: #fdf4eb;
+  border-radius: 3px;
+  border: solid 1px #fae2cd;
+}
+.flavorBox .flavor .cont .items .labItems span i {
+  cursor: pointer;
+  font-style: normal;
+}
+.flavorBox .flavor .cont .items .labItems .inputBox {
+  display: inline-block;
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  overflow: hidden;
+}
+.flavorBox .flavor .cont .items .delFlavor {
+  display: inline-block;
+  padding: 0 10px;
+  color: #f19c59;
+  cursor: pointer;
+}
+.addBrand-container .address .el-form-item__content {
+  width: 777px !important;
+}
+.el-button--text {
+  font-weight: 400 !important;
+  font-size: 13px !important;
+}
+.el-table td {
+  font-size: 13px !important;
+}
+.el-table .cell,
+.el-table th div,
+.el-table--border td:first-child .cell,
+.el-table--border th:first-child .cell {
+  padding-left: 12px;
+}
+.xuanzeqi {
+  padding: 5px 10px 5px 10px;
+  margin: 0px 3px 15px 13px;
+  /*border: rgba(162, 156, 156, 0.47) 1px solid;*/
+  /*border-radius: 10px;*/
 }
 
 </style>

@@ -23,7 +23,7 @@ export default [
 					requireAuth: false,
 					needrole:false
 				}
-			},
+			}
 		]
 	},
 	{
