@@ -560,6 +560,7 @@ video {
 
 
 .logins {
+
   display: flex;
   flex-flow: row wrap;
   box-sizing: content-box;
@@ -568,7 +569,7 @@ video {
 
 }
 .logins .el-form {
-  margin-top: 1rem;
+  margin-top: 3rem;
   width: 214px;
   height: 307px;
 }
