@@ -127,7 +127,38 @@ export default {
     },
     async onSubmit() {
       var that = this
-      const res = await Api.updataforuser(that.form.id,that.form.username,that.form.name, that.form.sex, that.form.idNumber,that.form.phone);
+      let data = {}
+      if (!this.form.name) {
+        this.$message.error("请你输入完整")
+        return false;
+      }
+      if (!this.form.sex) {
+        this.$message.error("请你输入完整")
+        return false;
+      }
+      if (!this.form.phone) {
+        this.$message.error("请你输入完整")
+        return false;
+      }
+      if (!this.form.username) {
+        this.$message.error("请你输入完整")
+        return false;
+      }
+      if (!this.form.idNumber) {
+        this.$message.error("请你输入身份证号")
+        return false;
+      }
+      data.id = this.form.id
+      data.name = this.form.name
+      data.sex = this.form.sex
+      data.avatar = this.form.avatar
+      data.permission = this.userInfo.permission
+      data.phone = this.form.phone
+      data.status = this.userInfo.status
+      data.username = this.form.username
+      data.idNumber = this.form.idNumber
+      const res = await Api.updataforuser(data)
+
       if (String(res.code)==='1'){
         that.$message.success(res.msg);
         const data = await Api.checkToken()
@@ -137,7 +168,7 @@ export default {
           that.init()
         }else {
           this.$message.error(data.msg)
-          router.push({name:'index'})
+          router.push({name:'login'})
         }
       }
       else {
