@@ -8,6 +8,7 @@ import PrintersForPDF from "@/views/print/PrintersForPDF.vue";
 import UserManagement from "@/views/admin/UserManagement.vue";
 import TempRegistration from "@/views/login/TempRegistration.vue";
 import dh from "@/views/dh/dh.vue";
+import navfenlei from "@/views/nav/navfenlei.vue";
 export default [
 	{
 		path: '/',
@@ -109,6 +110,16 @@ export default [
 					roles:[1]
 				}
 			}
+			,
+			{
+				path: '/navfenlei',
+				name: 'navfenlei',
+				component: navfenlei,
+				meta:{
+					requireAuth: false,
+					needrole:false
+				}
+			},
 
 		]
 	},

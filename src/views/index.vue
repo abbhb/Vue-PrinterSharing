@@ -149,6 +149,12 @@ export default {
               index: '2-1',
               routerName: "UserManagement",
               iconClassName: "el-icon-user"
+            },
+            {
+              optionName: '导航分类',
+              index: '2-2',
+              routerName: "navfenlei",
+              iconClassName: "el-icon-guide"
             }
           ]
         },
