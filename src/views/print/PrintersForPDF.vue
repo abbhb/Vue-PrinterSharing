@@ -163,8 +163,10 @@ export default {
 
       let formData = new FormData()
       let file = this.$refs.file.files[0]
-      const suffix = file.name.split('.')[1]
+      const temp = file.name.split('.')
+      const suffix = temp[temp.length-1]
       const size = file.size / 1024 / 1024 < 8
+      console.log(temp)
       if (!['pdf','docx'].includes(String(suffix))) {
         this.$message.error('上传只支持 pdf和docx')
         this.$refs.file.clearFiles()

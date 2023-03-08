@@ -44,9 +44,25 @@ export function getUserList(params){
     });
 }
 
+export function getNavListForAdmin(params){
+    return request({
+        url:'/quicknavigation/listadmin',
+        method:'get',
+        params
+    });
+}
+
 export function delUserList(params){
     return request({
         url:'/user/delete',
+        method:'delete',
+        params
+    });
+}
+
+export function deleteNavigationCategorize(params){
+    return request({
+        url:'/quicknavigation/delete',
         method:'delete',
         params
     });
@@ -83,6 +99,15 @@ export function updataforuser(data){
         data
     });
 }
+export function updataforquicknavigationcategorize(data){
+    return request({
+        url:'/quicknavigation/updataforquicknavigationcategorize',
+        method:'put',
+        data
+    });
+}
+
+
 export function updatauserstatus(data){
     return request({
         url:'/user/updatauserstatus',
