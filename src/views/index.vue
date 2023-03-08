@@ -131,7 +131,7 @@ export default {
               iconClassName: "el-icon-lock"
             },
             {
-              optionName: '个人信息',
+              optionName: '快捷导航',
               index: '1-3',
               routerName: "dh",
               iconClassName: "el-icon-user",

@@ -47,15 +47,6 @@ export default [
 		}
 	},
 	{
-		path: '/dh',
-		name: 'dh',
-		component: dh,
-		meta:{
-			requireAuth: false,
-			needrole:false
-		}
-	},
-	{
 		path: '/404',
 		name: 'NotFound',
 		component: NotFound,
@@ -97,6 +88,15 @@ export default [
 				component: PrintersForPDF,
 				meta:{
 					requireAuth: true,
+					needrole:false
+				}
+			},
+			{
+				path: '/dh',
+				name: 'dh',
+				component: dh,
+				meta:{
+					requireAuth: false,
 					needrole:false
 				}
 			},
