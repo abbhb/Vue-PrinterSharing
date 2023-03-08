@@ -7,6 +7,7 @@ import ChangePassword from "@/views/user/ChangePassword";
 import PrintersForPDF from "@/views/print/PrintersForPDF.vue";
 import UserManagement from "@/views/admin/UserManagement.vue";
 import TempRegistration from "@/views/login/TempRegistration.vue";
+import dh from "@/views/dh/dh.vue";
 export default [
 	{
 		path: '/',
@@ -39,6 +40,15 @@ export default [
 		path: '/registration',
 		name: 'registration',
 		component: TempRegistration,
+		meta:{
+			requireAuth: false,
+			needrole:false
+		}
+	},
+	{
+		path: '/dh',
+		name: 'dh',
+		component: dh,
 		meta:{
 			requireAuth: false,
 			needrole:false

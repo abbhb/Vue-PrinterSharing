@@ -129,7 +129,13 @@ export default {
               index: '1-4',
               routerName: "changepassword",
               iconClassName: "el-icon-lock"
-            }
+            },
+            {
+              optionName: '个人信息',
+              index: '1-3',
+              routerName: "dh",
+              iconClassName: "el-icon-user",
+            },
           ]
         },
         {
