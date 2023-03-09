@@ -17,7 +17,7 @@
       >
         <a :href="item.path" target="_blank">
           <el-tooltip effect="dark" :content="item.name" placement="bottom" hide-after="1000">
-            <el-card class="box-card">
+            <el-card class="box-card"  shadow="hover">
               <div class="ico_ cont_">
                 <img class="img_" :src="item.image">
               </div>
@@ -56,7 +56,7 @@ export default {
             "id": "1",
             "name": "文件服务器",
             "path": "http://10.15.245.153",
-            "permission": [2],
+            "permission": [1, 2],
             "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
             "introduction": "AI实验室服务器"
           },
@@ -64,7 +64,7 @@ export default {
             "id": "2",
             "name": "文件服务器",
             "path": "http://10.15.245.153",
-            "permission": [2],
+            "permission": [1, 2],
             "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
             "introduction": "AI实验室服务器"
           },
@@ -72,7 +72,7 @@ export default {
             "id": "2",
             "name": "文件服务器",
             "path": "http://10.15.245.153",
-            "permission": [2],
+            "permission": [1, 2],
             "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
             "introduction": "AI实验室服务器"
           },
