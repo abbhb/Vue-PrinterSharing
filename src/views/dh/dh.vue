@@ -1,28 +1,46 @@
 <template>
   <div>
-    <el-card class="box-card"
-             v-for="card in card"
-             :key="card.categorizeId"
-             :categorizeName="card.categorizeName"
-             :item="card.item"
+    <div
+      v-for="card in cards"
+      :key="card.categorizeId"
     >
-      <el-row>
-        <el-col :span="2"
-                v-for="item in card.item"
-                :key="item.id"
-        >
-          <a :href="item.path">
-            <el-card :body-style="{ padding: '0px'}" class="box-little" shadow="hover">
-              <img :src="item.image" class="image" alt="">
-              <div style="padding: 5px;">
-                <span style="font-size:small">{{ item.name }}</span>
+      <div class="head">
+        <h4 class="text">
+          <i :class="card.ico"></i>
+          {{ card.categorizeName }}
+        </h4>
+      </div>
+      <div class="box_"
+           v-for="item in card.item"
+           v-show="real_cards.id in item.permission"
+           :key="item.id"
+      >
+        <a :href="item.path" target="_blank">
+          <el-tooltip effect="dark" :content="item.name" placement="bottom" hide-after="1000">
+            <el-card class="box-card">
+              <div class="ico_ cont_">
+                <img class="img_" :src="item.image">
               </div>
+              <div class="cont_">
+                <div>
+                  <strong class="cont_head">{{ item.name }}</strong>
+                </div>
+                <p class="cont_cont">{{ item.introduction }}</p>
+              </div>
+              <a :href="item.path" class="link_">
+                <el-tooltip effect="dark" content="直达" placement="right">
+                  <i class="el-icon-s-promotion"></i>
+                </el-tooltip>
+              </a>
             </el-card>
-          </a>
+          </el-tooltip>
 
-        </el-col>
-      </el-row>
-    </el-card>
+        </a>
+
+      </div>
+    </div>
+    <a>
+    </a>
   </div>
 </template>
 
@@ -32,40 +50,70 @@ export default {
   data() {
     return {
       // todos: JSON.parse(localStorage.getItem('todos')) || []
-      card: [{
-        "categorizeId": "1", "categorizeName": "这是分类名称", item: [
-
+      cards: [{
+        "categorizeId": "1", "categorizeName": "文件", "ico": "el-icon-document", item: [
           {
             "id": "1",
             "name": "文件服务器",
             "path": "http://10.15.245.153",
-            "permission": [1, 2],
+            "permission": [2],
             "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-            "introduction": ""
+            "introduction": "AI实验室服务器"
           },
-
+          {
+            "id": "2",
+            "name": "文件服务器",
+            "path": "http://10.15.245.153",
+            "permission": [2],
+            "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+            "introduction": "AI实验室服务器"
+          },
+          {
+            "id": "2",
+            "name": "文件服务器",
+            "path": "http://10.15.245.153",
+            "permission": [2],
+            "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+            "introduction": "AI实验室服务器"
+          },
           {
             "id": "2",
             "name": "文件服务器",
             "path": "http://10.15.245.153",
             "permission": [1, 2],
-            "image": "",
-            "introduction": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+            "introduction": "AI实验室服务器"
+          },
+          {
+            "id": "2",
+            "name": "文件服务器",
+            "path": "http://10.15.245.153",
+            "permission": [1, 2],
+            "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+            "introduction": "AI实验室服务器"
+          },
+          {
+            "id": "2",
+            "name": "文件服务器",
+            "path": "http://10.15.245.153",
+            "permission": [1, 2],
+            "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+            "introduction": "AI实验室服务器"
           }
 
         ]
       },
 
         {
-          "categorizeId": "2", "categorizeName": "这是分类名称2", item: [
+          "categorizeId": "2", "categorizeName": "工具", "ico": "el-icon-monitor", item: [
 
             {
               "id": "1",
               "name": "文件服务器",
               "path": "http://10.15.245.153",
               "permission": [1, 2],
-              "image": "",
-              "introduction": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+              "introduction": "AI实验室服务器"
             },
 
             {
@@ -73,47 +121,80 @@ export default {
               "name": "文件服务器",
               "path": "http://10.15.245.153",
               "permission": [1, 2],
-              "image": "",
-              "introduction": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+              "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+              "introduction": "AI实验室服务器"
             }
-
           ]
         }
-
-      ]
+      ],
+      real_cards: JSON.parse(localStorage.getItem("userInfo"))
     };
-  },
+  }
 
 
 };
 </script>
 
 <style scoped>
+.text {
+  color: #555;
+  font-size: 0.9rem !important;
+  margin-bottom: 1.5rem !important;
+  font-weight: normal;
+}
+
 .box-card {
-  width: 80rem;
-  height: 10rem;
-  margin-top: 1rem;
-  border-radius: 20px;
+  width: 15rem;
+  height: 4rem;
 }
 
-.image {
+.head {
+  margin-top: 1.5rem;
+}
+
+.box_ {
+  display: inline-block;
+  margin-right: 3rem;
+  margin-bottom: 2rem;
+}
+
+.ico_ {
+  width: 2.5rem;
+  border-radius: 10px;
+  margin-right: 1rem;
+}
+
+.img_ {
   width: 100%;
-  display: block;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
-.box-little {
-  border-radius: 20px;
-  width: 80%;
-  height: 80%;
+.cont_ {
+  display: inline-block;
 }
 
-/*.box-card {*/
-/*  border-radius: 20px;*/
-/*  padding: 0;*/
-/*}*/
-.button {
-  padding: 0;
-  float: right;
+.cont_head {
+  font-size: .875rem !important;
+  position: relative;
+  bottom: .3rem;
 }
 
+.cont_cont {
+  font-size: .1rem;
+  color: #6c757d !important;
+  position: relative;
+  bottom: .3rem;
+}
+
+::v-deep .el-card__body {
+  padding: 13px;
+}
+
+.link_ {
+  position: relative;
+  left: 3.5rem;
+  bottom: .8rem;
+}
 </style>
