@@ -119,7 +119,7 @@ export default {
           disabled: false, // 是否禁用
           childList: [
             {
-              optionName: '个人信息',
+              optionName: '内部链接',
               index: '1-1',
               routerName: "userinfo",
               iconClassName: "el-icon-user",
