@@ -199,7 +199,7 @@ export default {
       if (this.input){
         params.name = this.input ? this.input : undefined
       }
-      const res =  await Api.getNavListForAdmin(params)
+      const res =  await Api.getNavListForFenlei(params)
       console.log(res)
       if (String(res.code) === '1') {
         this.tableData = res.data.records || []

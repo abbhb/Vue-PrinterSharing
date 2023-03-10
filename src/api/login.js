@@ -52,9 +52,16 @@ export function hasUserName(params){
     });
 }
 
-export function getNavListForAdmin(params){
+export function getNavListForFenlei(params){
     return request({
-        url:'/quicknavigation/listadmin',
+        url:'/quicknavigation/listnavfenlei',
+        method:'get',
+        params
+    });
+}
+export function getNavList(params){
+    return request({
+        url:'/quicknavigation/list',
         method:'get',
         params
     });

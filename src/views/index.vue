@@ -4,6 +4,7 @@
       <div class="left">
         <span class="style-logo-NxwZ7"><img src="@/assets/static/media/AIBIG.png" alt="logo"></span>
         <span>服务平台</span>
+        <div class="version">@Version:1.6.1</div>
 <!--        <el-button-->
 <!--            @click="onMenuCollapse"-->
 <!--            circle-->
@@ -377,6 +378,9 @@ body{
   height: 24px;
   margin-right: 4px;
   border-radius: 2px;
+}
+.version {
+  font-family: 'MS Reference Sans Serif';font-size: 12px;font-weight: 200;justify-content: end;align-self: end;
 }
 //点击后样式
 .el-menu-item.is-active {

@@ -45,12 +45,15 @@
 </template>
 
 <script>
+import * as Api from "@/api/login";
+
 export default {
   name: "dh.vue",
   data() {
     return {
       // todos: JSON.parse(localStorage.getItem('todos')) || []
-      cards: [{
+      cards: [],
+      /*{
         "categorizeId": "1", "categorizeName": "文件", "ico": "el-icon-document", item: [
           {
             "id": "1",
@@ -125,10 +128,27 @@ export default {
               "introduction": "AI实验室服务器"
             }
           ]
-        }
-      ],
+        }*/
       real_cards: JSON.parse(localStorage.getItem("userInfo"))
     };
+  },
+  created() {
+    const userInfo = window.localStorage.getItem('userInfo')
+    if (userInfo){
+      this.userInfo = JSON.parse(userInfo)
+    }
+    this.init()
+  },
+  methods: {
+    async init() {
+      const res = await Api.getNavList()
+      if (String(res.code)==='1'){
+        console.log(res.data)
+        this.cards = res.data
+      }else {
+        this.$message.error(res.msg)
+      }
+    }
   }
 
 
