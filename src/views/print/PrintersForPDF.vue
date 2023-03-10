@@ -61,7 +61,7 @@
       <el-button @click="getFile" style="margin-top: 10px">
         <i class="el-icon-upload"></i>选择文件
       </el-button>
-      <input type="file" ref="file" style="display: none;" v-on:change="handleFileUpload($event)">
+      <input id="fileupload" type="file" ref="file" style="display: none;" v-on:change="handleFileUpload($event)">
       <el-button :disabled="formData==undefined"  style="margin-top: 10px;margin-left: 10px;" type="danger" @click="cleanFile">清空选择</el-button>
       <el-button :disabled="isPost||formData==undefined" @click="printsopenforpdf" style="margin-top: 10px;margin-left: 10px">
         <i class="el-icon-upload"></i>开始打印
@@ -120,6 +120,7 @@ export default {
   methods:{
     cleanFile(){
       this.formData = undefined;
+      document.getElementById('fileupload').value= null;
     },
     openFullScreen2() {
       const loading = this.$loading({
@@ -152,12 +153,14 @@ export default {
         if (String(res.code) === '1') {
           this.$message.success(res.msg+"(显示打印成功后过几秒后打印机才会开始打印)")
 
+          this.cleanFile()
           // formData.clean()
           this.formData = undefined
         } else {
           this.$message.error(res.msg)
         }
         this.isPost = false
+
       }).catch(() => {
         this.$message({
           type: 'info',

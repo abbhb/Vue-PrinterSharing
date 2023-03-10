@@ -21,7 +21,7 @@
           <span class="span-btn delBut non" @click="deleteHandle('批量', null)">批量删除</span>
           <el-button
               type="primary"
-              @click="addUsertype('add')"
+              @click="addNavItemtype('add')"
           >
             + 增加导航分类
           </el-button>
@@ -54,6 +54,36 @@
             width="100"
         ></el-table-column>
         <el-table-column
+            label="权限"
+            width="130"
+        >
+          <template slot-scope="scope">
+            <span style="margin-right: 10px;">{{scope.row.permission.includes(1)?'管理员':''}}+{{scope.row.permission.includes(2)?'导航':''}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            label="图标"
+            width="100"
+        >
+          <template slot-scope="scope">
+            <el-image style="width: auto; height: 40px; border:none;cursor: pointer;"
+                      :src="scope.row.image"
+                      :preview-src-list="[ `${scope.row.image}` ]" >
+            </el-image>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop="introduction"
+            label="介绍"
+            width="200"
+        ></el-table-column>
+        <el-table-column
+            prop="categorizeName"
+            label="所属分类"
+            width="100"
+        ></el-table-column>
+
+        <el-table-column
             label="操作"
             width="200"
             align="center"
@@ -63,7 +93,7 @@
                 type="text"
                 size="small"
                 class="blueBug"
-                @click="addUsertype(scope.row)"
+                @click="addNavItemtype(scope.row)"
             >
               修改
             </el-button>
@@ -110,13 +140,61 @@
           >
             <div>
               <el-form-item
-                  label="用户名称:"
+                  label="导航名称:"
                   prop="name"
               >
                 <el-input
                     v-model="classData.name"
-                    placeholder="请填写用户昵称"
+                    placeholder="请填写导航昵称"
                     maxlength="20"
+                />
+              </el-form-item>
+              <el-form-item
+                  label="导航路径:"
+                  prop="path"
+              >
+                <el-input
+                    v-model="classData.path"
+                    placeholder="请选择展示路径"
+                    maxlength="20"
+                />
+              </el-form-item>
+              <el-form-item
+                  label="导航权限:"
+                  prop="permission"
+              >
+                <el-input
+                    v-model="classData.permission"
+                    placeholder="请选择导航权限"
+                    maxlength="20"
+                />
+              </el-form-item>
+              <el-form-item
+                  label="导航图片:"
+                  prop="image"
+              >
+                <el-input
+                    v-model="classData.image"
+                    placeholder="请选择图片"
+                    maxlength="20"
+                />
+              </el-form-item>
+              <el-form-item
+                  label="导航介绍:"
+                  prop="introduction"
+              >
+                <el-input
+                    v-model="classData.introduction"
+                    placeholder="请选择介绍"
+                />
+              </el-form-item>
+              <el-form-item
+                  label="导航分类:"
+                  prop="categorizeId"
+              >
+                <el-input
+                    v-model="classData.categorizeId"
+                    placeholder="请选择导航分类"
                 />
               </el-form-item>
             </div>
@@ -209,7 +287,8 @@ export default {
       if (this.input){
         params.name = this.input ? this.input : undefined
       }
-      const res =  await Api.getNavListForFenlei(params)
+
+      const res =  await Api.getListnavfenleiitem(params)
       console.log(res)
       if (String(res.code) === '1') {
         this.tableData = res.data.records || []
@@ -230,7 +309,7 @@ export default {
       this.init()
     },
     // 添加
-    addUsertype (st) {
+    addNavItemtype (st) {
       if (st === 'add'){
         this.action = 'add'
         this.cleanform()
@@ -259,13 +338,13 @@ export default {
         'confirmButtonText': '确定',
         'cancelButtonText': '取消',
       }).then(async () => {
-        const res = await Api.deleteNavigationCategorize(params)
-        if (String(res.code)==='1'){
-          this.$message.success(res.msg)
-          this.handleQuery()
-        }else {
-          this.$message.error(res.msg || '操作失败')
-        }
+        // const res = await Api.deleteNavigationCategorize(params)
+        // if (String(res.code)==='1'){
+        //   this.$message.success(res.msg)
+        //   this.handleQuery()
+        // }else {
+        //   this.$message.error(res.msg || '操作失败')
+        // }
       })
     },
     // 全部操作
@@ -329,7 +408,7 @@ export default {
             }
 
             data.name = this.classData.name
-            // const res = await Api.createUser(data)
+            // const res = await Api.createNavItem(data)
             // if (String(res.code) === '1') {
             //   this.$message.success(res.msg)
             //   this.cleanform()
@@ -360,7 +439,7 @@ export default {
 
               data.name = this.classData.name
 
-              // const res = await Api.createUser(data)
+              // const res = await Api.createNavItem(data)
               // if (String(res.code)==='1'){
               //   this.$message.success(res.msg)
               //
@@ -381,15 +460,15 @@ export default {
           }
           data.id = this.classData.id
           data.name = this.classData.name
-          const res = await Api.updataforquicknavigationcategorize(data)
-          if (String(res.code)==='1'){
-            this.$message.success(res.msg)
-            this.cancel()
-            this.handleQuery()
-            this.dialogVisible = false
-          }else {
-            this.$message.error(res.msg)
-          }
+          // const res = await Api.updataforquicknavigationcategorize(data)
+          // if (String(res.code)==='1'){
+          //   this.$message.success(res.msg)
+          //   this.cancel()
+          //   this.handleQuery()
+          //   this.dialogVisible = false
+          // }else {
+          //   this.$message.error(res.msg)
+          // }
 
         }
       }

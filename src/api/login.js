@@ -59,6 +59,13 @@ export function getNavListForFenlei(params){
         params
     });
 }
+export function getListnavfenleiitem(params){
+    return request({
+        url:'/quicknavigation/listnavfenleiitem',
+        method:'get',
+        params
+    });
+}
 export function getNavList(params){
     return request({
         url:'/quicknavigation/list',
