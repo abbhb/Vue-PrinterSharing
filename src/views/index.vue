@@ -44,7 +44,7 @@
               text-color="#5c5c5c"
               active-text-color="#ffd04b"
           >
-            <div v-for="(item) in menuData " :key="item.index">
+            <div v-for="(item) in menuData" :key="item.index">
               <el-submenu
                   v-if="item.childList && item.childList.length > 0"
                   :index="item.index"
@@ -104,6 +104,7 @@
 <script>
 
 import * as Api from "@/api/login";
+import {menuData} from "@/views/mencCofig";
 
 
 export default {
@@ -111,69 +112,7 @@ export default {
   data() {
     return {
       // 菜单配置
-      menuData:[
-        {
-          optionName: "我的主页",
-          iconClassName: "el-icon-eleme",
-          index: '1',
-          disabled: false, // 是否禁用
-          childList: [
-            {
-              optionName: '个人信息',
-              index: '1-1',
-              routerName: "userinfo",
-              iconClassName: "el-icon-user",
-            },
-            {
-              optionName: '修改密码',
-              index: '1-4',
-              routerName: "changepassword",
-              iconClassName: "el-icon-lock"
-            },
-            {
-              optionName: '快捷导航',
-              index: '1-3',
-              routerName: "dh",
-              iconClassName: "el-icon-user",
-            },
-          ]
-        },
-        {
-          optionName: "管理系统",
-          iconClassName: "el-icon-setting",
-          index: '2',
-          disabled: false, // 是否禁用
-          childList: [
-            {
-              optionName: '用户管理',
-              index: '2-1',
-              routerName: "UserManagement",
-              iconClassName: "el-icon-user"
-            },
-            {
-              optionName: '导航分类',
-              index: '2-2',
-              routerName: "navfenlei",
-              iconClassName: "el-icon-guide"
-            }
-          ]
-        },
-        {
-          optionName: "打印服务",
-          iconClassName: "el-icon-printer",
-          index: '3',
-          disabled: false, // 是否禁用
-          childList: [
-            {
-              optionName: '共享打印',
-              index: '2-1',
-              routerName: "printPDF",
-              iconClassName: "el-icon-document"
-            }
-          ]
-        }
-
-      ],
+      menuData:menuData,
       menuCollapse: false, //是否水平折叠收起菜单
       defaultUnfoldedMenu: '1', // 默认展开第一项
       tags: [],
@@ -213,6 +152,7 @@ export default {
     if (userInfo){
       this.userInfo = JSON.parse(userInfo)
     }
+    this.getMenuData()
 
     this.name = this.userInfo.name;
 
@@ -223,6 +163,9 @@ export default {
       this.defaultUnfoldedMenu = [
         localStorage.getItem("defaultUnfoldedMenu")
       ];
+    },
+    getMenuData() {
+      this.menuData = this.menuData.filter(item => item.roles.includes(String(this.userInfo.permission)))
     },
     // 菜单展开
     handleOpen(key, keyPath) {

@@ -293,7 +293,7 @@ export default {
             localStorage.setItem("permission",res.data.permission)
             localStorage.setItem('userId',String(res.data.id))
             localStorage.setItem('token',res.data.token)
-            router.push({name:'index'})
+            router.push({name:'dh'})
 
           } else {
             this.$message.error(res.msg)
@@ -390,7 +390,7 @@ export default {
         localStorage.setItem('userInfo',JSON.stringify(res.data))
         localStorage.setItem('userid',String(res.data.id))
         // localStorage.setItem('token',res.data.token)
-        router.push({name:'index'})
+        router.push({name:'dh'})
       }else {
         sessionStorage.setItem("userLastStoreId","")
         // this.$message.error(res.msg)

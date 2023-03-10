@@ -1,58 +1,75 @@
 
 export const menuData = [
-    // 有子菜单 字菜单不分组的
     {
         optionName: "我的主页",
-        iconClassName: "el-icon-setting",
+        iconClassName: "el-icon-eleme",
         index: '1',
-        disabled: false, // 是否禁用
+        roles:['1','2'],
         childList: [
             {
                 optionName: '个人信息',
                 index: '1-1',
-                routerName: "UserInfoForAdmin"
+                routerName: "userinfo",
+                iconClassName: "el-icon-user",
+                roles:['1','2']
             },
             {
                 optionName: '修改密码',
                 index: '1-4',
-                routerName: "ChangePasswordForAdmin"
+                routerName: "changepassword",
+                iconClassName: "el-icon-lock",
+                roles:['1','2']
+            },
+            {
+                optionName: '快捷导航',
+                index: '1-3',
+                routerName: "dh",
+                iconClassName: "el-icon-user",
+                roles:['1','2']
+            },
+        ]
+    },
+    {
+        optionName: "管理系统",
+        iconClassName: "el-icon-setting",
+        index: '2',
+        disabled: false, // 是否禁用
+        roles:['1'],
+        childList: [
+            {
+                optionName: '用户管理',
+                index: '2-1',
+                routerName: "UserManagement",
+                iconClassName: "el-icon-user",
+                roles:['1'],
+            },
+            {
+                optionName: '导航分类',
+                index: '2-2',
+                routerName: "navfenlei",
+                iconClassName: "el-icon-guide",
+                roles:['1'],
             }
         ]
     },
     {
-        optionName: "课程管理",
-        iconClassName: "el-icon-setting",
-        index: '2',
+        optionName: "打印服务",
+        iconClassName: "el-icon-printer",
+        index: '3',
         disabled: false, // 是否禁用
+        roles:['1','2'],
         childList: [
             {
-                optionName: '编辑课程',
+                optionName: '共享打印',
                 index: '2-1',
-                routerName: "MDCourseForAdmin"
-            },
-            {
-                optionName: '课程表展示',
-                index: '2-2',
-                routerName: "TimeTableForAdmin"
-            },
-            {
-                optionName: 'test2',
-                index: '2-3',
-                routerName: "test2"
-            },
-            {
-                optionName: 'test3',
-                index: '2-4',
-                routerName: "test3"
+                routerName: "printPDF",
+                iconClassName: "el-icon-document",
+                roles:['1','2']
             }
         ]
     }
 
 ]
-
-// export default {menuData}
-
-
 
 
 /* 菜单配置 描述 */
