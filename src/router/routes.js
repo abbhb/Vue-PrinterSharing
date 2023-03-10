@@ -9,6 +9,8 @@ import UserManagement from "@/views/admin/UserManagement.vue";
 import TempRegistration from "@/views/login/TempRegistration.vue";
 import dh from "@/views/dh/dh.vue";
 import navfenlei from "@/views/nav/navfenlei.vue";
+import navfenleiitem from "@/views/nav/navfenleiitem.vue";
+import docindex from "@/views/doc/docindex.vue";
 export default [
 	{
 		path: '/',
@@ -109,8 +111,7 @@ export default [
 					needrole:true,
 					roles:[1]
 				}
-			}
-			,
+			},
 			{
 				path: '/navfenlei',
 				name: 'navfenlei',
@@ -120,7 +121,24 @@ export default [
 					needrole:false
 				}
 			},
-
+			{
+				path: '/navfenleiitem',
+				name: 'navfenleiitem',
+				component: navfenleiitem,
+				meta:{
+					requireAuth: false,
+					needrole:false
+				}
+			},
+			{
+				path: '/doc',
+				name: 'docindex',
+				component: docindex,
+				meta:{
+					requireAuth: false,
+					needrole:false
+				}
+			},
 		]
 	},
 	{

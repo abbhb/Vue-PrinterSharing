@@ -49,6 +49,13 @@ export const menuData = [
                 routerName: "navfenlei",
                 iconClassName: "el-icon-guide",
                 roles:['1'],
+            },
+            {
+                optionName: '导航内容',
+                index: '2-3',
+                routerName: "navfenleiitem",
+                iconClassName: "el-icon-guide",
+                roles:['1'],
             }
         ]
     },
@@ -63,6 +70,22 @@ export const menuData = [
                 optionName: '共享打印',
                 index: '2-1',
                 routerName: "printPDF",
+                iconClassName: "el-icon-document",
+                roles:['1','2']
+            }
+        ]
+    },
+    {
+        optionName: "文档",
+        iconClassName: "el-icon-printer",
+        index: '4',
+        disabled: false, // 是否禁用
+        roles:['1','2'],
+        childList: [
+            {
+                optionName: '文档首页',
+                index: '2-1',
+                routerName: "docindex",
                 iconClassName: "el-icon-document",
                 roles:['1','2']
             }
