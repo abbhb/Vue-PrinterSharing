@@ -124,7 +124,7 @@ export default {
     openFullScreen2() {
       const loading = this.$loading({
         lock: true,
-        text: '打印中,请耐心等待!',
+        text: '打印中(可能比较久),请耐心等待!\n显示打印成功后过几秒后打印机才会开始打印',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       });
@@ -136,21 +136,36 @@ export default {
         return
       }
       //请求未完成前不允许多次请求
-      this.isPost = true
-      console.log(this.printBigValue)
-      let elLoadingComponent = this.openFullScreen2();
 
 
-      const res = await postUploadForPDF(this.formData, this.printNum, this.hengshu,this.printBigValue,this.numberOfPrintedPagesIndex);
-      elLoadingComponent.close();
-      if (String(res.code) === '1') {
-        this.$message.success(res.msg)
-        // formData.clean()
-        this.formData = undefined
-      } else {
-        this.$message.error(res.msg)
-      }
-      this.isPost = false
+
+      this.$confirm('打印不完整请检查打印机是否为error灯,缺纸加入纸后只需要按下打印机上GO,不需要重复提交打印任务!', '提示', {
+        confirmButtonText: '我已了解',
+        cancelButtonText: '我不听',
+        type: 'warning'
+      }).then(async () => {
+        console.log(this.printBigValue)
+        let elLoadingComponent = this.openFullScreen2();
+        this.isPost = true
+        const res = await postUploadForPDF(this.formData, this.printNum, this.hengshu, this.printBigValue, this.numberOfPrintedPagesIndex);
+        elLoadingComponent.close();
+        if (String(res.code) === '1') {
+          this.$message.success(res.msg+"(显示打印成功后过几秒后打印机才会开始打印)")
+
+          // formData.clean()
+          this.formData = undefined
+        } else {
+          this.$message.error(res.msg)
+        }
+        this.isPost = false
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '不听你就憋使了'
+        });
+      });
+
+
     },
     // 打开文件
     getFile () {
