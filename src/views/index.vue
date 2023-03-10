@@ -2,8 +2,8 @@
   <div class="home">
     <header class="header">
       <div class="left">
-        <span class="style-logo-NxwZ7"><img src="//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/bce33f56b383437993fd4c08175660da~tplv-uwbnlip3yd-image.image" alt="logo"></span>
-        <span>AI服务平台</span>
+        <span class="style-logo-NxwZ7"><img src="@/assets/static/media/AIBIG.png" alt="logo"></span>
+        <span>服务平台</span>
 <!--        <el-button-->
 <!--            @click="onMenuCollapse"-->
 <!--            circle-->

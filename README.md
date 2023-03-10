@@ -23,3 +23,9 @@ npm run lint
 ### 介绍：
 基于vue vue-cli4 scss Element-UI axios vue-axios 的打印机前端管理
 项目包括自适应的登录页面及 主页menu且有记忆功能 还有导航小图标
+
+### 目录结构
+```
+\views
+--\admin管理员的一些管理科
+```
