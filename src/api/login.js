@@ -44,6 +44,14 @@ export function getUserList(params){
     });
 }
 
+export function hasUserName(params){
+    return request({
+        url:'/user/hasUserName',
+        method:'get',
+        params
+    });
+}
+
 export function getNavListForAdmin(params){
     return request({
         url:'/quicknavigation/listadmin',
