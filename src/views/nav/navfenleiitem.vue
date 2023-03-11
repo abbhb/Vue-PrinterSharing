@@ -41,17 +41,17 @@
         <el-table-column
             prop="name"
             label="导航名称"
-            width="100"
+            width="150"
         ></el-table-column>
         <el-table-column
             prop="categorizeName"
             label="导航分类名称"
-            width="100"
+            width="150"
         ></el-table-column>
         <el-table-column
             prop="path"
             label="导航路径"
-            width="100"
+            width="150"
         ></el-table-column>
         <el-table-column
             label="权限"
@@ -156,26 +156,29 @@
                 <el-input
                     v-model="classData.path"
                     placeholder="请选择展示路径"
-                    maxlength="20"
                 />
               </el-form-item>
               <el-form-item
                   label="导航权限:"
                   prop="permission"
               >
-                <el-input
-                    v-model="classData.permission"
-                    placeholder="请选择导航权限"
-                    maxlength="20"
-                />
+                <el-select v-model="classData.permission" placeholder="请选择导航权限">
+                  <el-option
+                      v-for="item in permissionoptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                  </el-option>
+                </el-select>
               </el-form-item>
               <el-form-item
-                  label="导航图片:"
+                  label="导航图标:"
                   prop="image"
               >
                 <el-input
+                    disabled=""
                     v-model="classData.image"
-                    placeholder="请选择图片"
+                    placeholder="请选择图片(后续开放)"
                     maxlength="20"
                 />
               </el-form-item>
@@ -192,10 +195,14 @@
                   label="导航分类:"
                   prop="categorizeId"
               >
-                <el-input
-                    v-model="classData.categorizeId"
-                    placeholder="请选择导航分类"
-                />
+                <el-select v-model="classData.categorizeId" placeholder="请选择导航分类">
+                  <el-option
+                      v-for="item in categorizeOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </div>
 
@@ -255,10 +262,28 @@ export default {
         id:'',//id
         title: '新建导航分类',
         dialogVisible: false,
-        name: '',//导航分类名
+        name: '',//导航名
+        permission:'2',//默认权限为用户可见
+        introduction:'',//导航介绍
+        image:'',//导航图标
+        categorizeId:'',
+        path:'',
 
       },
       inputStyle  : {'flex':1},
+      permissionoptions:[{label:"管理员",value:'1'},{label:"用户(用户包含管理员)",value:'2'},],//权限选择
+      categorizeOptions:[{label:"错误",value:'0'}],
+    }
+  },
+  watch:{
+
+    async 'classData.dialogVisible'(newVal) {
+      if (newVal === true) {
+        const res = await Api.getCategorizeSelectOptionsList()
+        if (String(res.code)==='1'){
+          this.categorizeOptions = res.data
+        }
+      }
     }
   },
   computed: {
@@ -266,7 +291,16 @@ export default {
       return {
         'name': [
           {'required': true, 'message': '请填写导航分类名称', 'trigger': ['blur','change']}
-        ]
+        ],
+        'path': [
+          {'required': true, 'message': '请填写导航路径', 'trigger': ['blur','change']}
+        ],
+        'permission': [
+          {'required': true, 'message': '请选择权限', 'trigger': ['blur','change']}
+        ],
+        'categorizeId': [
+          {'required': true, 'message': '请选择导航分类', 'trigger': ['blur','change']}
+        ],
       }
     }
   },
@@ -338,13 +372,13 @@ export default {
         'confirmButtonText': '确定',
         'cancelButtonText': '取消',
       }).then(async () => {
-        // const res = await Api.deleteNavigationCategorize(params)
-        // if (String(res.code)==='1'){
-        //   this.$message.success(res.msg)
-        //   this.handleQuery()
-        // }else {
-        //   this.$message.error(res.msg || '操作失败')
-        // }
+        const res = await Api.deleteNavigationItem(params)
+        if (String(res.code)==='1'){
+          this.$message.success(res.msg)
+          this.handleQuery()
+        }else {
+          this.$message.error(res.msg || '操作失败')
+        }
       })
     },
     // 全部操作
@@ -406,18 +440,30 @@ export default {
               this.$message.error("请你输入完整")
               return false;
             }
-
+            if (!this.classData.path){
+              this.$message.error("请你输入导航路径")
+            }
+            if (!this.classData.categorizeId){
+              this.$message.error("请你选择分类")
+            }
+            if (!this.classData.permission){
+              this.$message.error("请你选择权限")
+            }
             data.name = this.classData.name
-            // const res = await Api.createNavItem(data)
-            // if (String(res.code) === '1') {
-            //   this.$message.success(res.msg)
-            //   this.cleanform()
-            //   this.handleQuery()
-            //
-            // } else {
-            //   this.$message.error(res.msg)
-            // }
-            // console.log(res)
+            data.path = this.classData.path
+            data.permission = this.classData.permission
+            data.categorizeId = this.classData.categorizeId
+            data.introduction = this.classData.introduction
+            data.image = this.classData.image
+            const res = await Api.createNavItem(data)
+            if (String(res.code) === '1') {
+              this.$message.success(res.msg)
+              this.cleanform()
+              this.handleQuery()
+            } else {
+              this.$message.error(res.msg)
+            }
+            console.log(res)
           } else {   //校验不通过
             return false;
           }
@@ -436,20 +482,33 @@ export default {
                 this.$message.error("请你输入完整")
                 return false;
               }
-
+              if (!this.classData.path){
+                this.$message.error("请你输入导航路径")
+              }
+              if (!this.classData.categorizeId){
+                this.$message.error("请你选择分类")
+              }
+              if (!this.classData.permission){
+                this.$message.error("请你选择权限")
+              }
               data.name = this.classData.name
+              data.path = this.classData.path
+              data.permission = this.classData.permission
+              data.categorizeId = this.classData.categorizeId
+              data.introduction = this.classData.introduction
+              data.image = this.classData.image
 
-              // const res = await Api.createNavItem(data)
-              // if (String(res.code)==='1'){
-              //   this.$message.success(res.msg)
-              //
-              //   this.handleQuery()
-              //   this.cancel()
-              //   this.dialogVisible = false
-              // }else {
-              //   this.$message.error(res.msg)
-              // }
-              // console.log(res)
+              const res = await Api.createNavItem(data)
+              if (String(res.code)==='1'){
+                this.$message.success(res.msg)
+
+                this.handleQuery()
+                this.cancel()
+                this.dialogVisible = false
+              }else {
+                this.$message.error(res.msg)
+              }
+              console.log(res)
             }
           });
         }else if (this.action==='edit'){

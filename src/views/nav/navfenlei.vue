@@ -319,16 +319,16 @@ export default {
             }
 
             data.name = this.classData.name
-            // const res = await Api.createUser(data)
-            // if (String(res.code) === '1') {
-            //   this.$message.success(res.msg)
-            //   this.cleanform()
-            //   this.handleQuery()
-            //
-            // } else {
-            //   this.$message.error(res.msg)
-            // }
-            // console.log(res)
+            const res = await Api.createCategorize(data)
+            if (String(res.code) === '1') {
+              this.$message.success(res.msg)
+              this.cleanform()
+              this.handleQuery()
+
+            } else {
+              this.$message.error(res.msg)
+            }
+            console.log(res)
           } else {   //校验不通过
             return false;
           }
@@ -350,17 +350,17 @@ export default {
 
               data.name = this.classData.name
 
-              // const res = await Api.createUser(data)
-              // if (String(res.code)==='1'){
-              //   this.$message.success(res.msg)
-              //
-              //   this.handleQuery()
-              //   this.cancel()
-              //   this.dialogVisible = false
-              // }else {
-              //   this.$message.error(res.msg)
-              // }
-              // console.log(res)
+              const res = await Api.createCategorize(data)
+              if (String(res.code)==='1'){
+                this.$message.success(res.msg)
+
+                this.handleQuery()
+                this.cancel()
+                this.dialogVisible = false
+              }else {
+                this.$message.error(res.msg)
+              }
+              console.log(res)
             }
           });
         }else if (this.action==='edit'){

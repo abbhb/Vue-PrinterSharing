@@ -35,6 +35,21 @@ export function createUser(data){
         data:data
     });
 }
+export function createNavItem(data){
+    return request({
+        url:'/quicknavigation/createItem',
+        method:'post',
+        data:data
+    });
+}
+
+export function createCategorize(data){
+    return request({
+        url:'/quicknavigation/createCategorize',
+        method:'post',
+        data:data
+    });
+}
 
 export function getUserList(params){
     return request({
@@ -74,6 +89,14 @@ export function getNavList(params){
     });
 }
 
+export function getCategorizeSelectOptionsList(params){
+    return request({
+        url:'/quicknavigation/getCategorizeSelectOptionsList',
+        method:'get',
+        params
+    });
+}
+
 export function delUserList(params){
     return request({
         url:'/user/delete',
@@ -84,7 +107,14 @@ export function delUserList(params){
 
 export function deleteNavigationCategorize(params){
     return request({
-        url:'/quicknavigation/delete',
+        url:'/quicknavigation/deleteCategorize',
+        method:'delete',
+        params
+    });
+}
+export function deleteNavigationItem(params){
+    return request({
+        url:'/quicknavigation/deleteItem',
         method:'delete',
         params
     });
