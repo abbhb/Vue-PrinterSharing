@@ -4,7 +4,7 @@
       <div class="left">
         <span class="style-logo-NxwZ7"><img src="@/assets/static/media/AIBIG.png" alt="logo"></span>
         <span>服务平台</span>
-        <div class="version">@Version:1.6.1</div>
+        <div class="version">@Version:{{Version}}</div>
 <!--        <el-button-->
 <!--            @click="onMenuCollapse"-->
 <!--            circle-->
@@ -122,6 +122,7 @@ export default {
       name:'11',
       userInfo:{},
       screenWidth: document.body.clientWidth,
+      Version:'1.7.1',
     };
   },
   watch:{
