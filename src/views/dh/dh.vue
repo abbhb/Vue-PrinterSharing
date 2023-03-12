@@ -227,7 +227,7 @@ export default {
   position: relative;
 }
 .acard:before {
-  transition: all 0.5s cubic-bezier(0.7, -0.5, 0.2, 2);
+  transition: all 0.6s cubic-bezier(0.7, -0.5, 0.2, 2);
   content: '';
   width: 1%;
   height: 100%;
