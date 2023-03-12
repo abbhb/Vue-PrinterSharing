@@ -65,7 +65,7 @@
 <script>
 import * as Api from "@/api/login";
 import MarkDownDialog from "@/components/MarkDownDialog.vue";
-
+// import { marked } from "marked";
 export default {
   name: "dh.vue",
   components: {MarkDownDialog},
@@ -106,6 +106,7 @@ export default {
         this.markdownDialog.dialogTitle = row.name;
         this.markdownDialog.dialogContent = row.path;
         this.markdownDialog.dialogVisible = true;
+
 
       }
     },
@@ -226,7 +227,7 @@ export default {
   position: relative;
 }
 .acard:before {
-  transition: all 0.8s cubic-bezier(0.7, -0.5, 0.2, 2);
+  transition: all 0.5s cubic-bezier(0.7, -0.5, 0.2, 2);
   content: '';
   width: 1%;
   height: 100%;

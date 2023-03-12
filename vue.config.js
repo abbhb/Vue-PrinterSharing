@@ -12,6 +12,18 @@ module.exports = {
         },
     },
     //这个在打包时必须打开
-    publicPath:'./'
+    publicPath:'./',
+    chainWebpack: config => {
+        config.module
+            .rule('')
+            .test(/\.md$/)
+            .use('html-loader')
+            .loader('html-loader')
+            .end()
+            .use('markdown-loader')
+            .loader('markdown-loader')
+            .end()
+    }
+
 
 }

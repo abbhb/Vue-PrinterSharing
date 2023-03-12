@@ -17,7 +17,9 @@
         </div>
         <div class="bodybody">
           <!-- 内容区我们使用默认插槽 -->
-          {{content}}
+<!--          <div v-highlight v-html="compiledMarkdown" class="styleClass"></div>-->
+          <v-md-preview :text="content"></v-md-preview>
+
           <slot></slot>
         </div>
         <div class="footfoot">
@@ -30,6 +32,8 @@
 </template>
 
 <script>
+
+
 export default {
   props: {
     // 控制是否展示或隐藏对话框
@@ -42,7 +46,7 @@ export default {
       type: String,
       default: "",
     },
-    content:{
+    content: {
       type: String,
       default: "",
     },
@@ -64,7 +68,10 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+    };
+  },
+  computed: {
   },
   methods: {
     // 关闭弹出框
