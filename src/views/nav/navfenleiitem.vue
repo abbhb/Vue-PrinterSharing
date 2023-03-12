@@ -73,15 +73,26 @@
           </template>
         </el-table-column>
         <el-table-column
-            prop="introduction"
             label="介绍"
-            width="200"
-        ></el-table-column>
+            width="160"
+        >
+          <template slot-scope="scope">
+            <span style="margin-right: 10px;">{{scope.row.introduction|ellipsis}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
             prop="categorizeName"
             label="所属分类"
             width="100"
         ></el-table-column>
+        <el-table-column
+            label="类型"
+            width="100"
+        >
+          <template slot-scope="scope">
+            <span style="margin-right: 10px;">{{String(scope.row.type)==='0'?'URL':(String(scope.row.type)==='1'? 'MarkDown':'')}}</span>
+          </template>
+        </el-table-column>
 
         <el-table-column
             label="操作"
@@ -155,7 +166,9 @@
               >
                 <el-input
                     v-model="classData.path"
-                    placeholder="请选择展示路径"
+                    type="textarea"
+                    :rows="4"
+                    placeholder="请选择展示路径/markdown"
                 />
               </el-form-item>
               <el-form-item
@@ -189,6 +202,8 @@
                 <el-input
                     v-model="classData.introduction"
                     placeholder="请选择介绍"
+                    type="textarea"
+                    :rows="4"
                 />
               </el-form-item>
               <el-form-item
@@ -198,6 +213,19 @@
                 <el-select v-model="classData.categorizeId" placeholder="请选择导航分类">
                   <el-option
                       v-for="item in categorizeOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                  label="导航类型:"
+                  prop="type"
+              >
+                <el-select v-model="classData.type" placeholder="请选择导航类型">
+                  <el-option
+                      v-for="item in typeOptions"
                       :key="item.value"
                       :label="item.label"
                       :value="item.value">
@@ -268,11 +296,12 @@ export default {
         image:'',//导航图标
         categorizeId:'',
         path:'',
-
+        type:'0',//默认为url
       },
       inputStyle  : {'flex':1},
       permissionoptions:[{label:"管理员",value:'1'},{label:"用户(用户包含管理员)",value:'2'},],//权限选择
       categorizeOptions:[{label:"错误",value:'0'}],
+      typeOptions:[{label:"URL",value:'0'},{label:"MarkDown",value:'1'}],
     }
   },
   watch:{
@@ -286,6 +315,15 @@ export default {
       }
     }
   },
+  filters: {
+    ellipsis(value) {
+      if (!value) return "";
+      if (value.length >30) {
+        return value.slice(0, 30) + "...";
+      }
+      return value;
+    }
+  },
   computed: {
     rules () {
       return {
@@ -294,6 +332,9 @@ export default {
         ],
         'path': [
           {'required': true, 'message': '请填写导航路径', 'trigger': ['blur','change']}
+        ],
+        'type': [
+          {'required': true, 'message': '请选择类型', 'trigger': ['blur','change']}
         ],
         'permission': [
           {'required': true, 'message': '请选择权限', 'trigger': ['blur','change']}
@@ -354,6 +395,17 @@ export default {
         this.classData.title = '编辑导航分类'
         this.classData.id = String(st.id)
         this.classData.name = String(st.name)
+        this.classData.path = String(st.path)
+        if (String(st.permission).includes('2')){
+          this.classData.permission = '2'
+        } else if (String(st.permission).includes('1')){
+          this.classData.permission = '1'
+        }
+
+        this.classData.categorizeId = String(st.categorizeId)
+        this.classData.introduction = String(st.introduction)
+        this.classData.image = String(st.image)
+        this.classData.type = String(st.type)
 
         this.classData.dialogVisible = true
 
@@ -448,6 +500,8 @@ export default {
             }
             if (!this.classData.permission){
               this.$message.error("请你选择权限")
+            }if (!this.classData.type){
+              this.$message.error("请你选择类型")
             }
             data.name = this.classData.name
             data.path = this.classData.path
@@ -455,6 +509,7 @@ export default {
             data.categorizeId = this.classData.categorizeId
             data.introduction = this.classData.introduction
             data.image = this.classData.image
+            data.type = this.classData.type
             const res = await Api.createNavItem(data)
             if (String(res.code) === '1') {
               this.$message.success(res.msg)
@@ -491,13 +546,16 @@ export default {
               if (!this.classData.permission){
                 this.$message.error("请你选择权限")
               }
+              if (!this.classData.type){
+                this.$message.error("请你选择类型")
+              }
               data.name = this.classData.name
               data.path = this.classData.path
               data.permission = this.classData.permission
               data.categorizeId = this.classData.categorizeId
               data.introduction = this.classData.introduction
               data.image = this.classData.image
-
+              data.type = this.classData.type
               const res = await Api.createNavItem(data)
               if (String(res.code)==='1'){
                 this.$message.success(res.msg)
@@ -517,17 +575,35 @@ export default {
             this.$message.error("请你输入完整")
             return false;
           }
+          if (!this.classData.path){
+            this.$message.error("请你输入导航路径")
+          }
+          if (!this.classData.categorizeId){
+            this.$message.error("请你选择分类")
+          }
+          if (!this.classData.permission){
+            this.$message.error("请你选择权限")
+          }
+          if (!this.classData.type){
+            this.$message.error("请你选择类型")
+          }
           data.id = this.classData.id
           data.name = this.classData.name
-          // const res = await Api.updataforquicknavigationcategorize(data)
-          // if (String(res.code)==='1'){
-          //   this.$message.success(res.msg)
-          //   this.cancel()
-          //   this.handleQuery()
-          //   this.dialogVisible = false
-          // }else {
-          //   this.$message.error(res.msg)
-          // }
+          data.path = this.classData.path
+          data.permission = this.classData.permission
+          data.categorizeId = this.classData.categorizeId
+          data.introduction = this.classData.introduction
+          data.image = this.classData.image
+          data.type = this.classData.type
+          const res = await Api.updataforquicknavigationitem(data)
+          if (String(res.code)==='1'){
+            this.$message.success(res.msg)
+            this.cancel()
+            this.handleQuery()
+            this.dialogVisible = false
+          }else {
+            this.$message.error(res.msg)
+          }
 
         }
       }

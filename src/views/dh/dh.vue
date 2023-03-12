@@ -18,7 +18,7 @@
              v-show="item.permission.includes(real_cards.permission)"
              :key="item.id"
         >
-          <a :href="item.path" target="_blank">
+          <div class="acard" @click="pathGoTo(item)">
             <div class="box-card" shadow="hover">
               <div class="ico_ cont_">
                 <img class="img_" :src="item.image">
@@ -34,34 +34,51 @@
                 </div>
 
               </div>
-              <div :href="item.path" class="link_">
+              <div @click="pathGoTo(item)" class="link_">
                 <el-tooltip effect="dark" content="直达" placement="right">
                   <i class="el-icon-s-promotion"></i>
                 </el-tooltip>
               </div>
             </div>
 
-          </a>
+          </div>
 
         </div>
       </div>
 
+      <MarkDownDialog
+          :isShowDialog.sync="markdownDialog.dialogVisible"
+          :title="markdownDialog.dialogTitle"
+          :content="markdownDialog.dialogContent"
+          :showCloseIcon="true"
+          @beforeClose="beforeClose"
+          :mask="true"
+          :clickMaskClose="true">
+
+      </MarkDownDialog>
     </div>
-    <a>
-    </a>
+
+
   </div>
 </template>
 
 <script>
 import * as Api from "@/api/login";
+import MarkDownDialog from "@/components/MarkDownDialog.vue";
 
 export default {
   name: "dh.vue",
+  components: {MarkDownDialog},
   data() {
     return {
       // todos: JSON.parse(localStorage.getItem('todos')) || []
       cards: [],
-      real_cards: JSON.parse(localStorage.getItem("userInfo"))
+      real_cards: JSON.parse(localStorage.getItem("userInfo")),
+      markdownDialog:{
+        dialogTitle:'markdown',
+        dialogVisible:false,
+        dialogContent:'123123',
+      },
     };
   },
   created() {
@@ -80,7 +97,31 @@ export default {
       }else {
         this.$message.error(res.msg)
       }
-    }
+    },
+    pathGoTo(row){
+      if (String(row.type)==='0'){
+        window.open(row.path, '_blank');
+      }else if (String(row.type)==='1'){
+        console.log("md")
+        this.markdownDialog.dialogTitle = row.name;
+        this.markdownDialog.dialogContent = row.path;
+        this.markdownDialog.dialogVisible = true;
+
+      }
+    },
+    beforeClose(flag) {
+      //   this.$confirm("是否关闭", "提示", {
+      //     confirmButtonText: "确认关闭",
+      //     cancelButtonText: "取消",
+      //     type: "warning",
+      //   })
+      //     .then(() => {
+      this.markdownDialog.dialogVisible = flag;
+      // })
+      // .catch(() => {
+      //   // 不关闭
+      // });
+    },
   },
   filters: {
     ellipsis(value) {
@@ -135,7 +176,9 @@ export default {
   display: inline-block;
   margin-right: 3rem;
   margin-bottom: 2rem;
+  cursor: pointer;
 }
+
 
 .ico_ {
   width: 2.2rem;
@@ -179,4 +222,25 @@ export default {
   margin-left: auto;
   font-size: 20px;
 }
+.acard {
+  position: relative;
+}
+.acard:before {
+  transition: all 0.8s cubic-bezier(0.7, -0.5, 0.2, 2);
+  content: '';
+  width: 1%;
+  height: 100%;
+  background: #a859ce;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.acard:hover:before {
+  background: #d4b1e5;
+  width: 83%;
+  left: 17%;
+
+}
+
 </style>

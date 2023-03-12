@@ -159,6 +159,14 @@ export function updataforquicknavigationcategorize(data){
     });
 }
 
+export function updataforquicknavigationitem(data){
+    return request({
+        url:'/quicknavigation/updataforquicknavigationitem',
+        method:'put',
+        data
+    });
+}
+
 
 export function updatauserstatus(data){
     return request({

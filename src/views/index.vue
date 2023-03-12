@@ -332,7 +332,6 @@ body{
         height: 96%;
         overflow: auto;
         .col2_header {
-          position: relative;
           width: 85%;
           height: 3rem;
           overflow: hidden;
@@ -342,7 +341,6 @@ body{
           display: flex;
           align-items: center;
           box-sizing: border-box;
-          z-index: 2000;
           position: fixed;
           .item {
             margin-right: 8px;
