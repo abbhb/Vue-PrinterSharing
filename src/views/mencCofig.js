@@ -72,7 +72,21 @@ export const menuData = [
                 routerName: "printPDF",
                 iconClassName: "el-icon-document",
                 roles:['1','2']
-            }
+            },
+            {
+                optionName: '我的历史记录',
+                index: '2-2',
+                routerName: "myHistoryPrints",
+                iconClassName: "el-icon-document",
+                roles:['1','2']
+            },
+            {
+                optionName: '全部历史记录',
+                index: '2-3',
+                routerName: "allUserHistoryPrints",
+                iconClassName: "el-icon-document",
+                roles:['1']
+            },
         ]
     },
     {

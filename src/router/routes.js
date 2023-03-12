@@ -11,6 +11,8 @@ import dh from "@/views/dh/dh.vue";
 import navfenlei from "@/views/nav/navfenlei.vue";
 import navfenleiitem from "@/views/nav/navfenleiitem.vue";
 import docindex from "@/views/doc/docindex.vue";
+import myHistoryPrints from "@/views/print/MyHistoryPrints.vue";
+import allUserHistoryPrints from "@/views/admin/AllUserHistoryPrints.vue";
 export default [
 	{
 		path: '/',
@@ -91,6 +93,25 @@ export default [
 				meta:{
 					requireAuth: true,
 					needrole:false
+				}
+			},
+			{
+				path: '/myHistoryPrints',
+				name: 'myHistoryPrints',
+				component: myHistoryPrints,
+				meta:{
+					requireAuth: true,
+					needrole:false
+				}
+			},
+			{
+				path: '/allUserHistoryPrints',
+				name: 'allUserHistoryPrints',
+				component: allUserHistoryPrints,
+				meta:{
+					requireAuth: true,
+					needrole:true,
+					roles:[1]
 				}
 			},
 			{
