@@ -167,6 +167,14 @@ export function updataforquicknavigationitem(data){
     });
 }
 
+export function uploadImage(data){
+    return request({
+        url:'/common/uploadimage',
+        method:'post',
+        config:{headers: {'Content-Type': 'multipart/form-data'}},
+        data
+    });
+}
 
 export function updatauserstatus(data){
     return request({

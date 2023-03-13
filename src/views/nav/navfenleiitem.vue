@@ -187,14 +187,20 @@
               <el-form-item
                   label="导航图标:"
                   prop="image"
+
               >
-                <el-input
-                    disabled=""
-                    v-model="classData.image"
-                    placeholder="请选择图片(后续开放)"
-                    maxlength="20"
-                />
+                <el-upload
+                    class="avatar-uploader"
+                    action="http://localhost:8081/api/common/uploadimage"
+                    :headers="headerObj"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                  <img v-if="classData.image" :src="classData.image" class="avatar">
+                  <i v-else class="el-icon-upload"></i>
+                </el-upload>
               </el-form-item>
+
               <el-form-item
                   label="导航介绍:"
                   prop="introduction"
@@ -242,6 +248,8 @@
                 <v-md-editor v-model="classData.content"
                              height="400px"
                              right-toolbar="customToolbar1 customToolbar2|preview toc sync-scroll fullscreen"
+                             :disabled-menus="[]"
+                             @upload-image="handleUploadImage"
                              :toolbar="toolbar"
                 ></v-md-editor>
               </div>
@@ -306,7 +314,7 @@ export default {
     return {
       headerObj: {
         Authorization: localStorage.getItem('token'),
-        navId:localStorage.getItem('navId')
+        userId:localStorage.getItem('userId')
       },
       input: '',
       counts: 0,
@@ -385,7 +393,35 @@ export default {
   mounted() {
   },
   methods: {
+    async handleUploadImage(event, insertImage, files) {
+      // 拿到 files 之后上传到文件服务器，然后向编辑框中插入对应的内容
+      console.log(files);
+      let data = new FormData()       // 创建form对象
+      data.append('file', files[0])       // 通过append向form对象添加数据
+      const res = await Api.uploadImage(data)
+      if (String(res.code)==='1'){
+        insertImage({
+          url: res.data,
+          desc: '',
+        });
+      }else {
+        this.$message.error(res.msg)
+      }
 
+    },
+    handleAvatarSuccess(res) {
+      console.log(res.data)
+      this.classData.image = res.data;
+    },
+    beforeAvatarUpload(file) {
+      // const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isLt2M;
+    },
     async init () {
       this.navtableloading = true
       let params = {}
@@ -673,6 +709,28 @@ export default {
 </script>
 
 <style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader {
+  font-size: 148px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 .sdss {
   background-color: #fff;
   display: flex;
@@ -699,46 +757,7 @@ export default {
   top: 50px;
   z-index: 99;
 }
-.selectInput .flavorSelect .items {
-  cursor: pointer;
-  display: inline-block;
-  width: 100%;
-  line-height: 15px;
-  /*border-bottom: solid 1px #a85151;*/
-  /*color: #383737;*/
-  /*padding: 1px 1px 1px 1px;*/
-}
-.selectInput .flavorSelect .none {
-  font-size: 14px;
-}
-#nav-management .uploadImg .el-form-item__label::before{
-  content: '*';
-  color: #F56C6C;
-  margin-right: 4px;
-}
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
+
 .dashboard-container {
   padding: 20px;
 }
@@ -767,144 +786,14 @@ export default {
   text-align: center;
   margin-top: 30px;
 }
-.tableLab .span-btn {
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  padding: 0 20px;
-  color: #818693;
-  border-right: solid 1px #d8dde3;
-}
+
 .container .tableLab .el-button {
   margin-left: 10px;
 }
 .el-table-column--selection .cell {
   padding-left: 10px;
 }
-/* 添加 */
-.addBrand-container .avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.addBrand-container .avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.addBrand-container .avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 200px;
-  height: 160px;
-  line-height: 160px;
-  text-align: center;
-}
-.addBrand-container .avatar {
-  width: 160px;
-  height: 160px;
-  display: block;
-}
-.addBrand-container .el-form--inline .el-form-item__content {
-  width: 293px;
-}
-.addBrand-container .el-input {
-  width: 293px;
-}
-.addBrand-container {
-  margin: 30px;
-}
-.addBrand-container .container {
-  position: relative;
-  z-index: 1;
-  background: #fff;
-  padding: 30px;
-  border-radius: 4px;
-  min-height: 500px;
-}
-.addBrand-container .container .subBox {
-  padding-top: 30px;
-  text-align: center;
-  border-top: solid 1px #f3f4f7;
-}
-.flavorBox {
-  width: 777px;
-}
-.flavorBox .addBut {
-  background: #ffc200;
-  display: inline-block;
-  padding: 0px 20px;
-  border-radius: 3px;
-  line-height: 40px;
-  cursor: pointer;
-  border-radius: 4px;
-  color: #333333;
-  font-weight: 500;
-}
-.flavorBox .flavor {
-  border: solid 1px #dfe2e8;
-  border-radius: 3px;
-  padding: 15px;
-  background: #fafafb;
-}
-.flavorBox .flavor .title {
-  color: #606168;
-}
-.flavorBox .flavor .cont .items {
-  display: flex;
-  margin: 10px 0;
-}
-.flavorBox .flavor .cont .items .itTit {
-  width: 150px;
-  margin-right: 15px;
-}
-.flavorBox .flavor .cont .items .itTit input {
-  width: 100%;
-  line-height: 40px;
-  border-radius: 3px;
-  padding: 0 10px;
-}
-.flavorBox .flavor .cont .items .labItems {
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  border-radius: 3px;
-  min-height: 39px;
-  border: solid 1px #d8dde3;
-  background: #fff;
-  padding: 0 5px;
-}
-.flavorBox .flavor .cont .items .labItems span {
-  display: inline-block;
-  color: #f19c59;
-  margin: 5px;
-  line-height: 26px;
-  height: 26px;
-  padding: 0 10px;
-  background: #fdf4eb;
-  border-radius: 3px;
-  border: solid 1px #fae2cd;
-}
-.flavorBox .flavor .cont .items .labItems span i {
-  cursor: pointer;
-  font-style: normal;
-}
-.flavorBox .flavor .cont .items .labItems .inputBox {
-  display: inline-block;
-  width: 100%;
-  height: 36px;
-  line-height: 36px;
-  overflow: hidden;
-}
-.flavorBox .flavor .cont .items .delFlavor {
-  display: inline-block;
-  padding: 0 10px;
-  color: #f19c59;
-  cursor: pointer;
-}
-.addBrand-container .address .el-form-item__content {
-  width: 777px !important;
-}
+
 .el-button--text {
   font-weight: 400 !important;
   font-size: 13px !important;

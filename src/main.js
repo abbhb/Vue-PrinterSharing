@@ -8,7 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/reset.scss'
 import './assets/scss/global.scss'
 let globl = {
-  isNeedZoom:false
+  isNeedZoom:false,
+  Version:'1.7.5Beta',
 }
 Vue.config.productionTip = false;
 Vue.prototype.$globl=globl

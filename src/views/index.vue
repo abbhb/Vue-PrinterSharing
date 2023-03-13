@@ -122,7 +122,7 @@ export default {
       name:'11',
       userInfo:{},
       screenWidth: document.body.clientWidth,
-      Version:'1.7.2',
+      Version:this.$globl.Version,
     };
   },
   watch:{
