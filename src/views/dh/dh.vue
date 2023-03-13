@@ -18,7 +18,7 @@
              v-show="item.permission.includes(real_cards.permission)"
              :key="item.id"
         >
-          <div class="acard" @click="pathGoTo(item)">
+          <div class="acard" @click="pathGoTo(item,1)">
             <div class="box-card" shadow="hover">
               <div class="ico_ cont_">
                 <img class="img_" :src="item.image">
@@ -34,7 +34,7 @@
                 </div>
 
               </div>
-              <div @click="pathGoTo(item)" class="link_">
+              <div @click="pathGoTo(item,2)" class="link_">
                 <el-tooltip effect="dark" content="直达" placement="right">
                   <i class="el-icon-s-promotion"></i>
                 </el-tooltip>
@@ -98,17 +98,38 @@ export default {
         this.$message.error(res.msg)
       }
     },
-    pathGoTo(row){
-      if (String(row.type)==='0'){
-        window.open(row.path, '_blank');
-      }else if (String(row.type)==='1'){
-        console.log("md")
-        this.markdownDialog.dialogTitle = row.name;
-        this.markdownDialog.dialogContent = row.path;
-        this.markdownDialog.dialogVisible = true;
+    pathGoTo(row,lo){
+      if (lo===1){
+        if (String(row.type)==='0'){
+          if (String(row.content)){
+            console.log("md")
+            this.markdownDialog.dialogTitle = row.name;
+            this.markdownDialog.dialogContent = row.content;
+            this.markdownDialog.dialogVisible = true;
+          }else {
+            window.open(row.path, '_blank');
+          }
+        }else if (String(row.type)==='1'){
+          console.log("md")
+          this.markdownDialog.dialogTitle = row.name;
+          this.markdownDialog.dialogContent = row.content;
+          this.markdownDialog.dialogVisible = true;
 
 
+        }
+      }else if (lo===2){
+        if (String(row.type)==='0'){
+          window.open(row.path, '_blank');
+        }else if (String(row.type)==='1'){
+          console.log("md")
+          this.markdownDialog.dialogTitle = row.name;
+          this.markdownDialog.dialogContent = row.content;
+          this.markdownDialog.dialogVisible = true;
+
+
+        }
       }
+
     },
     beforeClose(flag) {
       //   this.$confirm("是否关闭", "提示", {

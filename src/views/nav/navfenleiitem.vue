@@ -167,8 +167,8 @@
                 <el-input
                     v-model="classData.path"
                     type="textarea"
-                    :rows="4"
-                    placeholder="请选择展示路径/markdown"
+                    :rows="2"
+                    placeholder="请选择跳转链接"
                 />
               </el-form-item>
               <el-form-item
@@ -232,6 +232,20 @@
                   </el-option>
                 </el-select>
               </el-form-item>
+              <el-tag
+                  type="success"
+                  effect="dark">
+                提示:下方为markdown,在选择URL类型时可加入一些账号信息,Markdown类型为必填.上方链接规则与此相反!
+              </el-tag>
+              <div>
+                <label>导航展示MarkDown</label>
+                <v-md-editor v-model="classData.content"
+                             height="400px"
+                             right-toolbar="customToolbar1 customToolbar2|preview toc sync-scroll fullscreen"
+                             :toolbar="toolbar"
+                ></v-md-editor>
+              </div>
+
             </div>
 
           </el-form>
@@ -269,6 +283,26 @@ import * as Api from "@/api/login";
 export default {
   name: "navfenleiitem",
   data() {
+    this.toolbar = {
+      customToolbar1: {
+        title: '仅给管理员展示',
+        icon: 'v-md-icon-tip',
+        action(editor) {
+          editor.insert(function (selected) {
+            const prefix = '⌘1⌾';
+            const suffix = '⌾1⌘';
+            const placeholder = '请输入文本';
+            const content = selected || placeholder;
+
+            return {
+              text: `${prefix}${content}${suffix}`,
+              selected: content,
+            };
+          });
+        },
+      },
+
+    };
     return {
       headerObj: {
         Authorization: localStorage.getItem('token'),
@@ -297,6 +331,7 @@ export default {
         categorizeId:'',
         path:'',
         type:'0',//默认为url
+        content:'',//md
       },
       inputStyle  : {'flex':1},
       permissionoptions:[{label:"管理员",value:'1'},{label:"用户(用户包含管理员)",value:'2'},],//权限选择
@@ -329,9 +364,6 @@ export default {
       return {
         'name': [
           {'required': true, 'message': '请填写导航分类名称', 'trigger': ['blur','change']}
-        ],
-        'path': [
-          {'required': true, 'message': '请填写导航路径', 'trigger': ['blur','change']}
         ],
         'type': [
           {'required': true, 'message': '请选择类型', 'trigger': ['blur','change']}
@@ -396,6 +428,7 @@ export default {
         this.classData.id = String(st.id)
         this.classData.name = String(st.name)
         this.classData.path = String(st.path)
+        this.classData.content = String(st.content)
         if (String(st.permission).includes('2')){
           this.classData.permission = '2'
         } else if (String(st.permission).includes('1')){
@@ -457,6 +490,7 @@ export default {
     cleanform(){
       if (this.classData.name) {
         this.classData.name = ''
+        this.classData.path = ''
       }
     },
     outSelect(st,index){
@@ -492,9 +526,7 @@ export default {
               this.$message.error("请你输入完整")
               return false;
             }
-            if (!this.classData.path){
-              this.$message.error("请你输入导航路径")
-            }
+
             if (!this.classData.categorizeId){
               this.$message.error("请你选择分类")
             }
@@ -503,8 +535,19 @@ export default {
             }if (!this.classData.type){
               this.$message.error("请你选择类型")
             }
+            if (String(this.classData.type)==='0'){
+              if (!this.classData.path){
+                this.$message.error("请你输入导航路径")
+              }
+            }
+            if (String(this.classData.type)==='1'){
+              if (!this.classData.content){
+                this.$message.error("请你输入Markdown")
+              }
+            }
             data.name = this.classData.name
             data.path = this.classData.path
+            data.content = this.classData.content
             data.permission = this.classData.permission
             data.categorizeId = this.classData.categorizeId
             data.introduction = this.classData.introduction
@@ -537,9 +580,6 @@ export default {
                 this.$message.error("请你输入完整")
                 return false;
               }
-              if (!this.classData.path){
-                this.$message.error("请你输入导航路径")
-              }
               if (!this.classData.categorizeId){
                 this.$message.error("请你选择分类")
               }
@@ -549,6 +589,16 @@ export default {
               if (!this.classData.type){
                 this.$message.error("请你选择类型")
               }
+              if (String(this.classData.type)==='0'){
+                if (!this.classData.path){
+                  this.$message.error("请你输入导航路径")
+                }
+              }
+              if (String(this.classData.type)==='1'){
+                if (!this.classData.content){
+                  this.$message.error("请你输入Markdown")
+                }
+              }
               data.name = this.classData.name
               data.path = this.classData.path
               data.permission = this.classData.permission
@@ -556,6 +606,7 @@ export default {
               data.introduction = this.classData.introduction
               data.image = this.classData.image
               data.type = this.classData.type
+              data.content = this.classData.content
               const res = await Api.createNavItem(data)
               if (String(res.code)==='1'){
                 this.$message.success(res.msg)
@@ -575,9 +626,7 @@ export default {
             this.$message.error("请你输入完整")
             return false;
           }
-          if (!this.classData.path){
-            this.$message.error("请你输入导航路径")
-          }
+
           if (!this.classData.categorizeId){
             this.$message.error("请你选择分类")
           }
@@ -587,6 +636,16 @@ export default {
           if (!this.classData.type){
             this.$message.error("请你选择类型")
           }
+          if (String(this.classData.type)==='0'){
+            if (!this.classData.path){
+              this.$message.error("请你输入导航路径")
+            }
+          }
+          if (String(this.classData.type)==='1'){
+            if (!this.classData.content){
+              this.$message.error("请你输入Markdown")
+            }
+          }
           data.id = this.classData.id
           data.name = this.classData.name
           data.path = this.classData.path
@@ -595,6 +654,7 @@ export default {
           data.introduction = this.classData.introduction
           data.image = this.classData.image
           data.type = this.classData.type
+          data.content = this.classData.content
           const res = await Api.updataforquicknavigationitem(data)
           if (String(res.code)==='1'){
             this.$message.success(res.msg)
