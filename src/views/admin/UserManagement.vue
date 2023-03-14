@@ -189,13 +189,13 @@
               />
             </el-form-item>
             <el-form-item
-                label="身份证号:"
-                prop="idNumber"
+                label="学号:"
+                prop="studentId"
             >
               <el-input
-                  v-model="classData.idNumber"
-                  placeholder="请填写用户身份证号"
-                  maxlength="18"
+                  v-model="classData.studentId"
+                  placeholder="请填写用户学号"
+                  maxlength="12"
               />
             </el-form-item>
             <el-form-item label="用户性别：" prop="sex">
@@ -317,7 +317,7 @@ export default {
         id:'',//id
         title: '新建用户',
         dialogVisible: false,
-        idNumber: '',
+        studentId: '',
         sex:'男',
         name: '',//用户名
         username:'',
@@ -387,16 +387,16 @@ export default {
             'trigger': ['blur']
           },
         ],
-        'idNumber': [
+        'studentId': [
           {
             'required': true,
             // 'message': '请填写用户密码',
             validator: (rules, value, callback) => {
               if (!value) {
-                this.$message.error("请填写用户身份证号")
-                callback(new Error('请填写用户身份证号'))
+                this.$message.error("请填写用户学号")
+                callback(new Error('请填写用户学号'))
               }else {
-                if (!/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)/.test(value)){
+                if (!/^[2-2][0-0][2-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/.test(value)){
                   this.$message.error("格式错误")
                   callback(new Error('格式错误'))
                 }
@@ -472,7 +472,7 @@ export default {
         this.classData.username = String(st.username)
         this.classData.status = String(st.status)
         this.classData.avatar = String(st.avatar)
-        this.classData.idNumber = String(st.idNumber)
+        this.classData.studentId = String(st.studentId)
         this.classData.phone = String(st.phone)
         this.classData.image = String(st.image)
         this.classData.sex = String(st.sex)
@@ -580,8 +580,8 @@ export default {
       if (this.classData.username) {
         this.classData.username = ''
       }
-      if (this.classData.idNumber) {
-        this.classData.idNumber = ''
+      if (this.classData.studentId) {
+        this.classData.studentId = ''
       }
     },
     outSelect(st,index){
@@ -665,8 +665,8 @@ export default {
               this.$message.error("请你输入完整")
               return false;
             }
-            if (!this.classData.idNumber) {
-              this.$message.error("请你输入身份证号")
+            if (!this.classData.studentId) {
+              this.$message.error("请你输入学号")
               return false;
             }
             data.name = this.classData.name
@@ -677,7 +677,7 @@ export default {
             data.phone = this.classData.phone
             data.status = this.classData.status
             data.username = this.classData.username
-            data.idNumber = this.classData.idNumber
+            data.studentId = this.classData.studentId
             const res = await Api.createUser(data)
             if (String(res.code) === '1') {
               this.$message.success(res.msg)
@@ -730,8 +730,8 @@ export default {
                 this.$message.error("请你输入完整")
                 return false;
               }
-              if (!this.classData.idNumber) {
-                this.$message.error("请你输入身份证号")
+              if (!this.classData.studentId) {
+                this.$message.error("请你输入学号")
                 return false;
               }
               data.name = this.classData.name
@@ -742,7 +742,7 @@ export default {
               data.phone = this.classData.phone
               data.status = this.classData.status
               data.username = this.classData.username
-              data.idNumber = this.classData.idNumber
+              data.studentId = this.classData.studentId
               const res = await Api.createUser(data)
               if (String(res.code)==='1'){
                 this.$message.success(res.msg)
@@ -782,8 +782,8 @@ export default {
             this.$message.error("请你输入完整")
             return false;
           }
-          if (!this.classData.idNumber) {
-            this.$message.error("请你输入身份证号")
+          if (!this.classData.studentId) {
+            this.$message.error("请你输入学号")
             return false;
           }
           data.id = this.classData.id
@@ -794,7 +794,7 @@ export default {
           data.phone = this.classData.phone
           data.status = this.classData.status
           data.username = this.classData.username
-          data.idNumber = this.classData.idNumber
+          data.studentId = this.classData.studentId
           const res = await Api.updataforuser(data)
           if (String(res.code)==='1'){
             this.$message.success(res.msg)
