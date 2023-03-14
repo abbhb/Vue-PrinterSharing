@@ -58,7 +58,7 @@
             width="130"
         >
           <template slot-scope="scope">
-            <span style="margin-right: 10px;">{{scope.row.permission.includes(1)?'管理员':''}}+{{scope.row.permission.includes(2)?'导航':''}}</span>
+            <span style="margin-right: 10px;">{{scope.row.permission.includes(1)?'管理员':''}}+{{scope.row.permission.includes(2)?'用户':''}}</span>
           </template>
         </el-table-column>
         <el-table-column

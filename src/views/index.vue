@@ -342,6 +342,8 @@ body{
           align-items: center;
           box-sizing: border-box;
           position: fixed;
+          z-index: 2000;
+
           .item {
             margin-right: 8px;
 
@@ -351,6 +353,16 @@ body{
         .warp {
           margin: 15px;
           padding-top: 2.3rem;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+          /*布局方向是垂直的*/
+          flex-direction: column;
+          height: 100%;
         }
       }
     }
