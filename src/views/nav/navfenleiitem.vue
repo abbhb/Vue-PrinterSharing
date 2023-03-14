@@ -2,21 +2,32 @@
   <div class="sdss" id="nav-management">
     <div class="container">
       <div class="tableBar">
-        <el-input
-            v-model="input"
-            placeholder="请输入导航分类昵称"
-            style="width: 250px"
-            clearable
-            @clear="cleanQuery"
-            @keyup.enter.native="handleQuery"
-        >
-          <i
-              slot="prefix"
-              class="el-input__icon el-icon-search"
-              style="cursor: pointer"
-              @click="init"
-          ></i>
-        </el-input>
+        <div class="shaixuan">
+          <el-input
+              v-model="input"
+              placeholder="请输入导航分类昵称"
+              style="width: 250px;margin-right: 1rem"
+              clearable
+              @clear="cleanQuery"
+              @keyup.enter.native="handleQuery"
+          >
+            <i
+                slot="prefix"
+                class="el-input__icon el-icon-search"
+                style="cursor: pointer"
+                @click="init"
+            ></i>
+          </el-input>
+          <el-select v-model="selectCate" multiple placeholder="请选择">
+            <el-option
+                v-for="item in selectoptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+
         <div class="tableLab">
           <span class="span-btn delBut non" @click="deleteHandle('批量', null)">批量删除</span>
           <el-button
@@ -344,6 +355,8 @@ export default {
       inputStyle  : {'flex':1},
       permissionoptions:[{label:"管理员",value:'1'},{label:"用户(用户包含管理员)",value:'2'},],//权限选择
       categorizeOptions:[{label:"错误",value:'0'}],
+      selectoptions:[],
+      selectCate:[],
       typeOptions:[{label:"URL",value:'0'},{label:"MarkDown",value:'1'}],
     }
   },
@@ -356,6 +369,11 @@ export default {
           this.categorizeOptions = res.data
         }
       }
+    },
+    'selectCate'() {
+
+      this.handleQuery()
+
     }
   },
   filters: {
@@ -385,10 +403,14 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     this.navInfo = JSON.parse(localStorage.getItem('navInfo'))
     this.token = localStorage.getItem('token')
     this.init()
+    const resd = await Api.getCategorizeSelectOptionsList()
+    if (String(resd.code) === '1') {
+      this.selectoptions = resd.data
+    }
   },
   mounted() {
   },
@@ -430,7 +452,14 @@ export default {
       if (this.input){
         params.name = this.input ? this.input : undefined
       }
-
+      if (this.selectCate){
+        console.log(this.selectCate)
+        let sas = ''
+        for (let i=0;i<this.selectCate.length;i++) {
+          sas +=this.selectCate[i]+','
+        }
+        params.selectCate = this.selectCate ? sas : undefined
+      }
       const res =  await Api.getListnavfenleiitem(params)
       console.log(res)
       if (String(res.code) === '1') {
@@ -773,6 +802,7 @@ export default {
   margin-bottom: 20px;
   justify-content: space-between;
 }
+
 .container .tableBox {
   width: 100%;
   border: solid 2px #f3f4f7;
