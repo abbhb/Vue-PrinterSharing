@@ -157,7 +157,7 @@
                 <el-input
                     v-model="classData.name"
                     placeholder="请填写导航昵称"
-                    maxlength="20"
+                    maxlength="40"
                 />
               </el-form-item>
               <el-form-item

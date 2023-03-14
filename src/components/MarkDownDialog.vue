@@ -102,11 +102,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  z-index: 90000;
 }
 
 .dialogBox .dialogBoxContent {
-  width: 80rem;
+  width: 85rem;
   z-index: 99000;
   height: 44rem;
   border: 2px solid #e9e9e9;
