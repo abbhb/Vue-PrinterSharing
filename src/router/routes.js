@@ -13,6 +13,7 @@ import navfenleiitem from "@/views/nav/navfenleiitem.vue";
 import docindex from "@/views/doc/docindex.vue";
 import myHistoryPrints from "@/views/print/MyHistoryPrints.vue";
 import allUserHistoryPrints from "@/views/admin/AllUserHistoryPrints.vue";
+import files from "@/views/files/Files.vue";
 export default [
 	{
 		path: '/',
@@ -155,6 +156,15 @@ export default [
 				path: '/doc',
 				name: 'docindex',
 				component: docindex,
+				meta:{
+					requireAuth: false,
+					needrole:false
+				}
+			},
+			{
+				path: '/files',
+				name: 'files',
+				component: files,
 				meta:{
 					requireAuth: false,
 					needrole:false

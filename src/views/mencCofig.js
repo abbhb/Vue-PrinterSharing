@@ -104,6 +104,22 @@ export const menuData = [
                 roles:['1','2']
             }
         ]
+    },
+    {
+        optionName: "文件服务器",
+        iconClassName: "el-icon-printer",
+        index: '6',
+        disabled: false, // 是否禁用
+        roles:['1','2'],
+        childList: [
+            {
+                optionName: '文件服务器',
+                index: '6-1',
+                routerName: "files",
+                iconClassName: "el-icon-document",
+                roles:['1','2']
+            }
+        ]
     }
 
 ]

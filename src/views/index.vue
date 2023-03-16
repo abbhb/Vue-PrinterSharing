@@ -362,7 +362,7 @@ body{
           -ms-flex-direction: column;
           /*布局方向是垂直的*/
           flex-direction: column;
-          height: 100%;
+
         }
       }
     }
