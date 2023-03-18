@@ -13,10 +13,11 @@ export const menuData = [
                 iconClassName: "el-icon-user",
                 roles:['1','2']
             },
+
             {
-                optionName: '修改密码',
-                index: '1-4',
-                routerName: "changepassword",
+                optionName: '安全中心',
+                index: '1-5',
+                routerName: "safecenter",
                 iconClassName: "el-icon-lock",
                 roles:['1','2']
             },

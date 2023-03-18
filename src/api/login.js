@@ -35,6 +35,30 @@ export function createUser(data){
         data:data
     });
 }
+
+export function emailWithUser(data){
+    return request({
+        url:'/user/emailwithuser',
+        method:'post',
+        data:data
+    });
+}
+export function createEmailCode(data){
+    return request({
+        url:'/user/createemailcode',
+        method:'post',
+        data:data
+    });
+}
+
+
+export function addUser(data){
+    return request({
+        url:'/user/add',
+        method:'post',
+        data:data
+    });
+}
 export function createNavItem(data){
     return request({
         url:'/quicknavigation/createItem',

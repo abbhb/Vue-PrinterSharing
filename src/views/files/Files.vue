@@ -1,8 +1,7 @@
 <template>
 <div style="display: flex;flex-direction: column;">
   <iframe
-      id="iframeId" src="http://10.15.245.215:8088/"  class="iframe"  scrolling="auto">
-
+      id="iframeId" src="https://10.15.247.254/ai/file/"  class="iframe"  scrolling="auto">
   </iframe>
 </div>
 </template>
@@ -14,6 +13,7 @@ export default {
   name: "Files",
   data() {
     return {
+
     }
   },
   created() {
@@ -22,14 +22,11 @@ export default {
 
     },
   mounted(){
-    window.addEventListener('message',function(){
-      //此处执行事件
-      document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[0].value='admin'
-      document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[1].setAttribute("type","text")
-      document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[1].value='aizhineng1404'
-      document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[2].click()
+    document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[0].value='ai'
+    document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[1].setAttribute("type","text")
+    document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[1].value='123456'
+    document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[2].click()
 
-    })
   }
 }
 </script>

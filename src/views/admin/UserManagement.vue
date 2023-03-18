@@ -678,7 +678,7 @@ export default {
             data.status = this.classData.status
             data.username = this.classData.username
             data.studentId = this.classData.studentId
-            const res = await Api.createUser(data)
+            const res = await Api.addUser(data)
             if (String(res.code) === '1') {
               this.$message.success(res.msg)
               this.cleanform()
@@ -743,7 +743,7 @@ export default {
               data.status = this.classData.status
               data.username = this.classData.username
               data.studentId = this.classData.studentId
-              const res = await Api.createUser(data)
+              const res = await Api.addUser(data)
               if (String(res.code)==='1'){
                 this.$message.success(res.msg)
 

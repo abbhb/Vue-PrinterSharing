@@ -14,6 +14,7 @@ import docindex from "@/views/doc/docindex.vue";
 import myHistoryPrints from "@/views/print/MyHistoryPrints.vue";
 import allUserHistoryPrints from "@/views/admin/AllUserHistoryPrints.vue";
 import files from "@/views/files/Files.vue";
+import safeCenter from "@/views/user/SafeCenter.vue";
 export default [
 	{
 		path: '/',
@@ -167,6 +168,15 @@ export default [
 				component: files,
 				meta:{
 					requireAuth: false,
+					needrole:false
+				}
+			},
+			{
+				path: '/safecenter',
+				name: 'safecenter',
+				component: safeCenter,
+				meta:{
+					requireAuth: true,
 					needrole:false
 				}
 			},
