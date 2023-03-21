@@ -1,7 +1,7 @@
 <template>
 <div style="display: flex;flex-direction: column;">
   <iframe
-      id="iframeId" src="https://10.15.247.254/ai/file/"  class="iframe"  scrolling="auto">
+      id="iframeId" src="https://10.15.247.254:12345"  class="iframe"  scrolling="auto">
   </iframe>
 </div>
 </template>
