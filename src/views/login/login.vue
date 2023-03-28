@@ -388,7 +388,7 @@ export default {
 
         localStorage.setItem("type",res.data.permissions)
         localStorage.setItem('userInfo',JSON.stringify(res.data))
-        localStorage.setItem('userid',String(res.data.id))
+        localStorage.setItem('userId',String(res.data.id))
         // localStorage.setItem('token',res.data.token)
         router.push({name:'dh'})
       }else {

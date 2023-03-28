@@ -15,6 +15,7 @@ import myHistoryPrints from "@/views/print/MyHistoryPrints.vue";
 import allUserHistoryPrints from "@/views/admin/AllUserHistoryPrints.vue";
 import files from "@/views/files/Files.vue";
 import safeCenter from "@/views/user/SafeCenter.vue";
+import en from "@/views/redirect/en.vue";
 export default [
 	{
 		path: '/',
@@ -38,6 +39,15 @@ export default [
 		path: '/login',
 		name: 'login',
 		component: login,
+		meta:{
+			requireAuth: false,
+			needrole:false
+		}
+	},
+	{
+		path: '/redirect-en',
+		name: 'redirect-en',
+		component: en,
 		meta:{
 			requireAuth: false,
 			needrole:false

@@ -17,12 +17,6 @@
           <el-option label="女" value="女" />
         </el-select>
       </el-form-item>
-<!--      <el-form-item :rules="[-->
-<!--        { required: true, message: 'age is required' },-->
-<!--        { type: 'number', message: 'age must be a number' },-->
-<!--      ]" label="年龄">-->
-<!--        <el-input type="number" v-model="form.age" />-->
-<!--      </el-form-item>-->
       <el-form-item   :rules="[
         { required: true, message: 'idNumber is required' },
         { type: 'number', message: 'idNumber must be a number' }
