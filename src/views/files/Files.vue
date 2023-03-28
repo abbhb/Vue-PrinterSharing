@@ -1,8 +1,9 @@
 <template>
 <div style="display: flex;flex-direction: column;">
-  <iframe
-      id="iframeId" src="https://10.15.247.254:12345"  class="iframe"  scrolling="auto">
-  </iframe>
+<!--  <iframe-->
+<!--      id="iframeId" src="https://10.15.247.254:12345"  class="iframe"  scrolling="auto">-->
+<!--  </iframe>-->
+  已为你在新窗口打开
 </div>
 </template>
 
@@ -17,7 +18,7 @@ export default {
     }
   },
   created() {
-
+      window.open("https://10.15.247.254:12345")
 
 
     },
