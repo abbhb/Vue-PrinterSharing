@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
 					console.log("存在")
 					next()	//放行
 				}else{
-					router.push({path:"/404"})
+					router.push({path:"/404",query:{address:from.fullPath,type:"PERMISSION_FAILED"}})
 					// next({path:"/404"}0)	//跳到404页面
 				}
 			}

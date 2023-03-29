@@ -1,9 +1,10 @@
 <template>
 <div style="display: flex;flex-direction: column;">
-<!--  <iframe-->
-<!--      id="iframeId" src="https://10.15.247.254:12345"  class="iframe"  scrolling="auto">-->
-<!--  </iframe>-->
-  已为你在新窗口打开
+  <iframe v-if="can"
+      id="iframeId" :src="urls"  class="iframe"  scrolling="auto">
+  </iframe>
+  <span v-else>已为你在新窗口打开</span>
+
 </div>
 </template>
 
@@ -14,13 +15,27 @@ export default {
   name: "Files",
   data() {
     return {
-
+      can:false,
+      urls:'',
     }
   },
   created() {
-      window.open("https://10.15.247.254:12345")
-
-
+    if (window.location.href.indexOf('10.15')!==-1){
+      this.can = false
+      window.open("http://10.15.247.254:12345")
+    }
+    else if (window.location.href.indexOf('vpn')!==-1){
+      this.can = false
+      window.open("https://webvpn.beihua.edu.cn/http-12345/77726476706e69737468656265737421a1a70fcd727e3a042946dbf9cc/")
+    }
+    else if (window.location.href.indexOf('192.168')!==-1){
+      this.can = true
+      this.urls = "http://192.168.12.12"
+      // window.open("http://192.168.12.12")
+    }else {
+      this.can = false
+      window.open("http://10.15.247.254:12345")
+    }
     },
   mounted(){
     document.getElementById('iframeId').contentWindow.document.getElementsByTagName("form")[0].getElementsByTagName("input")[0].value='ai'
