@@ -5,11 +5,6 @@
         <span class="style-logo-NxwZ7"><img src="@/assets/static/media/AIBIG.png" alt="logo"></span>
         <span>服务平台</span>
         <div class="version">@Version:{{Version}}</div>
-<!--        <el-button-->
-<!--            @click="onMenuCollapse"-->
-<!--            circle-->
-<!--            :icon="menuCollapse? 'el-icon-s-unfold' : 'el-icon-s-fold'"-->
-<!--        ></el-button>-->
       </div>
       <div class="right" style="display: flex;flex-direction: row;align-items: center;">
         <div style="margin-right: 30px;font-size: 12px;color: rgba(255,255,255,0.78)">

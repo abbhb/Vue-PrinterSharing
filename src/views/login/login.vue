@@ -30,8 +30,8 @@
                           v-model="loginForm.username"
                           type="text"
                           auto-complete="off"
-                          placeholder="账号"
-                          maxlength="20"
+                          placeholder="账号/电子邮箱"
+                          maxlength="40"
                           prefix-icon="el-icon-user" />
               </el-form-item>
               <el-form-item prop="password">
@@ -201,7 +201,6 @@ export default {
             // 'message': '请填写用户密码',
             validator: async (rules, value, callback) => {
               if (!value) {
-                this.$message.error("请填写用户名称")
                 callback(new Error('请填写用户名称'))
               } else {
                 let params = {"username": this.registrationForm.username}
@@ -211,11 +210,9 @@ export default {
                 }else {
                   callback(new Error(res.msg))
                 }
-
-
               }
             },
-            'trigger': ['blur']}
+            'trigger': ['change']}
         ],
         'password': [
           {
@@ -223,7 +220,6 @@ export default {
             // 'message': '请填写用户密码',
             validator: (rules, value, callback) => {
               if (!value) {
-                this.$message.error("请填写用户密码")
                 callback(new Error('请填写用户密码'))
 
               }
@@ -343,6 +339,10 @@ export default {
           }
           if (!this.registrationForm.username) {
             this.$message.error("请你输入完整")
+            return false;
+          }
+          if (this.registrationForm.username.indexOf('@')!==-1) {
+            this.$message.error("不可在用户名中包含'@'")
             return false;
           }
           if (!this.registrationForm.studentId) {
