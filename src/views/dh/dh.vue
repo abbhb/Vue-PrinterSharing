@@ -84,7 +84,10 @@ export default {
   },
   created() {
     if (window.location.search.indexOf("?")!==-1){
-      window.location.href = window.location.href.replace("?","");
+      let wenhao = window.location.href.indexOf("?")
+      let jinghao = window.location.href.indexOf("#")-1
+
+      window.location.href = window.location.href.substring(wenhao,jinghao);
     }
     const userInfo = window.localStorage.getItem('userInfo')
     if (userInfo){
