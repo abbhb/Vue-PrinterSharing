@@ -58,7 +58,7 @@ export default {
 
       classData:{
         title:"尊贵的用户,您首此使用该第三方登录授权本服务,请简单绑定一下资料",
-        dialogVisible:true,
+        dialogVisible:false,
         type:'1',//默认绑定
         username:'',
         password:'',
@@ -79,11 +79,11 @@ export default {
         sessionStorage.setItem("userLastStoreId","")
       }
     }
-    if (!window.location.search){
+    if (window.location.search===''){
       this.$message.error("认证服务出错了,请联系开发者!")
     }else {
       this.code = window.location.search.split('?')[1].split('&')[0].split('=')[1]
-      if (!this.code){
+      if (this.code===''){
         this.$message.error("认证服务出错了,请联系开发者!")
         return
       }

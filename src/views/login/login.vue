@@ -53,6 +53,9 @@
 
                   </el-button>
                 </div>
+                <div class="goto" @click="goto('oauthen')">
+                  <span>EN-oauth2.0认证></span>
+                </div>
 
               </el-form-item>
             </el-form>
@@ -131,16 +134,8 @@
               </el-form-item>
             </el-form>
           </div>
-
-
-
-
-
-
-
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -303,6 +298,20 @@ export default {
           }
         }
       })
+    },
+    goto(val){
+      if (val==='oauthen'){
+        if (window.location.href.indexOf('10.15.247.254')!==-1){
+          window.location.href='http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+        }else if (window.location.href.indexOf('vpn')!==-1){
+          window.location.href='https://webvpn.beihua.edu.cn/http/77726476706e69737468656265737421a1a70fcd727e3a042946dbf9cc/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+        }else if (window.location.href.indexOf('192.168')!==-1){
+          window.location.href='http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+        }else {
+          window.location.href='http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+        }
+
+      }
     },
     async ButtonRe() {
       this.$refs["registrationForm"].validate(async (valid) => {  //开启校验
@@ -657,4 +666,7 @@ video {
   margin-left: 10px;
 }
 
+.goto {
+  align-items: center;justify-content: center;font-size: 12px;color: #0f84ff;
+}
 </style>
