@@ -83,17 +83,19 @@ export default {
     };
   },
   created() {
-    if (window.location.search.indexOf("?")!==-1){
-      let wenhao = window.location.href.indexOf("?")
-      let jinghao = window.location.href.indexOf("#")-1
-
-      window.location.href = window.location.href.substring(wenhao,jinghao);
-    }
+    this.$message.info("若菜单图标异常请强制刷新!shift+f5")
     const userInfo = window.localStorage.getItem('userInfo')
     if (userInfo){
       this.userInfo = JSON.parse(userInfo)
     }
     this.init()
+    if (window.location.search.indexOf("?")!==-1){
+      let wenhao = window.location.href.indexOf("?")
+      let arraytemp = window.location.href.split("")
+      arraytemp.splice(wenhao,window.location.search.length)
+      let sss = arraytemp.join("")
+      window.location.href = sss
+    }
   },
   methods: {
     async init() {
