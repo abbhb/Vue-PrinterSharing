@@ -16,6 +16,7 @@ import allUserHistoryPrints from "@/views/admin/AllUserHistoryPrints.vue";
 import files from "@/views/files/Files.vue";
 import safeCenter from "@/views/user/SafeCenter.vue";
 import en from "@/views/redirect/en.vue";
+import gitee from "@/views/redirect/gitee.vue";
 export default [
 	{
 		path: '/',
@@ -48,6 +49,15 @@ export default [
 		path: '/redirect-en',
 		name: 'redirect-en',
 		component: en,
+		meta:{
+			requireAuth: false,
+			needrole:false
+		}
+	},
+	{
+		path: '/redirect-gitee',
+		name: 'redirect-gitee',
+		component: gitee,
 		meta:{
 			requireAuth: false,
 			needrole:false

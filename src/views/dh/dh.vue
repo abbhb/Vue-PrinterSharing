@@ -65,6 +65,7 @@
 <script>
 import * as Api from "@/api/login";
 import MarkDownDialog from "@/components/MarkDownDialog.vue";
+
 // import { marked } from "marked";
 export default {
   name: "dh.vue",
@@ -82,6 +83,9 @@ export default {
     };
   },
   created() {
+    if (window.location.search.indexOf("?")!==-1){
+      window.location.href = window.location.href.replace("?","");
+    }
     const userInfo = window.localStorage.getItem('userInfo')
     if (userInfo){
       this.userInfo = JSON.parse(userInfo)

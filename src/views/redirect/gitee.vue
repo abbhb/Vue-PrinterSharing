@@ -12,7 +12,7 @@ import router from "@/router";
 import ThreeLoginR from "@/components/ThreeLoginR.vue";
 
 export default {
-  name: "en",
+  name: "gitee",
   components: {ThreeLoginR},
   data(){
     return{
@@ -48,7 +48,7 @@ export default {
         this.$message.error("认证服务出错了,请联系开发者!")
         return
       }
-      const res = await Auth.redirectEN(this.code)
+      const res = await Auth.redirectGitee(this.code)
       console.log(res.data)
       if (String(res.code) === '1') {
         this.successLogin(res)
@@ -63,6 +63,7 @@ export default {
         this.$message.error(res.msg)
         sessionStorage.setItem("userLastStoreId","")
       }
+
     }
 
   },
@@ -89,7 +90,7 @@ export default {
       data.type = this.classData.type
       data.username = this.classData.username
       data.password = this.classData.password
-      const resd = await Auth.firstEN(data)
+      const resd = await Auth.firstGitee(data)
       console.log(resd)
       if (String(resd.code)==='1'){
         this.successLogin(resd)
