@@ -3418,18 +3418,6 @@ body {
 }
 
 @media screen and (min-width: 1025px) {
-  .container {
-    margin-left:auto;
-    margin-right: auto;
-    width: 780px
-  }
-
-  .container:after {
-    clear: both;
-    content: "";
-    display: block
-  }
-
   .personal__center-container {
     margin-left: auto;
     margin-right: auto;

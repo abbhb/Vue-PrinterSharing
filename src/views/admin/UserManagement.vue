@@ -895,7 +895,7 @@ export default {
   justify-content: space-between;
 }
 .container .tableBox {
-  width: 100%;
+  width: 100rem;
   border: solid 2px #f3f4f7;
   border-radius: 2px;
 }

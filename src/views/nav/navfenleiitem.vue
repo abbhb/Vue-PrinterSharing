@@ -790,34 +790,37 @@ export default {
 .dashboard-container {
   padding: 20px;
 }
-.container {
+.sdss {
+
+}
+.sdss .container {
   background: #fff;
   position: relative;
   z-index: 1;
   padding: 30px 28px;
   border-radius: 4px;
 }
-.container .tableBar {
+.sdss .container .tableBar {
   display: flex;
   margin-bottom: 20px;
   justify-content: space-between;
 }
 
-.container .tableBox {
+.sdss .container .tableBox {
   width: 100%;
   border: solid 2px #f3f4f7;
   border-radius: 2px;
 }
-.container .tableBox .el-image img {
+.sdss .container .tableBox .el-image img {
   width: 40px;
   border-radius: 5px;
 }
-.container .pageList {
+.sdss .container .pageList {
   text-align: center;
   margin-top: 30px;
 }
 
-.container .tableLab .el-button {
+.sdss .container .tableLab .el-button {
   margin-left: 10px;
 }
 .el-table-column--selection .cell {
