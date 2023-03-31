@@ -2,6 +2,7 @@
   <div>
     <span style="font-size: 48px;">
       认证中,请稍安勿躁!
+
     </span>
     <div>
       <el-dialog
