@@ -465,19 +465,20 @@ export default {
         this.classData.title = '新增用户'
         this.classData.dialogVisible = true
       } else {
-        this.action = 'edit'
-        this.classData.title = '编辑用户'
-        this.classData.id = String(st.id)
-        this.classData.name = String(st.name)
-        this.classData.username = String(st.username)
-        this.classData.status = String(st.status)
-        this.classData.avatar = String(st.avatar)
-        this.classData.studentId = String(st.studentId)
-        this.classData.phone = String(st.phone)
-        this.classData.image = String(st.image)
-        this.classData.sex = String(st.sex)
-        this.imageUrl = String(st.image)
-        this.classData.dialogVisible = true
+        this.action = 'edit';
+        this.classData.title = '编辑用户';
+        this.classData.id = String(st.id);
+        this.classData.name = String(st.name);
+        this.classData.username = String(st.username);
+        this.classData.status = String(st.status);
+        this.classData.avatar = String(st.avatar);
+        this.classData.studentId = String(st.studentId);
+        this.classData.phone = String(st.phone);
+        this.classData.image = String(st.image);
+        this.classData.sex = String(st.sex);
+        this.imageUrl = String(st.image);
+        this.classData.permission = String(st.permission);
+        this.classData.dialogVisible = true;
 
       }
     },

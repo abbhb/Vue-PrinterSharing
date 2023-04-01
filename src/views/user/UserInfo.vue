@@ -18,10 +18,10 @@
         </el-select>
       </el-form-item>
       <el-form-item   :rules="[
-        { required: true, message: 'idNumber is required' },
-        { type: 'number', message: 'idNumber must be a number' }
-      ]"  label="身份证号码">
-        <el-input v-model="form.idNumber" />
+        { required: true, message: 'studentId is required' },
+        { type: 'number', message: 'studentId must be a number' }
+      ]"  label="学号">
+        <el-input v-model="form.studentId" />
       </el-form-item>
       <el-form-item   :rules="[
         { required: true, message: '手机号码必须填写' },
@@ -31,7 +31,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" :disabled="(form_serve.id === form.id)&&(form_serve.username === form.username)&&(form_serve.name === form.name)&&(form_serve.sex === form.sex)&&(form_serve.idNumber === form.idNumber)&&(form_serve.phone === form.phone) ? true:false">更新</el-button>
+        <el-button type="primary" @click="onSubmit" :disabled="(form_serve.id === form.id)&&(form_serve.username === form.username)&&(form_serve.name === form.name)&&(form_serve.sex === form.sex)&&(form_serve.studentId === form.studentId)&&(form_serve.phone === form.phone) ? true:false">更新</el-button>
         <el-button @click="reWrite">重置</el-button>
       </el-form-item>
     </el-form>
@@ -53,7 +53,7 @@ export default {
         username:'',
         name: '',
         sex: '',
-        idNumber:'',
+        studentId:'',
         phone:'',
 
       },
@@ -62,7 +62,7 @@ export default {
         username:'',
         name: '',
         sex: '',
-        idNumber:'',
+        studentId:'',
         phone:'',
       },
       userInfo:{},
@@ -78,14 +78,14 @@ export default {
       this.form.phone =  this.userInfo.phone
       this.form.sex = this.userInfo.sex
       this.form.username = this.userInfo.username
-      this.form.idNumber = this.userInfo.idNumber
+      this.form.studentId = this.userInfo.studentId
       this.form.id = this.userInfo.id
 
       this.form_serve.name = this.userInfo.name
       this.form_serve.phone =  this.userInfo.phone
       this.form_serve.sex = this.userInfo.sex
       this.form_serve.username = this.userInfo.username
-      this.form_serve.idNumber = this.userInfo.idNumber
+      this.form_serve.studentId = this.userInfo.studentId
       this.form_serve.id = this.userInfo.id
 
     },
@@ -103,14 +103,14 @@ export default {
         this.form.phone =  this.userInfo.phone
         this.form.sex = this.userInfo.sex
         this.form.username = this.userInfo.username
-        this.form.idNumber = this.userInfo.idNumber
+        this.form.studentId = this.userInfo.studentId
         this.form.id = this.userInfo.id
 
         this.form_serve.name = this.userInfo.name
         this.form_serve.phone =  this.userInfo.phone
         this.form_serve.sex = this.userInfo.sex
         this.form_serve.username = this.userInfo.username
-        this.form_serve.idNumber = this.userInfo.idNumber
+        this.form_serve.studentId = this.userInfo.studentId
         this.form_serve.id = this.userInfo.id
         loading.close();
 
@@ -138,8 +138,8 @@ export default {
         this.$message.error("请你输入完整")
         return false;
       }
-      if (!this.form.idNumber) {
-        this.$message.error("请你输入身份证号")
+      if (!this.form.studentId) {
+        this.$message.error("请你输入学号")
         return false;
       }
       data.id = this.form.id
@@ -150,8 +150,8 @@ export default {
       data.phone = this.form.phone
       data.status = this.userInfo.status
       data.username = this.form.username
-      data.idNumber = this.form.idNumber
-      const res = await Api.updataforuser(data)
+      data.studentId = this.form.studentId
+      const res = await Api.updataforuserself(data)
 
       if (String(res.code)==='1'){
         that.$message.success(res.msg);

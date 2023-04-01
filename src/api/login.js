@@ -175,6 +175,15 @@ export function updataforuser(data){
         data
     });
 }
+
+export function updataforuserself(data){
+    return request({
+        url:'/user/updataforuserself',
+        method:'put',
+        data
+    });
+}
+
 export function updataforquicknavigationcategorize(data){
     return request({
         url:'/quicknavigation/updataforquicknavigationcategorize',
