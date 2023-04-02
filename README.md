@@ -29,3 +29,4 @@ npm run lint
 \views
 --\admin管理员的一些管理科
 ```
+-[ ] 给打印记录加上下载文件
