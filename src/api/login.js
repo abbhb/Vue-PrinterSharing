@@ -146,9 +146,9 @@ export function deleteNavigationItem(params){
 
 
 // 文件上传
-export function postUploadForPDF (file,numberOfPrintedPages,printingDirection,printBigValue,numberOfPrintedPagesIndex) {
+export function postUploadFile (file,numberOfPrintedPages,printingDirection,printBigValue,numberOfPrintedPagesIndex,isDUPLEX) {
     return request({
-        url: '/printer/uploadpdf?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection+'&printBigValue='+printBigValue+'&numberOfPrintedPagesIndex='+numberOfPrintedPagesIndex,
+        url: '/printer/uploadPrint?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection+'&printBigValue='+printBigValue+'&numberOfPrintedPagesIndex='+numberOfPrintedPagesIndex+'&isDuplex='+isDUPLEX,
         method: 'post',
         data: file,
         headers: {
@@ -156,16 +156,16 @@ export function postUploadForPDF (file,numberOfPrintedPages,printingDirection,pr
         }
     })
 }
-export function postUploadForWord (file,numberOfPrintedPages,printingDirection) {
-    return request({
-        url: '/printer/uploadword?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection,
-        method: 'post',
-        data: file,
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    })
-}
+// export function postUploadForWord (file,numberOfPrintedPages,printingDirection) {
+//     return request({
+//         url: '/printer/uploadword?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection,
+//         method: 'post',
+//         data: file,
+//         headers: {
+//             'Content-Type': 'multipart/form-data'
+//         }
+//     })
+// }
 
 
 export function updataforuser(data){

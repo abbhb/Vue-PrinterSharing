@@ -36,9 +36,17 @@
                         width="200"
                 ></el-table-column>
                 <el-table-column
+                    label="单双面"
+                    width="200"
+                >
+                    <template slot-scope="scope">
+                        <span style="margin-right: 10px;">{{String(scope.row.isDuplex)==='0'?'单面':(String(scope.row.isDuplex)==='1'?'双面':'缺失')}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
                         prop="createTime"
                         label="打印时间"
-                        width="600"
+                        width="400"
                 ></el-table-column>
 
             </el-table>

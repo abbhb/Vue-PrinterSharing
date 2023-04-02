@@ -1,17 +1,6 @@
 <template>
 <div>
 
-<!--  <el-upload-->
-<!--      class="upload-demo"-->
-<!--      action="http://localhost:8080/print/uploadpdf"-->
-<!--      :headers="headerObj"-->
-<!--      :on-success="handleAvatarSuccess"-->
-<!--      :before-upload="beforeUpload"-->
-<!--      ref="upload"-->
-<!--  >-->
-<!--    <el-button size="small" type="primary">点击打印</el-button>-->
-<!--    <div slot="tip" class="el-upload__tip">目前仅支持只能上传pdf文件</div>-->
-<!--  </el-upload>-->
   <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
     <div style="display: flex;flex-direction: row">
       <div class="yuanjiao shupin" v-if="hengshu==='1'" :style="formData==undefined?'':'background-color: #be0010;'">
@@ -47,12 +36,24 @@
           </el-select>
         </div>
         <div class="upmargin">
-          <i>打印页数:</i>
-          <el-input style="width: 40%" v-model="numberOfPrintedPagesIndex" placeholder="输入格式X"></el-input>
+            <i>打印页数:</i>
+            <el-input disabled="true" style="width: 3rem" placeholder="1"></el-input>
+            <span style="width: 10%;margin-left: 1rem;margin-right: 1rem;">-</span>
+            <el-input maxlength="3" style="width: 8rem" v-model="numberOfPrintedPagesIndex" placeholder="输入格式X"></el-input>
         </div>
+
         <div class="upmargin">
-          <span style="width: 80%;font-style: oblique;font-weight: 100;font-size: 8px;">注:(仅支持1-X页,输入5就是1-5,all就是全部)</span>
+          <span class="texttip">注:输入 </span>
+          <i style="color: #d96222"> all</i>
+          <span class="texttip">就是全部</span>
         </div>
+          <div class="upmargin">
+              <el-switch
+                      v-model="isDUPLEX"
+                      active-text="双面打印"
+                      inactive-text="单面打印">
+              </el-switch>
+          </div>
 
       </div>
     </div>
@@ -74,7 +75,7 @@
 </template>
 
 <script>
-import {postUploadForPDF} from "@/api/login";
+import {postUploadFile} from "@/api/login";
 
 export default {
   name: "PrintersForPDF.vue",
@@ -88,22 +89,23 @@ export default {
       hengshu: '1',//默认竖着着打
       formData:undefined,//实际传输的file文件
       isPost:false,//是否正在打印
-      printBigOptions: [{
-        value: 3,
-        label: '自动适应'
-      }, {
+        printBigOptions: [{
+          value: 3,
+          label: '自动适应'
+        }, {
         value: 0,
         label: '实际大小'
-      }, {
-        value: 1,
-        label: '缩小'
-      }, {
-        value: 2,
-        label: '拉伸'
-      }],
-      printBigValue: 3,//打印大小配置
-      numberOfPrintedPagesIndex:'all',//页码，字符串传递,默认全都打印
-    }
+        }, {
+          value: 1,
+          label: '缩小'
+        }, {
+          value: 2,
+          label: '拉伸'
+        }],
+          printBigValue: 3,//打印大小配置
+          numberOfPrintedPagesIndex:'all',//页码，字符串传递,默认全都打印
+          isDUPLEX:false,//默认单面打印
+      }
   },
   created() {
   },
@@ -140,33 +142,25 @@ export default {
 
 
 
-      this.$confirm('打印不完整请检查打印机是否为error灯,缺纸加入纸后只需要按下打印机上GO,不需要重复提交打印任务!', '提示', {
-        confirmButtonText: '我已了解',
-        cancelButtonText: '我不听',
-        type: 'warning'
-      }).then(async () => {
         console.log(this.printBigValue)
         let elLoadingComponent = this.openFullScreen2();
         this.isPost = true
-        const res = await postUploadForPDF(this.formData, this.printNum, this.hengshu, this.printBigValue, this.numberOfPrintedPagesIndex);
+        let isDuplex = 0
+        if (this.isDUPLEX){
+            isDuplex = 1
+        }
+        const res = await postUploadFile(this.formData, this.printNum, this.hengshu, this.printBigValue, this.numberOfPrintedPagesIndex ,isDuplex);
         elLoadingComponent.close();
         if (String(res.code) === '1') {
-          this.$message.success(res.msg+"(显示打印成功后过几秒后打印机才会开始打印)")
+            this.$message.success(res.msg+"(显示打印成功后过几秒后打印机才会开始打印)")
 
-          this.cleanFile()
-          // formData.clean()
-          this.formData = undefined
+            this.cleanFile()
+            // formData.clean()
+            this.formData = undefined
         } else {
-          this.$message.error(res.msg)
+            this.$message.error(res.msg)
         }
         this.isPost = false
-
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '不听你就憋使了'
-        });
-      });
 
 
     },
@@ -206,6 +200,12 @@ export default {
 </script>
 
 <style scoped>
+.texttip {
+    width: 80%;
+    font-weight: 200;
+    font-size: 8px;
+    font-family: Inter, "-apple-system", BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "noto sans", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 .caozuoqu {
   border: #ffffff 1px solid;
   padding: 2rem 2rem 2rem 2rem;
