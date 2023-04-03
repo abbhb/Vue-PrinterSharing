@@ -1,8 +1,8 @@
 <template>
 <div>
 
-  <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
-    <div style="display: flex;flex-direction: row">
+  <div class="printbigbody">
+    <div style="display: flex;flex-direction: row;">
       <div class="yuanjiao shupin" v-if="hengshu==='1'" :style="formData==undefined?'':'background-color: #be0010;'">
         <span>需要保证原文件内本来就为竖屏</span>
         <span>目前仅支持pdf[pdf],word格式[docx]直接打印(推荐使用PDF).</span>
@@ -13,7 +13,7 @@
         <span>目前仅支持pdf[*.pdf],word格式[*.docx]直接打印(推荐使用PDF).</span>
         <span v-if="formData!=undefined">已选择文件</span>
       </div>
-      <div class="caozuoqu" style="display: flex;flex-direction: column;align-items: center;margin-left: 2rem">
+      <div class="yuanjiao caozuoqu" style="display: flex;flex-direction: column;align-items: center;margin-left: 2rem">
         <span style="align-content: center;font-size: 18px;font-weight: 800;">打印配置</span>
         <div class="upmargin">
           <i>打印份数:</i>
@@ -208,9 +208,8 @@ export default {
 }
 .caozuoqu {
   border: #ffffff 1px solid;
-  padding: 2rem 2rem 2rem 2rem;
   background-color: #ffffff;
-  border-radius: 2rem;
+
 }
 i {
   margin-right: 1rem;
@@ -222,6 +221,8 @@ i {
   border: #ffffff 1px solid;
   background-color: #ffffff;
   border-radius: 2rem;
+    box-shadow: 0px 3px 6px rgba(114, 113, 113, 0.34);
+    padding: 1rem 1rem 1rem 1rem;
 }
 .shupin {
   width: 21rem;
@@ -237,6 +238,14 @@ i {
   display: flex;flex-direction: column;
   justify-content: center;
   align-items: center;
+
+}
+.printbigbody {
+    display: flex;flex-direction: column;justify-content: center;align-items: center;
+    padding: 3rem 3rem 3rem 3rem;
+
+    border-radius: 1rem;
+    background-image: url('/images/pexels-codioful-(formerly-gradienta)-7130469.jpg');
 
 }
 </style>
