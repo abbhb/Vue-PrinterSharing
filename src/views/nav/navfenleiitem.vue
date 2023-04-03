@@ -80,6 +80,10 @@
             <el-image style="width: auto; height: 40px; border:none;cursor: pointer;"
                       :src="scope.row.image"
                       :preview-src-list="[ `${scope.row.image}` ]" >
+                <div slot="error" class="image-slot">
+                    <!--                  <i class="el-icon-picture-outline"></i>-->
+                    <img src="@/assets/notimage.png">
+                </div>
             </el-image>
           </template>
         </el-table-column>

@@ -53,8 +53,12 @@
       <el-table-column prop="avatar" label="用户头像" align="center">
         <template slot-scope="{ row }">
           <el-image style="width: auto; height: 40px; border:none;cursor: pointer;"
-                    :src="row.image"
-                    :preview-src-list="[ `${row.image}` ]" >
+                  :src="row.image"
+                  :preview-src-list="[ `${row.image}` ]" >
+              <div slot="error" class="image-slot">
+<!--                  <i class="el-icon-picture-outline"></i>-->
+                  <img src="@/assets/notimage.png">
+              </div>
           </el-image>
         </template>
       </el-table-column>

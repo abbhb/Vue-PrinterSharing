@@ -21,7 +21,9 @@
           <div class="acard" @click="pathGoTo(item,1)">
             <div class="box-card" shadow="hover">
               <div class="ico_ cont_">
-                <img class="img_" :src="item.image">
+
+                <img class="img_" v-if="item.image===''" src="@/assets/notimage.png">
+                <img class="img_" v-else :src="item.image">
               </div>
               <div class="cont_">
                 <div>
