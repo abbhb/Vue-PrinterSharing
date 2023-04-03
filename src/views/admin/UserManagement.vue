@@ -88,6 +88,7 @@
           label="操作"
           width="160"
           align="center"
+          fixed="right"
       >
         <template slot-scope="scope">
           <el-button

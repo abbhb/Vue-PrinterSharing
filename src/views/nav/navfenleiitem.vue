@@ -113,6 +113,7 @@
             label="操作"
             width="200"
             align="center"
+            fixed="right"
         >
           <template slot-scope="scope">
             <el-button
