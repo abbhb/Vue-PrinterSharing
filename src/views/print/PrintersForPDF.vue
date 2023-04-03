@@ -69,16 +69,18 @@
       </el-button>
     </div>
   </div>
-
+  <PrintFileTopList></PrintFileTopList>
 
 </div>
 </template>
 
 <script>
 import {postUploadFile} from "@/api/login";
+import PrintFileTopList from "@/components/PrintFileTopList.vue";
 
 export default {
   name: "PrintersForPDF.vue",
+    components: {PrintFileTopList},
   data(){
     return{
       headerObj: {

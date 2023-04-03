@@ -2,21 +2,6 @@
     <div class="sdss" id="nav-management">
         <div class="container">
             <div class="tableBar">
-                <el-input
-                        v-model="filenameinput"
-                        placeholder="请输入文件名称"
-                        style="width: 250px"
-                        clearable
-                        @clear="cleanQuery"
-                        @keyup.enter.native="handleQuery"
-                >
-                    <i
-                            slot="prefix"
-                            class="el-input__icon el-icon-search"
-                            style="cursor: pointer"
-                            @click="init"
-                    ></i>
-                </el-input>
                 <slot></slot>
             </div>
             <el-table
@@ -33,22 +18,46 @@
                 <el-table-column
                         prop="numberOfPrintedPages"
                         label="打印份数"
-                        width="200"
+                        width="100"
                 ></el-table-column>
                 <el-table-column
                         label="单双面"
-                        width="200"
+                        width="100"
                 >
                     <template slot-scope="scope">
                         <span style="margin-right: 10px;">{{String(scope.row.isDuplex)==='0'?'单面':(String(scope.row.isDuplex)==='1'?'双面':'缺失')}}</span>
                     </template>
                 </el-table-column>
                 <el-table-column
+                    v-if="this.type==='admin'"
+                    prop="createUser"
+                    label="打印人"
+                    width="300"
+                ></el-table-column>
+                <el-table-column
                         prop="createTime"
                         label="打印时间"
-                        width="400"
+                        width="200"
                 ></el-table-column>
 
+                <el-table-column
+                    label="操作"
+                    width="160"
+                    align="center"
+                    fixed="right"
+                >
+                    <template slot-scope="scope">
+                        <el-button
+                            type="text"
+                            size="small"
+                            class="blueBug"
+                            @click="tryDownload(scope.row)"
+                        >
+                            尝试下载
+                        </el-button>
+
+                    </template>
+                </el-table-column>
             </el-table>
 
             <el-pagination
@@ -65,21 +74,37 @@
 </template>
 
 <script>
-import {getListPrinter} from "@/api/printer";
 
 export default {
     name: "PrinterHistoryComponent",
     props: {
         // 控制是否展示或隐藏对话框
-
+        type:{
+            type: String,
+            default: 'user',
+        },
+        filenameinput:{
+            type: String,
+            default: '',
+        },
+        counts:{
+            type: Number,
+            default: 0,
+        },
+        page:{
+            type: Number,
+            default: 1,
+        },
+        pageSize:{
+            type: Number,
+            default: 5,
+        },
+        tableData:{
+            default: [],
+        }
     },
     data() {
         return {
-            filenameinput: '',
-            counts: 0,
-            page: 1,
-            pageSize: 5,
-            tableData : [],
             navState : '',
             navtableloading:false,
             token:'',
@@ -90,50 +115,23 @@ export default {
         this.init()
     },
     methods: {
+         init () {
+             this.$emit("init", false);
+         },
 
-        async init () {
-            this.navtableloading = true
-            let params = {}
-            params.pageNum = this.page
-            params.pageSize = this.pageSize
-            if (this.input){
-                params.name = this.input ? this.input : undefined
-            }
-            const res =  await getListPrinter(params)
-            console.log(res)
-            if (String(res.code) === '1') {
-                this.tableData = res.data.records || []
-                this.counts = Number(res.data.total)
-            }else {
-                this.$message.error('请求出错了：' + res.msg)
-            }
-            this.navtableloading = false
-
-        },
-        handleQuery() {
-            this.page = 1;
-            this.init();
-        },
-        cleanQuery(){
-            this.page = 1;
-            this.input = undefined
-            this.init()
-        },
 
         handleSizeChange (val) {
-            console.log(val)
-            this.pageSize = val
-            this.init()
+            this.$emit("handleSizeChange", val);
         },
         handleCurrentChange (val) {
-            if (val>(Number(this.counts)/Number(this.pageSize))+1){
-                this.$message.info("最大页了")
-                return
-            }
-            this.page = val
-            this.init()
-        },
+            this.$emit("handleCurrentChange", val);
 
+        },
+        tryDownload(row){
+            console.log("尝试下载")
+            console.log(row)
+            alert("暂不开放")
+        }
 
     }
 }
@@ -149,35 +147,6 @@ export default {
     padding: 1rem 1rem 1rem 1rem;
 }
 
-.selectInput {
-    position: relative;
-    width: 100%;
-    min-width: 100px;
-}
-.selectInput .flavorSelect {
-    position: absolute;
-    width: 100%;
-    padding: 0 10px;
-    border-radius: 3px;
-    border: solid 1px #807974;
-    line-height: 30px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.98);
-    top: 50px;
-    z-index: 99;
-}
-.selectInput .flavorSelect .items {
-    cursor: pointer;
-    display: inline-block;
-    width: 100%;
-    line-height: 15px;
-    /*border-bottom: solid 1px #a85151;*/
-    /*color: #383737;*/
-    /*padding: 1px 1px 1px 1px;*/
-}
-.selectInput .flavorSelect .none {
-    font-size: 14px;
-}
 #nav-management .uploadImg .el-form-item__label::before{
     content: '*';
     color: #F56C6C;
@@ -193,22 +162,7 @@ export default {
 .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
 }
-.avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-}
-.avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-}
-.dashboard-container {
-    padding: 20px;
-}
+
 .container {
     background: #fff;
     position: relative;
@@ -219,6 +173,7 @@ export default {
 .container .tableBar {
     display: flex;
     flex-flow: wrap;
+
     margin-bottom: 20px;
     justify-content: left;
 }
@@ -260,14 +215,7 @@ export default {
 .addBrand-container .avatar-uploader .el-upload:hover {
     border-color: #409eff;
 }
-.addBrand-container .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 200px;
-    height: 160px;
-    line-height: 160px;
-    text-align: center;
-}
+
 .addBrand-container .avatar {
     width: 160px;
     height: 160px;
