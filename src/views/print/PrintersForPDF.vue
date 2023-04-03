@@ -234,7 +234,7 @@ i {
 }
 .hengpin {
   width: 29.7rem;
-  height: 21rem;
+  height: 26rem;
   display: flex;flex-direction: column;
   justify-content: center;
   align-items: center;
