@@ -18,14 +18,14 @@
              v-show="item.permission.includes(real_cards.permission)"
              :key="item.id"
         >
-          <div class="acard" @click="pathGoTo(item,1)">
-            <div class="box-card" shadow="hover">
+          <div class="acard" >
+            <div class="box-card" shadow="hover" @click="pathGoTo(item,1)">
               <div class="ico_ cont_">
 
                 <img class="img_" v-if="item.image===''" src="@/assets/notimage.png">
                 <img class="img_" v-else :src="item.image">
               </div>
-              <div class="cont_">
+              <div class="cont_" @click="pathGoTo(item,1)">
                 <div>
                   <strong class="cont_head">{{item.name}}</strong>
                 </div>
@@ -36,9 +36,9 @@
                 </div>
 
               </div>
-              <div @click="pathGoTo(item,2)" class="link_">
+              <div class="link_" @click="pathGoTo(item,2)">
                 <el-tooltip effect="dark" content="直达" placement="right">
-                  <i class="el-icon-s-promotion"></i>
+                  <i class="el-icon-s-promotion" ></i>
                 </el-tooltip>
               </div>
             </div>

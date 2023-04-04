@@ -83,7 +83,7 @@ export const menuData = [
             },
             {
                 optionName: '全部历史记录',
-                index: '2-3',
+                index: '2-4',
                 routerName: "allUserHistoryPrints",
                 iconClassName: "el-icon-document",
                 roles:['1']

@@ -129,8 +129,11 @@ export default {
         },
         tryDownload(row){
             console.log("尝试下载")
-            console.log(row)
-            alert("暂不开放")
+            if (row.url){
+                window.open(row.url)
+            }else {
+                alert("该功能逐步开放中")
+            }
         }
 
     }
