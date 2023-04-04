@@ -7,11 +7,17 @@
         <span>需要保证原文件内本来就为竖屏</span>
         <span>目前仅支持pdf[pdf],word格式[docx]直接打印(推荐使用PDF).</span>
         <span v-if="formData!=undefined">已选择文件</span>
+          <div style="color: #000000;font-weight: 800">
+              多次验证证明，word无法打印的时候手动转成pdf再打印成功率更高
+          </div>
       </div>
       <div class="yuanjiao hengpin" v-else-if="hengshu==='0'" :style="formData==undefined?'':'background-color: #be0010;'">
         <span>需要保证原文件内本来就为横屏</span>
         <span>目前仅支持pdf[*.pdf],word格式[*.docx]直接打印(推荐使用PDF).</span>
         <span v-if="formData!=undefined">已选择文件</span>
+          <div style="color: #000000;font-weight: 800">
+              多次验证证明，word无法打印的时候手动转成pdf再打印成功率更高
+          </div>
       </div>
       <div class="yuanjiao caozuoqu" style="display: flex;flex-direction: column;align-items: center;margin-left: 2rem">
         <span style="align-content: center;font-size: 18px;font-weight: 800;">打印配置</span>
@@ -69,18 +75,24 @@
       </el-button>
     </div>
   </div>
-  <PrintFileTopList></PrintFileTopList>
+    <div style="display: flex;flex-flow: wrap;">
+        <PrintTopBody :type="1" ztitle="总" ftitle="每日4:00更新" style="margin-right: 5px;"></PrintTopBody>
+        <PrintTopBody :type="2" ztitle="每日" ftitle="每日4:00更新"></PrintTopBody>
+    </div>
+
 
 </div>
 </template>
 
 <script>
 import {postUploadFile} from "@/api/login";
-import PrintFileTopList from "@/components/PrintFileTopList.vue";
+import PrintTopBody from "@/components/PrintTopBody.vue";
+
+
 
 export default {
   name: "PrintersForPDF.vue",
-    components: {PrintFileTopList},
+    components: {PrintTopBody},
   data(){
     return{
       headerObj: {
@@ -247,7 +259,7 @@ i {
     padding: 3rem 3rem 3rem 3rem;
 
     border-radius: 1rem;
-    background-image: url('/images/pexels-codioful-(formerly-gradienta)-7130469.jpg');
+    background-image: url('~@/assets/pexels-codioful-(formerly-gradienta)-7130469.jpg');
 
 }
 </style>

@@ -20,3 +20,12 @@ export function getAllUserPrinter(){
         method:'get'
     });
 }
+export function getUserPrintTopList(type){
+    return request({
+        url:'/printer/getUserPrintTopList',
+        method:'get',
+        params:{
+            type:type
+        }
+    });
+}
