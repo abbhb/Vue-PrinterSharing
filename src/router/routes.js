@@ -133,7 +133,7 @@ export default [
 				meta:{
 					requireAuth: true,
 					needrole:true,
-					roles:[1]
+					roles:[10,1]
 				}
 			},
 			{
@@ -152,7 +152,7 @@ export default [
 				meta:{
 					requireAuth: true,
 					needrole:true,
-					roles:[1]
+					roles:[10,1]
 				}
 			},
 			{

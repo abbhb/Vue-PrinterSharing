@@ -15,7 +15,7 @@
         </div>
         <div class="box_"
              v-for="item in card.item"
-             v-show="item.permission.includes(real_cards.permission)"
+             v-show="item.permission.includes(real_cards.permission)||String(real_cards.permission)==='10'"
              :key="item.id"
         >
           <div class="acard" >

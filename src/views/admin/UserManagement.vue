@@ -69,11 +69,17 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="用户权限" width="60">
-        <template slot-scope="scope">
-          <span style="margin-right: 10px;">{{String(scope.row.permission)==='1'?"管理员":"用户"}}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="用户权限" width="60">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span style="margin-right: 10px;">{{String(scope.row.permission)==='1'?"管理员":"用户"}}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+        <el-table-column
+                prop="permissionName"
+                label="用户权限"
+                width="60"
+        >
+        </el-table-column>
       <el-table-column
           prop="createTime"
           label="创建时间"
@@ -419,7 +425,7 @@ export default {
     this.token = localStorage.getItem('token')
     const userInfo = window.localStorage.getItem('userInfo')
     if (userInfo){
-      if (String(this.userInfo.permission)==='1'){
+      if (String(this.userInfo.permission)==='10'||String(this.userInfo.permission)==='1'){
         this.isAdmin = true
         this.init()
       }else {

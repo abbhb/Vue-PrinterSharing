@@ -22,13 +22,12 @@ router.beforeEach((to, from, next) => {
 				var per = localStorage.getItem("permission")
 				console.log(roles.includes(Number(per)))
 				if(roles.includes(Number(per))){
-
-					console.log("存在")
 					next()	//放行
 				}else{
-					router.push({path:"/404",query:{address:from.fullPath,type:"PERMISSION_FAILED"}})
-					// next({path:"/404"}0)	//跳到404页面
+					router.push({path:"/404",query:{address:to.fullPath,type:"PERMISSION_FAILED"}})
 				}
+
+
 			}
 			next()	//放行
 

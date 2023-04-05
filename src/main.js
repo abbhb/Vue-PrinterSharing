@@ -9,7 +9,7 @@ import './assets/css/reset.scss'
 import './assets/scss/global.scss'
 let globl = {
   isNeedZoom:false,
-  Version:'1.8.2',
+  Version:'1.8.3 Dev',
 }
 Vue.config.productionTip = false;
 Vue.prototype.$globl=globl
