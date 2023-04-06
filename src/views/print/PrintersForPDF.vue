@@ -80,19 +80,21 @@
         <PrintTopBody :type="2" ztitle="每日" ftitle="每日4:00更新"></PrintTopBody>
     </div>
 
-
+    <ProgressExtendElement @exitloading="exitloading()" :status="myloadingstatus"
+                           v-if="myloading"></ProgressExtendElement>
 </div>
 </template>
 
 <script>
 import {postUploadFile} from "@/api/login";
 import PrintTopBody from "@/components/PrintTopBody.vue";
+import ProgressExtendElement from "@/components/ProgressExtendElement.vue";
 
 
 
 export default {
   name: "PrintersForPDF.vue",
-    components: {PrintTopBody},
+    components: {ProgressExtendElement, PrintTopBody},
   data(){
     return{
       headerObj: {
@@ -119,6 +121,8 @@ export default {
           printBigValue: 3,//打印大小配置
           numberOfPrintedPagesIndex:'all',//页码，字符串传递,默认全都打印
           isDUPLEX:false,//默认单面打印
+        myloadingstatus:undefined,
+        myloading:false,
       }
   },
   created() {
@@ -134,18 +138,24 @@ export default {
     }
   },
   methods:{
+      exitloading() {
+          this.myloading = false;
+          this.myloadingstatus = undefined;
+      },
     cleanFile(){
       this.formData = undefined;
       document.getElementById('fileupload').value= null;
     },
     openFullScreen2() {
-      const loading = this.$loading({
-        lock: true,
-        text: '打印中(可能比较久),请耐心等待!\n显示打印成功后过几秒后打印机才会开始打印',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      });
-      return loading;
+      // const loading = this.$loading({
+      //   lock: true,
+      //   text: '打印中(可能比较久),请耐心等待!\n显示打印成功后过几秒后打印机才会开始打印',
+      //   spinner: 'el-icon-loading',
+      //   background: 'rgba(0, 0, 0, 0.7)'
+      // });
+      //
+      // return loading;
+        this.myloading = true
     },
     printsopenforpdf: async function () {
       // debugger
@@ -157,21 +167,22 @@ export default {
 
 
         console.log(this.printBigValue)
-        let elLoadingComponent = this.openFullScreen2();
+        this.openFullScreen2();
         this.isPost = true
         let isDuplex = 0
         if (this.isDUPLEX){
             isDuplex = 1
         }
         const res = await postUploadFile(this.formData, this.printNum, this.hengshu, this.printBigValue, this.numberOfPrintedPagesIndex ,isDuplex);
-        elLoadingComponent.close();
         if (String(res.code) === '1') {
+            this.myloadingstatus = 'success'
             this.$message.success(res.msg+"(显示打印成功后过几秒后打印机才会开始打印)")
 
             this.cleanFile()
             // formData.clean()
             this.formData = undefined
         } else {
+            this.myloadingstatus = 'error'
             this.$message.error(res.msg)
         }
         this.isPost = false

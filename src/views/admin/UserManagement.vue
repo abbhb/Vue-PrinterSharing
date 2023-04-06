@@ -69,11 +69,7 @@
         </template>
       </el-table-column>
 
-<!--      <el-table-column label="用户权限" width="60">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span style="margin-right: 10px;">{{String(scope.row.permission)==='1'?"管理员":"用户"}}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+
         <el-table-column
                 prop="permissionName"
                 label="用户权限"

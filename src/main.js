@@ -43,6 +43,21 @@ import 'codemirror/addon/scroll/simplescrollbars.css';
 // style
 import 'codemirror/lib/codemirror.css';
 
+//swiper轮播图组件样式
+import 'swiper/dist/css/swiper.min.css'
+import 'swiper/dist/js/swiper.min'
+
+//注册服务
+
+import loadingService from './service.js'
+
+//
+//引入组件库:jvuewheel
+import jvuewheel from '@jyeontu/jvuewheel'
+//引入样式
+import '@jyeontu/jvuewheel/lib/jvuewhell.css'
+Vue.use(jvuewheel);
+
 VMdEditor.Codemirror = Codemirror;
 
 VMdEditor.use(githubTheme, {
@@ -65,6 +80,9 @@ Vue.use(VMdPreview);
 
 Vue.use(ElementUI);
 
+
+//注册loading服务
+Vue.prototype.$myloading = loadingService;
 
 new Vue({
   router,
