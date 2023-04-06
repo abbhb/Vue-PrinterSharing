@@ -3,21 +3,26 @@
 
   <div class="printbigbody">
     <div style="display: flex;flex-direction: row;">
-      <div class="yuanjiao shupin" v-if="hengshu==='1'" :style="formData==undefined?'':'background-color: #be0010;'">
+      <div :class="this.isdrop?'yuanjiao shupin xuanzhong':'yuanjiao shupin'" v-if="hengshu==='1'" :style="formData==undefined?'':'background-color: #be0010;'"
+           @drop="enentDrop($event)" @dragleave="dragleave($event)" @dragover="dragover($event)">
         <span>需要保证原文件内本来就为竖屏</span>
         <span>目前仅支持pdf[pdf],word格式[docx]直接打印(推荐使用PDF).</span>
-        <span v-if="formData!=undefined">已选择文件</span>
-          <div style="color: #000000;font-weight: 800">
+        <span v-if="formData!=undefined" style="font-size: 36px;">已选择文件</span>
+          <div v-if="formData==undefined" style="color: #000000;font-weight: 800">
               多次验证证明，word无法打印的时候手动转成pdf再打印成功率更高
           </div>
+          <div v-if="formData==undefined" style="color: #d96222;font-size: 36px;font-weight: 500;">支持拖拽文件到此处</div>
+          <span>暂时仅支持单文件</span>
       </div>
       <div class="yuanjiao hengpin" v-else-if="hengshu==='0'" :style="formData==undefined?'':'background-color: #be0010;'">
         <span>需要保证原文件内本来就为横屏</span>
         <span>目前仅支持pdf[*.pdf],word格式[*.docx]直接打印(推荐使用PDF).</span>
-        <span v-if="formData!=undefined">已选择文件</span>
-          <div style="color: #000000;font-weight: 800">
+        <span v-if="formData!=undefined" style="font-size: 36px;">已选择文件</span>
+          <div v-if="formData==undefined" style="color: #000000;font-weight: 800">
               多次验证证明，word无法打印的时候手动转成pdf再打印成功率更高
           </div>
+          <div v-if="formData==undefined" style="color: #d96222;font-size: 36px;font-weight: 500;">支持拖拽文件到此处</div>
+          <span>暂时仅支持单文件</span>
       </div>
       <div class="yuanjiao caozuoqu" style="display: flex;flex-direction: column;align-items: center;margin-left: 2rem">
         <span style="align-content: center;font-size: 18px;font-weight: 800;">打印配置</span>
@@ -123,6 +128,7 @@ export default {
           isDUPLEX:false,//默认单面打印
         myloadingstatus:undefined,
         myloading:false,
+        isdrop:false,
       }
   },
   created() {
@@ -217,6 +223,36 @@ export default {
       this.formData = formData;
       this.$message.success('选择成功!')
     },
+      enentDrop: function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          this.isdrop = false;
+          this.updataFun(e.dataTransfer.files)
+      },
+      dragleave(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          this.isdrop = false;
+      },
+      dragover(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          this.isdrop = true;
+      },
+      updataFun(data) {
+          let formData = new FormData()
+          const temp = data[0].name.split('.')
+          const suffix = temp[temp.length-1]
+          this.isdrop = false;
+          if (!['pdf','docx'].includes(String(suffix))) {
+              this.$message.error('上传只支持 pdf和docx')
+              this.$refs.file.clearFiles()
+              return false
+          }
+
+          formData.append('file',data[0])
+          this.formData = formData
+      }
 
 
   }
@@ -272,5 +308,13 @@ i {
     border-radius: 1rem;
     background-image: url('~@/assets/pexels-codioful-(formerly-gradienta)-7130469.jpg');
 
+}
+
+
+.xuanzhong {
+    position: relative;
+    border: 2px solid #03A9F3;
+    box-shadow: 0px 0px 8px #00cafc;
+    background-color: #c6cbd1;
 }
 </style>
