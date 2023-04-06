@@ -17,7 +17,7 @@
                 </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>{{name}}</el-dropdown-item>
-              <el-dropdown-item>切换账号</el-dropdown-item>
+              <el-dropdown-item @click.native="changeLogin">切换账号</el-dropdown-item>
               <el-dropdown-item @click.native="onLogOut">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -90,6 +90,26 @@
           </header>
           <div class="warp">
             <router-view />
+              <el-dialog
+                      title="切换用户"
+                      :visible.sync="changeUser"
+                      width="70%">
+                  <div style="display: flex;flex-direction: row;justify-content: center;align-items: center" :key="item" v-for="item in allUser">
+                    <div>{{item.id}}</div>
+                    <el-button style="margin-left: auto" @click.native="changeUserById(item.id,item.token)">切换</el-button>
+                  </div>
+                  <div style="justify-content: center;align-items: center">
+                    <el-button style="margin-left: auto" @click.native="ToAddUser()">新增</el-button>
+                  </div>
+
+                  <el-dialog
+                          width="40%"
+                          title="登录"
+                          :visible.sync="LoginDialog"
+                          append-to-body>
+                    <LoginComponents></LoginComponents>
+                  </el-dialog>
+              </el-dialog>
           </div>
         </div>
       </div>
@@ -101,10 +121,14 @@
 
 import * as Api from "@/api/login";
 import {menuData} from "@/views/mencCofig";
+import {checkToken} from "@/api/login";
+import router from "@/router";
+import LoginComponents from "@/components/LoginComponents.vue";
 
 
 export default {
   name:'index',
+    components: {LoginComponents},
   data() {
     return {
       // 菜单配置
@@ -118,6 +142,9 @@ export default {
       userInfo:{},
       screenWidth: document.body.clientWidth,
       Version:this.$globl.Version,
+        changeUser: false,
+        allUser:[],
+        LoginDialog:false,
     };
   },
   watch:{
@@ -161,6 +188,53 @@ export default {
         localStorage.getItem("defaultUnfoldedMenu")
       ];
     },
+      async changeUserById(id, token) {
+          console.log(id)
+          if (String(id)===String(localStorage.getItem('userId'))){
+              this.$message.error("禁止切换到当前登录的用户上")
+              this.changeUser = false
+              return
+          }
+          localStorage.setItem('userId', String(id))
+          localStorage.setItem('token', token)
+
+          const res = await checkToken()
+          if (String(res.code) === '1') {
+              console.log("验证")
+
+              localStorage.setItem("type", res.data.permissions)
+              localStorage.setItem('userInfo', JSON.stringify(res.data))
+              localStorage.setItem('userId', String(res.data.id))
+              const sss = JSON.parse(localStorage.getItem('myAllUser'))
+              let list = []
+              let par = {}
+              par.id = res.data.id
+              par.token = res.data.token
+              list.push(par)
+              if (sss) {
+                  for (let i = 0; i < sss.length; i++) {
+                      if (sss[i].id === res.data.id) {
+                          continue;
+                      }
+                      let par = {}
+                      par.id = sss[i].id
+                      par.token = sss[i].token
+                      list.push(par)
+                  }
+              }
+              localStorage.setItem('myAllUser', JSON.stringify(list))
+              // localStorage.setItem('token',res.data.token)
+              router.push({name: 'dh'})
+              window.location.reload()
+          } else {
+              sessionStorage.setItem("userLastStoreId", "")
+              // this.$message.error(res.msg)
+              //此处就不提示token校验失败了，可能第一次本来就没有token
+          }
+      },
+      ToAddUser(){
+        this.LoginDialog = true;
+      },
     getMenuData() {
       this.menuData = this.menuData.filter(item => item.roles.includes(String(this.userInfo.permission)))
     },
@@ -244,6 +318,10 @@ export default {
       this.$globl.isNeedZoom = true;
       document.body.style.zoom = 0.9
     },
+      changeLogin(){
+        this.changeUser = true;
+        this.allUser = JSON.parse(localStorage.getItem("myAllUser"))
+      },
     async onLogOut() {
       const data = await Api.logoutApi()
       console.log(data)

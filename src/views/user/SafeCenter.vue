@@ -69,6 +69,7 @@
         :title="classData.title"
         :visible.sync="classData.dialogVisible"
         width="55%"
+        class="dialog"
         :show-close="true"
         :close-on-click-modal="false"
         :close-on-press-escape="false"
@@ -189,6 +190,9 @@ export default {
 <style>
 .box-card{
   width: 50rem;
+}
+.dialog .box-card{
+  width: auto;
 }
 .input_span{
   display: flex;
