@@ -1,51 +1,65 @@
 <template>
 <div>
-  <el-card class="box-card">
-    <el-form :model="form" label-width="120px">
-      <el-form-item :rules="[{ required: true, message: 'id is required' },]" label="id">
-        <el-input v-model="form.id" disabled=""/>
-      </el-form-item>
-      <el-form-item :rules="[{ required: true, message: '用户名 is required' },]" label="用户名">
-        <el-input v-model="form.username" disabled=""/>
-      </el-form-item>
-      <el-form-item :rules="[{ required: true, message: '昵称 is required' },]" label="昵称">
-        <el-input v-model="form.name" />
-      </el-form-item>
-      <el-form-item :rules="[{ required: true, message: '性别 is required' },]" label="性别">
-        <el-select v-model="form.sex" placeholder="请选择你的性别">
-          <el-option label="男" value="男" />
-          <el-option label="女" value="女" />
-        </el-select>
-      </el-form-item>
-      <el-form-item   :rules="[
+  <div>
+          <el-form class="myinfo userform" :model="form" label-width="100px">
+              <div style="">
+                  <el-form-item :rules="[{ required: true, message: 'id is required' },]" label="id">
+                      <el-input v-model="form.id" disabled=""/>
+                  </el-form-item>
+                  <el-form-item :rules="[{ required: true, message: '用户名 is required' },]" label="用户名">
+                      <el-input v-model="form.username" disabled=""/>
+                  </el-form-item>
+                  <el-form-item :rules="[{ required: true, message: '昵称 is required' },]" label="昵称">
+                      <el-input v-model="form.name" />
+                  </el-form-item>
+                  <el-form-item :rules="[{ required: true, message: '性别 is required' },]" label="性别">
+                      <el-select v-model="form.sex" placeholder="请选择你的性别">
+                          <el-option label="男" value="男" />
+                          <el-option label="女" value="女" />
+                      </el-select>
+                  </el-form-item>
+                  <el-form-item   :rules="[
         { required: true, message: 'studentId is required' },
         { type: 'number', message: 'studentId must be a number' }
       ]"  label="学号">
-        <el-input v-model="form.studentId" />
-      </el-form-item>
-      <el-form-item   :rules="[
+                      <el-input v-model="form.studentId" />
+                  </el-form-item>
+                  <el-form-item   :rules="[
         { required: true, message: '手机号码必须填写' },
         { type: 'number', message: '手机号码必须是数字' }
       ]"  label="手机号码">
-        <el-input v-model="form.phone" />
-      </el-form-item>
+                      <el-input v-model="form.phone" />
+                  </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit" :disabled="(form_serve.id === form.id)&&(form_serve.username === form.username)&&(form_serve.name === form.name)&&(form_serve.sex === form.sex)&&(form_serve.studentId === form.studentId)&&(form_serve.phone === form.phone) ? true:false">更新</el-button>
-        <el-button @click="reWrite">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+                  <el-form-item>
+                      <el-button type="primary" @click="onSubmit" :disabled="(form_serve.id === form.id)&&(form_serve.username === form.username)&&(form_serve.name === form.name)&&(form_serve.sex === form.sex)&&(form_serve.studentId === form.studentId)&&(form_serve.phone === form.phone)&&(form_serve.avatar === form.avatar) ? true:false">更新</el-button>
+                      <el-button @click="reWrite">重置</el-button>
+                  </el-form-item>
+              </div>
+              <div class="useravatar">
+                  <el-form-item label="用户头像">
+                      <MyElUploadImage :avatar.sync="form.avatar"></MyElUploadImage>
+                  </el-form-item>
+              </div>
+
+          </el-form>
+
+
+
+
+  </div>
 </div>
 </template>
 
 <script>
 import * as Api from "@/api/login";
 import router from "@/router";
+import MyElUploadImage from "@/components/MyElUploadImage.vue";
 
 
 export default {
   name: "UserInfo",
+    components: {MyElUploadImage},
   data(){
     return{
       form:{
@@ -55,7 +69,7 @@ export default {
         sex: '',
         studentId:'',
         phone:'',
-
+          avatar:'',
       },
       form_serve:{
         id:'',
@@ -64,8 +78,10 @@ export default {
         sex: '',
         studentId:'',
         phone:'',
+          avatar:'',
       },
       userInfo:{},
+
     };
   },
   created() {
@@ -80,6 +96,7 @@ export default {
       this.form.username = this.userInfo.username
       this.form.studentId = this.userInfo.studentId
       this.form.id = this.userInfo.id
+      this.form.avatar = this.userInfo.avatar
 
       this.form_serve.name = this.userInfo.name
       this.form_serve.phone =  this.userInfo.phone
@@ -87,6 +104,7 @@ export default {
       this.form_serve.username = this.userInfo.username
       this.form_serve.studentId = this.userInfo.studentId
       this.form_serve.id = this.userInfo.id
+      this.form_serve.avatar = this.userInfo.avatar
 
     },
     init(){
@@ -105,6 +123,7 @@ export default {
         this.form.username = this.userInfo.username
         this.form.studentId = this.userInfo.studentId
         this.form.id = this.userInfo.id
+        this.form.avatar = this.userInfo.avatar
 
         this.form_serve.name = this.userInfo.name
         this.form_serve.phone =  this.userInfo.phone
@@ -112,8 +131,8 @@ export default {
         this.form_serve.username = this.userInfo.username
         this.form_serve.studentId = this.userInfo.studentId
         this.form_serve.id = this.userInfo.id
+        this.form_serve.avatar = this.userInfo.avatar
         loading.close();
-
         //注意用户名不能有重复
       }else {
         this.$message.error("数据错误,请刷新重试!")
@@ -151,6 +170,7 @@ export default {
       data.status = this.userInfo.status
       data.username = this.form.username
       data.studentId = this.form.studentId
+      data.avatar = this.form.avatar
       const res = await Api.updataforuserself(data)
 
       if (String(res.code)==='1'){
@@ -169,13 +189,29 @@ export default {
         this.$message.error(res.msg)
         
       }
-    }
+    },
+
   }
 }
 </script>
 
-<style scoped>
-.box-card{
-  width: 50rem;
+<style>
+
+
+.myinfo {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+    flex-flow: wrap;
 }
+.userform {
+
+    padding: 2rem 4rem 1rem 1rem;
+    border: #FFFFFF 1px solid;
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+}
+.useravatar {
+}
+
 </style>

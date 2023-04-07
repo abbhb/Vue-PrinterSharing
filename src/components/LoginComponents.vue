@@ -1,7 +1,8 @@
+
 <template>
     <div>
         <div class="logins" v-if="!isRegistration">
-            <el-form ref="loginForm" :model="loginForm" :rules="loginRules" >
+            <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
                 <el-form-item prop="username">
                     <el-input
                             v-model="loginForm.username"
@@ -9,11 +10,12 @@
                             auto-complete="off"
                             placeholder="账号/电子邮箱"
                             maxlength="40"
-                            prefix-icon="el-icon-user" />
+                            prefix-icon="el-icon-user"/>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" type="password" show-password placeholder="密码" prefix-icon="el-icon-lock" maxlength="20"
-                              @keyup.enter.native="handleLogin" />
+                    <el-input v-model="loginForm.password" type="password" show-password placeholder="密码"
+                              prefix-icon="el-icon-lock" maxlength="20"
+                              @keyup.enter.native="handleLogin"/>
                 </el-form-item>
 
                 <el-form-item style="width:100%;">
@@ -38,7 +40,7 @@
             </el-form>
         </div>
         <div class="logins" v-else-if="isRegistration">
-            <el-form ref="registrationForm" :model="registrationForm" :rules="registrationRules" >
+            <el-form ref="registrationForm" :model="registrationForm" :rules="registrationRules">
                 <el-form-item prop="username">
                     <el-input
                             v-model="registrationForm.username"
@@ -46,11 +48,12 @@
                             auto-complete="off"
                             placeholder="用户名"
                             maxlength="20"
-                            prefix-icon="el-icon-user" />
+                            prefix-icon="el-icon-user"/>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="registrationForm.password" type="password" show-password placeholder="密码" prefix-icon="el-icon-lock" maxlength="20"
-                              @keyup.enter.native="handleLogin" />
+                    <el-input v-model="registrationForm.password" type="password" show-password placeholder="密码"
+                              prefix-icon="el-icon-lock" maxlength="20"
+                              @keyup.enter.native="handleLogin"/>
                 </el-form-item>
                 <el-form-item prop="name">
                     <el-input
@@ -59,7 +62,7 @@
                             auto-complete="off"
                             placeholder="昵称"
                             maxlength="20"
-                            prefix-icon="el-icon-user" />
+                            prefix-icon="el-icon-user"/>
                 </el-form-item>
                 <el-form-item prop="sex">
                     <el-select v-model="registrationForm.sex" placeholder="请选择用户性别">
@@ -96,7 +99,8 @@
                 <el-form-item style="width:100%;">
 
                     <div style="display: flex;flex-flow: column;justify-content: center;align-items: flex-end;">
-                        <el-button :loading="loading" :disabled="loading" class="login-btn" size="medium" type="primary" style="width:100%;"
+                        <el-button :loading="loading" :disabled="loading" class="login-btn" size="medium" type="primary"
+                                   style="width:100%;"
                                    @click.native.prevent="ButtonRe">
                             <span v-if="!loading">注册</span>
                             <span v-else>注册中...</span>
@@ -117,38 +121,41 @@
 </template>
 
 <script>
+/**
+ * 登录模块
+ */
 import {loginApi} from "@/api/login";
 import router from "@/router";
 import * as Api from "@/api/login";
 
 export default {
     name: "LoginComponents",
-    data(){
-        return{
-            loginForm:{
+    data() {
+        return {
+            loginForm: {
                 username: '',
                 password: ''
             },
-            sexoptions:[{label:"男",value:"男"},{label:"女",value:"女"}],
-            registrationForm:{
+            sexoptions: [{label: "男", value: "男"}, {label: "女", value: "女"}],
+            registrationForm: {
                 username: '',
                 password: '',
-                name:'',
-                phone:'',
-                studentId:'',
-                sex:'',
-                permission:'2',
-                status:'1',//默认启用
-                avatar:'',//url
+                name: '',
+                phone: '',
+                studentId: '',
+                sex: '',
+                permission: '2',
+                status: '1',//默认启用
+                avatar: '',//url
             },
             loading: false,
-            isRegistration:false,//默认是登录
+            isRegistration: false,//默认是登录
         }
     },
     computed: {
         loginRules() {
             const validateUsername = (rule, value, callback) => {
-                if (value.length < 1 ) {
+                if (value.length < 1) {
                     callback(new Error('请输入用户名'))
                 } else {
                     callback()
@@ -162,17 +169,18 @@ export default {
                 }
             }
             return {
-                'username': [{ 'validator': validateUsername, 'trigger': 'blur' }],
-                'password': [{ 'validator': validatePassword, 'trigger': 'blur' }]
+                'username': [{'validator': validateUsername, 'trigger': 'blur'}],
+                'password': [{'validator': validatePassword, 'trigger': 'blur'}]
             }
         },
-        registrationRules () {
+        registrationRules() {
             return {
                 'name': [
                     {'required': true, 'message': '请填写用户名称', 'trigger': ['blur']}
                 ],
                 'username': [
-                    {'required': true,
+                    {
+                        'required': true,
                         // 'message': '请填写用户密码',
                         validator: async (rules, value, callback) => {
                             if (!value) {
@@ -180,14 +188,15 @@ export default {
                             } else {
                                 let params = {"username": this.registrationForm.username}
                                 const res = await Api.hasUserName(params)
-                                if (String(res.code)==='1'){
+                                if (String(res.code) === '1') {
                                     callback()
-                                }else {
+                                } else {
                                     callback(new Error(res.msg))
                                 }
                             }
                         },
-                        'trigger': ['change']}
+                        'trigger': ['change']
+                    }
                 ],
                 'password': [
                     {
@@ -212,7 +221,7 @@ export default {
                                 this.$message.error("请填写用户手机号")
                                 callback(new Error('请填写用户手机号'))
                             } else {
-                                if (!/^1[34578]\d{9}$/.test(value)){
+                                if (!/^1[34578]\d{9}$/.test(value)) {
                                     this.$message.error("格式错误")
                                     callback(new Error('格式错误'))
                                 }
@@ -231,8 +240,8 @@ export default {
                             if (!value) {
                                 this.$message.error("请填写用户学号")
                                 callback(new Error('请填写用户学号'))
-                            }else {
-                                if (!/^[2-2][0-0][2-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/.test(value)){
+                            } else {
+                                if (!/^[2-2][0-0][2-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/.test(value)) {
                                     this.$message.error("格式错误")
                                     callback(new Error('格式错误'))
                                 }
@@ -245,24 +254,24 @@ export default {
             }
         }
     },
-    methods:{
-        goto(val){
-            if (val==='oauthen'){
+    methods: {
+        goto(val) {
+            if (val === 'oauthen') {
                 this.openLoading()
-                if (window.location.href.indexOf('10.15.247.254')!==-1){
+                if (window.location.href.indexOf('10.15.247.254') !== -1) {
 
-                    window.location.href='http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
-                }else if (window.location.href.indexOf('vpn')!==-1){
-                    window.location.href='https://webvpn.beihua.edu.cn/http/77726476706e69737468656265737421a1a70fcd727e3a042946dbf9cc/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
-                }else if (window.location.href.indexOf('192.168')!==-1){
-                    window.location.href='http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
-                }else {
-                    window.location.href='http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+                    window.location.href = 'http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+                } else if (window.location.href.indexOf('vpn') !== -1) {
+                    window.location.href = 'https://webvpn.beihua.edu.cn/http/77726476706e69737468656265737421a1a70fcd727e3a042946dbf9cc/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+                } else if (window.location.href.indexOf('192.168') !== -1) {
+                    window.location.href = 'http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
+                } else {
+                    window.location.href = 'http://10.15.247.254/en/oauth/authorize/?client_id=WFIko9MEhg1BuOFDRlnGc4JvxEnhi48e2F9cr8Ud&response_type=code'
                 }
 
             }
         },
-        openLoading(){
+        openLoading() {
             const loading = this.$loading({
                 lock: true,
                 text: '请耐心等待!\n这个第三方有点慢',
@@ -304,7 +313,7 @@ export default {
                         this.$message.error("请你输入完整")
                         return false;
                     }
-                    if (this.registrationForm.username.indexOf('@')!==-1) {
+                    if (this.registrationForm.username.indexOf('@') !== -1) {
                         this.$message.error("不可在用户名中包含'@'")
                         return false;
                     }
@@ -334,7 +343,7 @@ export default {
                 }
             });
         },
-        cancelForm(){
+        cancelForm() {
             this.registrationForm.sex = ''
             this.registrationForm.password = ''
             this.registrationForm.name = ''
@@ -345,7 +354,7 @@ export default {
             this.loginForm.password = ''
             this.loginForm.username = ''
         },
-        handleRe(){
+        handleRe() {
             this.isRegistration = true;
         },
         handleLo() {
@@ -353,52 +362,59 @@ export default {
             this.cancelForm()
         },
         async handleLogin() {
+            //登录
             this.$refs.loginForm.validate(async (valid) => {
                 if (valid) {
                     this.loading = true
-                    const res = await loginApi(this.loginForm.username,this.loginForm.password)
+                    const res = await loginApi(this.loginForm.username, this.loginForm.password)
                     if (String(res.code) === '1') {
-                        localStorage.setItem('userInfo',JSON.stringify(res.data))
-                        localStorage.setItem("permission",res.data.permission)
-                        localStorage.setItem('userId',String(res.data.id))
-                        localStorage.setItem('token',res.data.token)
-
-                        const sss = JSON.parse(localStorage.getItem('myAllUser'))
-                        let list = []
-                        let par = {}
-                        par.id = res.data.id
-                        par.token = res.data.token
-                        list.push(par)
-                        if (sss){
-                            for (let i = 0; i < sss.length; i++) {
-                                if (sss[i].id===res.data.id){
-                                    continue;
-                                }
-                                let par = {}
-                                par.id = sss[i].id
-                                par.token = sss[i].token
-                                list.push(par)
-                            }
-                        }
-                        localStorage.setItem('myAllUser',JSON.stringify(list))
-                        console.log(this.$route.path.indexOf("login"))
-                        if (this.$route.path.indexOf("login")==-1){
+                        localStorage.setItem('userInfo', JSON.stringify(res.data))
+                        localStorage.setItem("permission", res.data.permission)
+                        localStorage.setItem('userId', String(res.data.id))
+                        localStorage.setItem('token', res.data.token)
+                        this.refreshMyUserList(res.data)
+                        // console.log(this.$route.path.indexOf("login"))
+                        if (this.$route.path.indexOf("login") == -1) {
+                            //说明此时不是在login处调用,刷新即可!信息已经返回了
                             window.location.reload()
-                        }else {
-                            router.push({name:'dh'})
+                        } else {
+                            //此时时login调用,跳转导航页
+                            router.push({name: 'dh'})
                         }
-
-
-
 
                     } else {
                         this.$message.error(res.msg)
-                        sessionStorage.setItem("userLastStoreId","")
-
+                        sessionStorage.setItem("userLastStoreId", "")
                         this.loading = false
                     }
                 }
             })
+        },
+        refreshMyUserList(data){
+            const myAllUser = JSON.parse(localStorage.getItem('myAllUser'))
+            let list = []
+            let par = {}
+            par.id = data.id
+            par.token = data.token
+            par.name = data.name
+            par.avatar = data.avatar
+            par.username = data.username
+            list.push(par)
+            if (myAllUser) {
+                for (let i = 0; i < myAllUser.length; i++) {
+                    if (myAllUser[i].id === data.id) {
+                        continue;
+                    }
+                    let par = {}
+                    par.id = myAllUser[i].id
+                    par.token = myAllUser[i].token
+                    par.name = myAllUser[i].name
+                    par.avatar = myAllUser[i].avatar
+                    par.username = myAllUser[i].username
+                    list.push(par)
+                }
+            }
+            localStorage.setItem('myAllUser', JSON.stringify(list))
         },
     }
 }
@@ -414,24 +430,29 @@ export default {
     align-items: center;
 
 }
+
 .logins .el-form {
     margin-top: 3rem;
     width: 214px;
     height: 307px;
 }
+
 .logins .el-form-item {
     margin-bottom: 15px;
 }
+
 .logins .el-form-item.is-error .el-input__inner {
     border: 0 !important;
     border-bottom: 1px solid #fd7065 !important;
     background: #fff !important;
 }
+
 .logins .input-icon {
     height: 32px;
     width: 18px;
     margin-left: -2px;
 }
+
 .logins .el-input__inner {
     border: 0;
     border-bottom: 1px solid #e9e9e8;
@@ -442,21 +463,27 @@ export default {
     height: 32px;
     line-height: 32px;
 }
+
 .logins .el-input__prefix {
     left: 0;
 }
+
 .logins .el-input--prefix .el-input__inner {
     padding-left: 26px;
 }
+
 .logins .el-input__inner::placeholder {
     color: #aeb5c4;
 }
+
 .logins .el-form-item--medium .el-form-item__content {
     line-height: 32px;
 }
+
 .logins .el-input--medium .el-input__icon {
     line-height: 32px;
 }
+
 .login-btn {
     border-radius: 17px;
     padding: 11px 20px !important;
@@ -466,11 +493,13 @@ export default {
     border: 0;
     background-color: #2fa4de;
 }
+
 .login-btn:hover,
 .login-btn:focus {
     /* background: #FFC200; */
     /* color: #ffffff; */
 }
+
 .login-form-title {
     height: 36px;
     display: flex;
@@ -478,6 +507,7 @@ export default {
     align-items: center;
     margin-bottom: 40px;
 }
+
 .login-form-title .title-label {
     font-weight: 500;
     font-size: 20px;
@@ -486,6 +516,9 @@ export default {
 }
 
 .goto {
-    align-items: center;justify-content: center;font-size: 12px;color: #0f84ff;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #0f84ff;
 }
 </style>

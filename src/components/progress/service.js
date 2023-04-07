@@ -1,10 +1,10 @@
 import Vue from 'vue';
-import ProgressExtendElement from "@/components/ProgressExtendElement.vue";
+import ProgressExtendElement from "@/components/progress/ProgressExtendElement.vue";
 import {addClass} from "@/utils/dom";
 
 const LoadingConstructor = Vue.extend(ProgressExtendElement);
 
-LoadingConstructor.prototype.close = function() {
+LoadingConstructor.prototype.close = function () {
     this.visible = false;
 }
 

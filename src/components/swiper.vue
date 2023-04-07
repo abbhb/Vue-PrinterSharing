@@ -4,21 +4,25 @@
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide item" v-for="(item, index) in pointTextList" :key="index">
-                        <div class="text">{{item.thumb1}}</div>
+                        <div class="text">{{ item.thumb1 }}</div>
                     </div>
                 </div>
-<!--                &lt;!&ndash; 如果需要导航按钮 &ndash;&gt;-->
-<!--                <div class="swiper-button-prev"></div>-->
-<!--                <div class="swiper-button-next"></div>-->
-<!--                <div class="swiper-pagination"></div>-->
+                <!--                &lt;!&ndash; 如果需要导航按钮 &ndash;&gt;-->
+                <!--                <div class="swiper-button-prev"></div>-->
+                <!--                <div class="swiper-button-next"></div>-->
+                <!--                <div class="swiper-pagination"></div>-->
             </div>
         </div>
     </div>
 </template>
 
 <script>
+/**
+ * 滚动公告组件
+ */
 // npm install swiper@4.5.1 --save-dev  // 安装swiper
-import  Swiper  from "swiper"
+import Swiper from "swiper"
+
 export default {
     name: "swiper",
     data() {
@@ -61,7 +65,7 @@ export default {
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
-                    paginationClickable:true,
+                    paginationClickable: true,
                 },
                 // 如果需要前进后退按钮
                 navigation: {
@@ -82,9 +86,11 @@ export default {
     justify-content: center;
     align-items: center;
     width: auto;
+
     .item {
         height: auto;
     }
+
     .text {
 
     }

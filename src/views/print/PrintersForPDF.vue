@@ -105,7 +105,7 @@
 <script>
 import {postUploadFile} from "@/api/login";
 import PrintTopBody from "@/components/PrintTopBody.vue";
-import ProgressExtendElement from "@/components/ProgressExtendElement.vue";
+import ProgressExtendElement from "@/components/progress/ProgressExtendElement.vue";
 
 
 export default {

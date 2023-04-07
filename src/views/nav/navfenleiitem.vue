@@ -205,16 +205,7 @@
                   prop="image"
 
               >
-                <el-upload
-                    class="avatar-uploader"
-                    action="http://localhost:8081/api/common/uploadimage"
-                    :headers="headerObj"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                  <img v-if="classData.image" :src="classData.image" class="avatar">
-                  <i v-else class="el-icon-upload"></i>
-                </el-upload>
+                <MyElUploadImage :avatar.sync="classData.image"></MyElUploadImage>
               </el-form-item>
 
               <el-form-item
@@ -303,9 +294,11 @@
 
 <script>
 import * as Api from "@/api/login";
+import MyElUploadImage from "@/components/MyElUploadImage.vue";
 
 export default {
   name: "navfenleiitem",
+    components: {MyElUploadImage},
   data() {
     this.toolbar = {
       customToolbar1: {
@@ -328,10 +321,6 @@ export default {
 
     };
     return {
-      headerObj: {
-        Authorization: localStorage.getItem('token'),
-        userId:localStorage.getItem('userId')
-      },
       input: '',
       counts: 0,
       page: 1,
@@ -435,19 +424,6 @@ export default {
         this.$message.error(res.msg)
       }
 
-    },
-    handleAvatarSuccess(res) {
-      console.log(res.data)
-      this.classData.image = res.data;
-    },
-    beforeAvatarUpload(file) {
-      // const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isLt2M;
     },
     async init () {
       this.navtableloading = true
@@ -743,28 +719,7 @@ export default {
 </script>
 
 <style>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
-}
-.avatar-uploader {
-  font-size: 148px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
+
 .sdss {
   background-color: #fff;
   display: flex;

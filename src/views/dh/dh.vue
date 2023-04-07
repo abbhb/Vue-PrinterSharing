@@ -69,7 +69,7 @@
 <script>
 import * as Api from "@/api/login";
 import MarkDownDialog from "@/components/MarkDownDialog.vue";
-import ProgressExtendElement from "@/components/ProgressExtendElement.vue";
+import ProgressExtendElement from "@/components/progress/ProgressExtendElement.vue";
 
 // import { marked } from "marked";
 export default {

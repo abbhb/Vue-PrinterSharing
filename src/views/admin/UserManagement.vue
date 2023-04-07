@@ -246,26 +246,7 @@
               class="uploadImg"
           >
             <!--必须加header，不然后端会拦截-->
-            <el-upload
-                class="avatar-uploader"
-                action="http://localhost:8081/api/common/uploadimage"
-                :headers="headerObj"
-                v-loading="isimageupload"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeUpload"
-                ref="upload"
-            >
-              <img
-                  v-if="imageUrl"
-                  :src="imageUrl"
-                  class="avatar"
-              />
-              <i
-                  v-else
-                  class="el-icon-plus avatar-uploader-icon"
-              ></i>
-            </el-upload>
+              <MyElUploadImage :avatar="classData.image"></MyElUploadImage>
           </el-form-item>
 
         </el-form>
@@ -300,14 +281,13 @@
 <script>
 import * as Api from "@/api/login";
 import router from "@/router";
+import MyElUploadImage from "@/components/MyElUploadImage.vue";
 export default {
   name: "UserManagement",
+    components: {MyElUploadImage},
   data() {
     return {
-      headerObj: {
-        Authorization: localStorage.getItem('token'),
-        userId:localStorage.getItem('userId')
-      },
+
       input: '',
       counts: 0,
       page: 1,
@@ -346,8 +326,7 @@ export default {
       imageUrl: '',
       dishList: [],
       inputStyle  : {'flex':1},
-      isimageupload:false,//图片是否再上传
-      permissionoptions:[{"label":'管理员','value':'1'},{"label":'用户','value':'2'}],//用户权限
+        permissionoptions:[{"label":'管理员','value':'1'},{"label":'用户','value':'2'}],//用户权限
     }
   },
   computed: {
@@ -613,30 +592,7 @@ export default {
       arrDate[key] = JSON.parse(JSON.stringify(this.dishFlavorsData[ind]))
       this.dishFlavors = arrDate
     },
-    beforeUpload(file) {
-      this.isimageupload = true
-      const suffix = file.name.split('.')[1]
-      if (!['png', 'jpeg', 'jpg'].includes(String(suffix))) {
-        this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
-        this.$refs.upload.clearFiles()
-        return false
-      }
-    },
-    handleAvatarSuccess (response, file, fileList) {//上传图片成功的回调
-      console.log(file)
-      console.log(fileList)
-      // 拼接down接口预览
-      if (String(response.code)==='1'){
-        this.imageUrl = response.data
-        this.classData.image = response.data
-      }else {
-        this.imageUrl = ''
-        this.classData.image = ''
-        this.$message.error(response.msg)
-      }
-      this.isimageupload = false
-      this.$refs.upload.clearFiles()
-    },
+
     async submitForm(st) {
       if ((st === 'go')&&this.action==='add') {
         //继续添加

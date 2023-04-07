@@ -49,7 +49,7 @@ import 'swiper/dist/js/swiper.min'
 
 //注册服务
 
-import loadingService from './service.js'
+import loadingService from './components/progress/service.js'
 
 //
 //引入组件库:jvuewheel

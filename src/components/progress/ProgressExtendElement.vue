@@ -2,15 +2,6 @@
     <div>
         <transition name="el-loading-fade">
             <div class="el-loading-mask">
-                <div>
-                    <j-hover-btn bgColor = 'pink'
-                                 :text = jHoverBtnText
-                                 :btn-style = "btnStyle"
-                                 @hoverBtnClick = "hoverBtnClick()">
-                    </j-hover-btn>
-                </div>
-
-
                 <div class="el-loading-spinner" :style="this.longtime?'top:69vh;margin-left: auto;max-width: 5rem;':''">
                     <el-progress :class="this.longtime?'el-progress-small':'el-progress'" id="el-progressone" type="circle" :percentage="parseInt(fake.progress*100)" :status="getStatus"></el-progress>
                     <div v-if="!longtime" class="swiper-body">
@@ -18,11 +9,7 @@
                     </div>
 
                 </div>
-                <iframe v-if="longtime"  id="iframe"
-                        name="iframe"
-                        height="100%"
-                        width="100%" src="https://tool.liumingye.cn/music/#/"  scrolling="auto"
-                        frameborder="0"></iframe>
+
             </div>
         </transition>
     </div>
@@ -30,6 +17,9 @@
 </template>
 
 <script>
+/**
+ * 自定义加载中
+ */
 //依赖element-progress
 //依赖npm install fake-progress
 
@@ -75,7 +65,6 @@ export default {
                 "top":'70vh',
                 "left":'1vw'
             },
-            jHoverBtnText:"省时模式",
             node2:undefined,
         }
     },
@@ -89,26 +78,9 @@ export default {
 
     },
     methods:{
-        hoverBtnClick(){
-            if (this.longtime == true){
-                this.longtime = false;
-                this.node2.style.width='226px';
-                this.node2.style.height='226px';
-                this.jHoverBtnText = "省时模式"
-
-            }else if (this.longtime == false){
-                this.longtime = true;
-                this.node2.style.width='40px';
-                this.node2.style.height='40px';
-                this.jHoverBtnText = "纯净模式"
-            }
-
-        },
         exit(){
             this.$emit('exitloading');
         },
-//onresize属性可以用来获取或设置当前窗口的resize事件的事件处理函数
-//onresize事件会在窗口或框架被调整大小时发生
     }
 }
 </script>
@@ -120,7 +92,7 @@ div .el-loading-mask .el-progress{
 }
 div .el-loading-mask .el-progress-small{
     margin-top: -100rem;
-    background-color: rgba(243, 228, 230, 0.93);
+    background-color: #ffffff;
     border-radius: 1rem;
 }
 

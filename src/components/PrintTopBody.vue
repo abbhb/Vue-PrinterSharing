@@ -1,8 +1,8 @@
 <template>
     <div class="PrintFileTopList">
         <div class="titlebody">
-            <span class="title">打印用户榜单({{Ztitle}})</span>
-            <span class="intro">{{Ftitle}}</span>
+            <span class="title">打印用户榜单({{ Ztitle }})</span>
+            <span class="intro">{{ Ftitle }}</span>
         </div>
         <div>
             <el-table
@@ -24,7 +24,7 @@
                     <template slot-scope="{ row }">
                         <el-image style="width: 40px; height: 40px; border:none;cursor: pointer;"
                                   :src="row.avatar"
-                                  :preview-src-list="[ `${row.avatar}` ]" >
+                                  :preview-src-list="[ `${row.avatar}` ]">
                             <div slot="error" class="image-slot">
                                 <!--                  <i class="el-icon-picture-outline"></i>-->
                                 <img src="@/assets/notimage.png">
@@ -44,34 +44,37 @@
 </template>
 
 <script>
+/**
+ * 打印排行榜
+ */
 import {getUserPrintTopList} from "@/api/printer";
 
 export default {
     name: "PrintTopBody",
-    props:{
-        Ztitle:{
-            type:String,
-            default:""
+    props: {
+        Ztitle: {
+            type: String,
+            default: ""
         },
-        Ftitle:{
-            type:String,
-            default:""
+        Ftitle: {
+            type: String,
+            default: ""
         },
-        type:{
-            type:Number,
-            default:1,
+        type: {
+            type: Number,
+            default: 1,
         }
     },
     data() {
         return {
-            UserTopList:[],
+            UserTopList: [],
         }
     },
     async created() {
         const res = await getUserPrintTopList(this.type);
-        if (String(res.code)==='1'){
+        if (String(res.code) === '1') {
             this.UserTopList = res.data
-        }else {
+        } else {
             this.$message.error(res.msg)
         }
     },
@@ -80,22 +83,31 @@ export default {
 
 <style scoped>
 .PrintFileTopList {
-    display: flex;flex-direction: column;justify-content: center;align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 3rem 3rem 3rem 3rem;
     border-radius: 1rem;
     background-image: url('~@/assets/pexels-codioful-(formerly-gradienta)-7130469.jpg');
 }
-.PrintFileTopList .titlebody{
-    display: flex;flex-direction: column;justify-content: center;align-items: center;
+
+.PrintFileTopList .titlebody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.PrintFileTopList .titlebody .title{
+
+.PrintFileTopList .titlebody .title {
     font-weight: 800;
     font-size: 28px;
     color: #9d3be5;
 }
-.PrintFileTopList .titlebody .intro{
+
+.PrintFileTopList .titlebody .intro {
     font-weight: 500;
     font-size: 14px;
     font-family: "Arial Rounded MT Bold";
