@@ -7,12 +7,17 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/reset.scss'
 import './assets/scss/global.scss'
+
+//全局变量
 let globl = {
   isNeedZoom:false,
-  Version:'1.8.3 Dev',
+  Version:'2.0.0',
 }
 Vue.config.productionTip = false;
 Vue.prototype.$globl=globl
+
+
+
 import VMdEditor from '@kangc/v-md-editor/lib/codemirror-editor';
 import '@kangc/v-md-editor/lib/style/codemirror-editor.css';
 import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';

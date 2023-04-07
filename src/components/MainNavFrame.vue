@@ -16,7 +16,7 @@
                     <el-avatar shape="circle" :size="40" :src="userphoto"/>
                 </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>{{ name }}</el-dropdown-item>
+                            <el-dropdown-item >{{ name }}</el-dropdown-item>
                             <el-dropdown-item @click.native="changeLogin">切换账号</el-dropdown-item>
                             <el-dropdown-item @click.native="onLogOut">退出登录</el-dropdown-item>
                         </el-dropdown-menu>
@@ -92,7 +92,7 @@
                     <div class="warp">
                         <slot></slot>
                         <!--切换用户-->
-                        <ChangeCurrentUser :changeUser="changeUser"></ChangeCurrentUser>
+                        <ChangeCurrentUser :changeUser.sync="changeUser"></ChangeCurrentUser>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,8 @@
     <el-dialog
             title="切换用户"
             :visible.sync="changeUser"
+            destroy-on-close="true"
+            :before-close="handleClose"
             width="70%">
         <el-table
             :data="allUser"
@@ -70,11 +72,16 @@ export default {
         this.allUser = JSON.parse(localStorage.getItem("myAllUser"))
     },
     methods: {
+        handleClose(done){
+            this.$emit("update:changeUser", false);
+            done();
+        },
         async changeUserById(row) {
             console.log(row.id)
             if (String(row.id) === String(localStorage.getItem('userId'))) {
                 this.$message.error("禁止切换到当前登录的用户上")
                 this.changeUser = false
+                this.$emit("update:changeUser", false);
                 return
             }
             localStorage.setItem('userId', String(row.id))
@@ -105,11 +112,15 @@ export default {
                     }
                 }
                 localStorage.setItem('myAllUser', JSON.stringify(list))
+                this.changeUser = false
+                this.$emit("update:changeUser", false);
                 // localStorage.setItem('token',res.data.token)
                 router.push({name: 'dh'})
                 window.location.reload()
             } else {
                 sessionStorage.setItem("userLastStoreId", "")
+                this.changeUser = false
+                this.$emit("update:changeUser", false);
                 // this.$message.error(res.msg)
                 //此处就不提示token校验失败了，可能第一次本来就没有token
             }
