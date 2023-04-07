@@ -1,7 +1,7 @@
 <template>
     <el-upload
             class="avatar-uploader"
-            action="http://localhost:8081/api/common/uploadimage"
+            action="./api/common/uploadimage"
             :headers="headerObj"
             v-loading="isimageupload"
             :show-file-list="false"
@@ -55,6 +55,7 @@ export default {
             const suffix = file.name.split('.')[1]
             if (!['png', 'jpeg', 'jpg'].includes(String(suffix))) {
                 this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
+                this.isimageupload = false;
                 return false
             }
         },
