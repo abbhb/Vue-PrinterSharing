@@ -19,8 +19,8 @@
                      :key="item.id"
                 >
                     <div class="acard">
-                        <div class="box-card" shadow="hover" @click="pathGoTo(item,1)">
-                            <div class="ico_ cont_">
+                        <div class="box-card" shadow="hover">
+                            <div class="ico_ cont_"  @click="pathGoTo(item,1)">
 
                                 <img class="img_" v-if="item.image===''" src="@/assets/notimage.png">
                                 <img class="img_" v-else :src="item.image">
@@ -129,6 +129,7 @@ export default {
                 if (String(row.type) === '0') {
                     if (String(row.content)) {
                         console.log("md")
+                        console.log(row.content)
                         this.markdownDialog.dialogTitle = row.name;
                         this.markdownDialog.dialogContent = row.content;
                         this.markdownDialog.dialogVisible = true;
@@ -137,11 +138,10 @@ export default {
                     }
                 } else if (String(row.type) === '1') {
                     console.log("md")
+                    console.log(row)
                     this.markdownDialog.dialogTitle = row.name;
                     this.markdownDialog.dialogContent = row.content;
                     this.markdownDialog.dialogVisible = true;
-
-
                 }
             } else if (lo === 2) {
                 if (String(row.type) === '0') {
