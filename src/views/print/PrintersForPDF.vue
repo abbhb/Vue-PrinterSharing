@@ -7,7 +7,7 @@
                      :style="formData==undefined?'':'background-color: #be0010;'"
                      @drop="enentDrop($event)" @dragleave="dragleave($event)" @dragover="dragover($event)">
                     <span>需要保证原文件内本来就为竖屏</span>
-                    <span>目前仅支持pdf[pdf],word格式[docx]直接打印(推荐使用PDF).</span>
+                    <span>目前仅支持pdf,word格式直接打印(推荐使用PDF).</span>
                     <span v-if="formData!=undefined" style="font-size: 36px;">已选择文件</span>
                     <div v-if="formData==undefined" style="color: #000000;font-weight: 800">
                         多次验证证明，word无法打印的时候手动转成pdf再打印成功率更高
@@ -20,7 +20,7 @@
                 <div class="yuanjiao hengpin" v-else-if="hengshu==='0'"
                      :style="formData==undefined?'':'background-color: #be0010;'">
                     <span>需要保证原文件内本来就为横屏</span>
-                    <span>目前仅支持pdf[*.pdf],word格式[*.docx]直接打印(推荐使用PDF).</span>
+                    <span>目前仅支持pdf,word格式直接打印(推荐使用PDF).</span>
                     <span v-if="formData!=undefined" style="font-size: 36px;">已选择文件</span>
                     <div v-if="formData==undefined" style="color: #000000;font-weight: 800">
                         多次验证证明，word无法打印的时候手动转成pdf再打印成功率更高
@@ -164,14 +164,6 @@ export default {
             document.getElementById('fileupload').value = null;
         },
         openFullScreen2() {
-            // const loading = this.$loading({
-            //   lock: true,
-            //   text: '打印中(可能比较久),请耐心等待!\n显示打印成功后过几秒后打印机才会开始打印',
-            //   spinner: 'el-icon-loading',
-            //   background: 'rgba(0, 0, 0, 0.7)'
-            // });
-            //
-            // return loading;
             this.myloading = true
         },
         printsopenforpdf: async function () {
@@ -220,8 +212,8 @@ export default {
             const suffix = temp[temp.length - 1]
             const size = file.size / 1024 / 1024 < 8
             console.log(temp)
-            if (!['pdf', 'docx'].includes(String(suffix))) {
-                this.$message.error('上传只支持 pdf和docx')
+            if (!['pdf', 'docx','doc'].includes(String(suffix))) {
+                this.$message.error('上传只支持 pdf和word')
                 this.$refs.file.clearFiles()
                 return false
             }
@@ -254,8 +246,8 @@ export default {
             const temp = data[0].name.split('.')
             const suffix = temp[temp.length - 1]
             this.isdrop = false;
-            if (!['pdf', 'docx'].includes(String(suffix))) {
-                this.$message.error('上传只支持 pdf和docx')
+            if (!['pdf', 'docx','doc'].includes(String(suffix))) {
+                this.$message.error('上传只支持 pdf和word')
                 this.$refs.file.clearFiles()
                 return false
             }
