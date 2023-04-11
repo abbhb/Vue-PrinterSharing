@@ -2,9 +2,13 @@
     <div class="home">
         <header class="header">
             <div class="left">
-                <span class="style-logo-NxwZ7"><img src="@/assets/static/media/AIBIG.png" alt="logo"></span>
-                <span>服务平台</span>
-                <div class="version">@Version:{{ Version }}</div>
+
+                <span class="style-logo-NxwZ7">
+                    <img v-if="bigLogo" src="@/assets/static/media/AILOGO2.png" alt="logo">
+                    <img v-else src="@/assets/static/media/AIBIG.png" alt="logo">
+                </span>
+<!--                <span>服务平台</span>-->
+                <span class="version">@Version:{{ Version }}</span>
             </div>
             <div class="right" style="display: flex;flex-direction: row;align-items: center;">
                 <div style="margin-right: 30px;font-size: 12px;color: rgba(255,255,255,0.78)">
@@ -122,6 +126,7 @@ export default {
             screenWidth: document.body.clientWidth,
             Version: this.$globl.Version,
             changeUser: false,//切换用户
+            bigLogo:true,
         };
     },
     watch: {
@@ -129,8 +134,10 @@ export default {
             console.log('newVal', newVal);
             if (newVal <= 1000) {
                 this.menuCollapse = true;
+                this.bigLogo = false;
             } else {
                 this.menuCollapse = false;
+                this.bigLogo = true;
             }
 
         }
@@ -391,13 +398,25 @@ export default {
 .el-icon-arrow-down {
   font-size: 12px;
 }
+@media screen and (min-width:1000px){
+    .style-logo-NxwZ7 {
+        display: inline-flex;
+        width: 148px;
+        height: 60px;
+        margin-right: 4px;
+        border-radius: 2px;
+    }
 
-.style-logo-NxwZ7 {
-  display: inline-flex;
-  width: 24px;
-  height: 24px;
-  margin-right: 4px;
-  border-radius: 2px;
+}
+@media screen and (max-width:1000px){
+    .style-logo-NxwZ7 {
+        display: inline-flex;
+        width: 36px;
+        height: 36px;
+        margin-right: 4px;
+        border-radius: 2px;
+    }
+
 }
 
 .version {

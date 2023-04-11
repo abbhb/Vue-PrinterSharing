@@ -21,7 +21,7 @@
       <div class="waiqian bWXzON">
         <div class="login-form">
           <div class="sc-hLBbgP bWXzON logoContainer">
-            <img width="70%" src="@/assets/static/media/AI3.png">
+            <img width="70%" src="@/assets/static/media/AILOGO2.png">
           </div>
             <LoginComponents></LoginComponents>
         </div>
