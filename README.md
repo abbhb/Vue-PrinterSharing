@@ -29,4 +29,9 @@ npm run lint
 \views
 --\admin管理员的一些管理科
 ```
+
+- [AI服务平台主后端](https://github.com/abbhb/Springboot-PrinterSharing)
+- [AI服务平台前端(本项目也是其中一部分的后端)](https://github.com/abbhb/Vue-PrinterSharing)
+- [AI服务平台DOC后端](https://github.com/abbhb/Printer-Doc)
+
 -[ ] 给打印记录加上下载文件
