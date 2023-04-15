@@ -20,6 +20,7 @@ router.beforeEach((to, from, next) => {
 				// console.log(localStorage.getItem("permission"))
 				var roles = to.meta.roles
 				var per = localStorage.getItem("permission")
+
 				console.log(roles.includes(Number(per)))
 				if(roles.includes(Number(per))){
 					next()	//放行

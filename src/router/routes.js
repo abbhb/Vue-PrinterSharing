@@ -17,6 +17,9 @@ import files from "@/views/files/Files.vue";
 import safeCenter from "@/views/user/SafeCenter.vue";
 import en from "@/views/redirect/en.vue";
 import gitee from "@/views/redirect/gitee.vue";
+import ipcview1 from "@/views/ipc/ipcview1.vue";
+import ipcview2 from "@/views/ipc/ipcview2.vue";
+
 export default [
 	{
 		path: '/',
@@ -192,6 +195,26 @@ export default [
 				}
 			},
 			{
+				path: '/ipcview1',
+				name: 'ipcview1',
+				component: ipcview1,
+				meta:{
+					requireAuth: true,
+					needrole:true,
+					roles:[10,1]
+				}
+			},
+			{
+				path: '/ipcview2',
+				name: 'ipcview2',
+				component: ipcview2,
+				meta:{
+					requireAuth: true,
+					needrole:true,
+					roles:[10,1]
+				}
+			},
+			{
 				path: '/safecenter',
 				name: 'safecenter',
 				component: safeCenter,
@@ -200,6 +223,7 @@ export default [
 					needrole:false
 				}
 			},
+
 		]
 	},
 	{

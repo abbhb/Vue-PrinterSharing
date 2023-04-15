@@ -92,7 +92,7 @@ export const menuData = [
     },
     {
         optionName: "文档",
-        iconClassName: "el-icon-printer",
+        iconClassName: "el-icon-document",
         index: '4',
         disabled: false, // 是否禁用
         roles:['10','1','2'],
@@ -108,7 +108,7 @@ export const menuData = [
     },
     {
         optionName: "文件服务器",
-        iconClassName: "el-icon-printer",
+        iconClassName: "el-icon-document",
         index: '6',
         disabled: false, // 是否禁用
         roles:['10','1','2'],
@@ -119,6 +119,29 @@ export const menuData = [
                 routerName: "files",
                 iconClassName: "el-icon-document",
                 roles:['10','1','2']
+            }
+        ]
+    },
+    {
+        optionName: "AI监控预览[Beta]",
+        iconClassName: "el-icon-camera",
+        index: '7',
+        disabled: false, // 是否禁用
+        roles:['10','1'],
+        childList: [
+            {
+                optionName: 'AI监控预览-1',
+                index: '7-1',
+                routerName: "ipcview1",
+                iconClassName: "el-icon-camera",
+                roles:['10','1']
+            },
+            {
+                optionName: 'AI监控预览-2',
+                index: '7-2',
+                routerName: "ipcview2",
+                iconClassName: "el-icon-camera",
+                roles:['10','1']
             }
         ]
     }

@@ -6,7 +6,7 @@ import { inject } from './index';
 
 const service = axios.create({
     baseURL: "./api", // api的base_url
-    timeout: 120000 // 请求超时时间
+    timeout: 1200000 // 请求超时时间
 });
 
 inject(service);

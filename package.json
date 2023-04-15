@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "fake-progress": "^1.0.4",
+    "flv.js": "^1.6.2",
     "image-conversion": "^2.1.1",
     "moment": "^2.29.4",
     "vue": "^2.6.11",
