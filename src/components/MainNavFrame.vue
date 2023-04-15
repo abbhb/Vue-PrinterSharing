@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <header class="header">
-            <div class="left">
+            <div class="left" @click="menuCollapse = !menuCollapse;">
 
                 <span class="style-logo-NxwZ7">
                     <img v-if="bigLogo" src="@/assets/static/media/AILOGO2.png" alt="logo">
@@ -63,7 +63,7 @@
                                     <!--                  {{ item1.optionName }}-->
                                     <template slot="title">
                                         <i :class="item1.iconClassName"></i>
-                                        <span slot="title">{{ !menuCollapse ? item1.optionName : '' }}</span>
+                                        <span slot="title">{{ !menuCollapse ? item1.optionName : item1.optionName }}</span>
                                     </template>
                                 </el-menu-item>
                             </el-submenu>
