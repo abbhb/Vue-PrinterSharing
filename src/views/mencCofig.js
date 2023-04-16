@@ -4,14 +4,14 @@ export const menuData = [
         optionName: "我的主页",
         iconClassName: "el-icon-eleme",
         index: '1',
-        roles:['10','1','2'],
+        roles:['10','1','2','3'],
         childList: [
             {
                 optionName: '个人信息',
                 index: '1-1',
                 routerName: "userinfo",
                 iconClassName: "el-icon-user",
-                roles:['10','1','2']
+                roles:['10','1','2','3']
             },
 
             {
@@ -19,14 +19,14 @@ export const menuData = [
                 index: '1-5',
                 routerName: "safecenter",
                 iconClassName: "el-icon-lock",
-                roles:['10','1','2']
+                roles:['10','1','2','3']
             },
             {
                 optionName: '快捷导航',
                 index: '1-3',
                 routerName: "dh",
                 iconClassName: "el-icon-user",
-                roles:['10','1','2']
+                roles:['10','1','2','3']
             },
         ]
     },
@@ -95,14 +95,14 @@ export const menuData = [
         iconClassName: "el-icon-document",
         index: '4',
         disabled: false, // 是否禁用
-        roles:['10','1','2'],
+        roles:['10','1','2','3'],
         childList: [
             {
                 optionName: '文档首页',
                 index: '2-1',
                 routerName: "docindex",
                 iconClassName: "el-icon-document",
-                roles:['10','1','2']
+                roles:['10','1','2','3']
             }
         ]
     },
