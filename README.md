@@ -34,4 +34,5 @@ npm run lint
 - [AI服务平台前端(本项目也是其中一部分的后端)](https://github.com/abbhb/Vue-PrinterSharing)
 - [AI服务平台DOC后端](https://github.com/abbhb/Printer-Doc)
 
--[ ] 给打印记录加上下载文件
+- [x] 给打印记录加上下载文件
+- [ ] doc文档初始功能开发
