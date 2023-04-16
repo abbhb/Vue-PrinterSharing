@@ -32,7 +32,7 @@
         </div>
         <div class="cards">
             <div class="title">leo</div>
-            <div class="intro">此文集没有介绍</div>
+            <div class="intro">比如我现在写完了</div>
         </div>
     </div>
 </div>
