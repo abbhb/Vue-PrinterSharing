@@ -16,9 +16,25 @@
                         width="400"
                 ></el-table-column>
                 <el-table-column
-                        prop="numberOfPrintedPages"
+                        prop="copies"
                         label="打印份数"
                         width="100"
+                ></el-table-column>
+                <el-table-column
+                  prop="needPrintPagesEndIndex"
+                  label="打印页数"
+                  width="100"
+                ></el-table-column>
+                <el-table-column
+                  prop="singleDocumentPaperUsage"
+                  label="实际单份用纸数"
+                  width="100"
+                ></el-table-column>
+
+                <el-table-column
+                  prop="originFilePages"
+                  label="源文件页数"
+                  width="100"
                 ></el-table-column>
                 <el-table-column
                         label="单双面"
@@ -39,6 +55,7 @@
                         label="打印时间"
                         width="200"
                 ></el-table-column>
+
 
                 <el-table-column
                         label="操作"

@@ -146,9 +146,9 @@ export function deleteNavigationItem(params){
 
 
 // 文件上传
-export function postUploadFile (file,numberOfPrintedPages,printingDirection,printBigValue,numberOfPrintedPagesIndex,isDUPLEX) {
+export function postUploadFile (file,copies,printingDirection,printBigValue,needPrintPagesEndIndex,isDUPLEX) {
     return request({
-        url: '/printer/uploadPrint?numberOfPrintedPages='+numberOfPrintedPages+'&printingDirection='+printingDirection+'&printBigValue='+printBigValue+'&numberOfPrintedPagesIndex='+numberOfPrintedPagesIndex+'&isDuplex='+isDUPLEX,
+        url: '/printer/uploadPrint?copies='+copies+'&printingDirection='+printingDirection+'&printBigValue='+printBigValue+'&needPrintPagesEndIndex='+needPrintPagesEndIndex+'&isDuplex='+isDUPLEX,
         method: 'post',
         data: file,
         headers: {

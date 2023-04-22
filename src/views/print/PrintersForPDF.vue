@@ -35,7 +35,7 @@
                     <span style="align-content: center;font-size: 18px;font-weight: 800;">打印配置</span>
                     <div class="upmargin">
                         <i>打印份数:</i>
-                        <el-input-number v-model="printNum" :min="1" :max="20" label="打印份数"></el-input-number>
+                        <el-input-number v-model="copies" :min="1" :max="20" label="打印份数"></el-input-number>
                     </div>
                     <div class="upmargin">
                         <i>横竖:</i>
@@ -57,8 +57,8 @@
                         <i>打印页数:</i>
                         <el-input disabled="true" style="width: 3rem" placeholder="1"></el-input>
                         <span style="width: 10%;margin-left: 1rem;margin-right: 1rem;">-</span>
-                        <el-input maxlength="3" style="width: 8rem" v-model="numberOfPrintedPagesIndex"
-                                  placeholder="输入格式X"></el-input>
+                        <el-input maxlength="3" style="width: 8rem" v-model="needPrintPagesEndIndex"
+                                  placeholder="全部打印为-1"></el-input>
                     </div>
 
                     <div class="upmargin">
@@ -117,7 +117,7 @@ export default {
                 Authorization: localStorage.getItem('token'),
                 userid: localStorage.getItem('userid')
             },
-            printNum: 1,
+            copies: 1,
             hengshu: '1',//默认竖着着打
             formData: undefined,//实际传输的file文件
             isPost: false,//是否正在打印
@@ -135,7 +135,7 @@ export default {
                 label: '拉伸'
             }],
             printBigValue: 3,//打印大小配置
-            numberOfPrintedPagesIndex: 'all',//页码，字符串传递,默认全都打印
+            needPrintPagesEndIndex: -1,//页码，字符串传递,默认全都打印
             isDUPLEX: false,//默认单面打印
             myloadingstatus: undefined,
             myloading: false,
@@ -181,7 +181,7 @@ export default {
             if (this.isDUPLEX) {
                 isDuplex = 1
             }
-            const res = await postUploadFile(this.formData, this.printNum, this.hengshu, this.printBigValue, this.numberOfPrintedPagesIndex, isDuplex);
+            const res = await postUploadFile(this.formData, this.copies, this.hengshu, this.printBigValue, this.needPrintPagesEndIndex, isDuplex);
             if (String(res.code) === '1') {
                 this.myloadingstatus = 'success'
                 this.$message.success(res.msg + "(显示打印成功后过几秒后打印机才会开始打印)")

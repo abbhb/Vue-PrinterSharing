@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
         proxy: {
             '^/api': {
-                target: 'http://192.168.12.122:8080',//接口的前缀
+                target: 'http://127.0.0.1:8080',//接口的前缀
                 ws:true,//代理websocked
                 changeOrigin:true,//虚拟的站点需要更管origin
                 pathRewrite:{
