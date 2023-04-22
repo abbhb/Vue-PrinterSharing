@@ -178,10 +178,10 @@
                 prop="password"
             >
               <el-input
-                  :disabled="this.action==='edit'"
+                  :disabled="true"
                   v-model="classData.password"
                   type="password"
-                  :placeholder="this.action==='edit'?'密码不可编辑':'请填写用户密码'"
+                  :placeholder="this.action==='edit'?'密码由CAS平台管理':'密码由CAS平台管理'"
                   maxlength="32"
               />
             </el-form-item>

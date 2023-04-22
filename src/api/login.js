@@ -1,16 +1,6 @@
 import request from '../http/request';
 
 
-export function loginApi(username,password) {
-    return request({
-        url:'/user/login',
-        method:'post',
-        data:{
-            username:username,
-            password:password
-        }
-    })
-}
 
 export function logoutApi(){
     return request({

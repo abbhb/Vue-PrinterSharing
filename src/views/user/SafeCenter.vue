@@ -103,7 +103,6 @@
 
 <script>
 import * as Api from "@/api/login";
-import router from "@/router";
 import ChangeCurrentUser from "@/components/ChangeCurrentUser.vue";
 
 
@@ -162,12 +161,12 @@ export default {
             } else {
                 this.classData.title = '绑定电子邮箱';
             }
-
-            this.classData.dialogVisible = true;
+            window.location.href = 'http://'+window.location.hostname+'55554'
+            // this.classData.dialogVisible = true;
 
         },
         changepassword() {
-            router.push({name: 'changepassword'})
+            window.location.href = 'http://'+window.location.hostname+'55554'
         },
         async onSubmit() {
             const data = await Api.emailWithUser({email: this.emailform.email, code: this.emailform.code});

@@ -3,7 +3,6 @@ import NotFound from "@/views/NotFound";
 import index from "@/views/index";
 import login from "@/views/login/login";
 import UserInfo from "@/views/user/UserInfo";
-import ChangePassword from "@/views/user/ChangePassword";
 import PrintersForPDF from "@/views/print/PrintersForPDF.vue";
 import UserManagement from "@/views/admin/UserManagement.vue";
 import TempRegistration from "@/views/login/TempRegistration.vue";
@@ -97,15 +96,6 @@ export default [
 				path: '/userinfo',
 				name: 'userinfo',
 				component: UserInfo,
-				meta:{
-					requireAuth: true,
-					needrole:false
-				}
-			},
-			{
-				path: '/changepassword',
-				name: 'changepassword',
-				component: ChangePassword,
 				meta:{
 					requireAuth: true,
 					needrole:false
