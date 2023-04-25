@@ -50,8 +50,7 @@
 
 <script>
 import LoginComponents from "@/components/LoginComponents.vue";
-import {checkToken} from "@/api/login";
-import router from "@/router";
+
 
 export default {
     name: "ChangeCurrentUser",
@@ -78,52 +77,53 @@ export default {
         },
         async changeUserById(row) {
             console.log(row.id)
-            if (String(row.id) === String(localStorage.getItem('userId'))) {
-                this.$message.error("禁止切换到当前登录的用户上")
-                this.changeUser = false
-                this.$emit("update:changeUser", false);
-                return
-            }
-            localStorage.setItem('userId', String(row.id))
-            localStorage.setItem('token', row.token)
-
-            const res = await checkToken()
-            if (String(res.code) === '1') {
-                console.log("验证")
-
-                localStorage.setItem("type", res.data.permissions)
-                localStorage.setItem('userInfo', JSON.stringify(res.data))
-                localStorage.setItem('userId', String(res.data.id))
-                const sss = JSON.parse(localStorage.getItem('myAllUser'))
-                let list = []
-                let par = {}
-                par.id = res.data.id
-                par.token = res.data.token
-                list.push(par)
-                if (sss) {
-                    for (let i = 0; i < sss.length; i++) {
-                        if (sss[i].id === res.data.id) {
-                            continue;
-                        }
-                        let par = {}
-                        par.id = sss[i].id
-                        par.token = sss[i].token
-                        list.push(par)
-                    }
-                }
-                localStorage.setItem('myAllUser', JSON.stringify(list))
-                this.changeUser = false
-                this.$emit("update:changeUser", false);
-                // localStorage.setItem('token',res.data.token)
-                router.push({name: 'dh'})
-                window.location.reload()
-            } else {
-                sessionStorage.setItem("userLastStoreId", "")
-                this.changeUser = false
-                this.$emit("update:changeUser", false);
-                // this.$message.error(res.msg)
-                //此处就不提示token校验失败了，可能第一次本来就没有token
-            }
+            this.$message.info("业务升级，此功能废弃")
+            // if (String(row.id) === String(localStorage.getItem('userId'))) {
+            //     this.$message.error("禁止切换到当前登录的用户上")
+            //     this.changeUser = false
+            //     this.$emit("update:changeUser", false);
+            //     return
+            // }
+            // localStorage.setItem('userId', String(row.id))
+            // localStorage.setItem('token', row.token)
+            //
+            // const res = await checkToken()
+            // if (String(res.code) === '1') {
+            //     console.log("验证")
+            //
+            //     localStorage.setItem("type", res.data.permissions)
+            //     localStorage.setItem('userInfo', JSON.stringify(res.data))
+            //     localStorage.setItem('userId', String(res.data.id))
+            //     const sss = JSON.parse(localStorage.getItem('myAllUser'))
+            //     let list = []
+            //     let par = {}
+            //     par.id = res.data.id
+            //     par.token = res.data.token
+            //     list.push(par)
+            //     if (sss) {
+            //         for (let i = 0; i < sss.length; i++) {
+            //             if (sss[i].id === res.data.id) {
+            //                 continue;
+            //             }
+            //             let par = {}
+            //             par.id = sss[i].id
+            //             par.token = sss[i].token
+            //             list.push(par)
+            //         }
+            //     }
+            //     localStorage.setItem('myAllUser', JSON.stringify(list))
+            //     this.changeUser = false
+            //     this.$emit("update:changeUser", false);
+            //     // localStorage.setItem('token',res.data.token)
+            //     router.push({name: 'dh'})
+            //     window.location.reload()
+            // } else {
+            //     sessionStorage.setItem("userLastStoreId", "")
+            //     this.changeUser = false
+            //     this.$emit("update:changeUser", false);
+            //     // this.$message.error(res.msg)
+            //     //此处就不提示token校验失败了，可能第一次本来就没有token
+            // }
         },
         ToAddUser() {
             this.LoginDialog = true;

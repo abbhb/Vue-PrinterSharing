@@ -13,14 +13,6 @@ export const menuData = [
                 iconClassName: "el-icon-user",
                 roles:['10','1','2','3']
             },
-
-            {
-                optionName: '安全中心',
-                index: '1-5',
-                routerName: "safecenter",
-                iconClassName: "el-icon-lock",
-                roles:['10','1','2','3']
-            },
             {
                 optionName: '快捷导航',
                 index: '1-3',
@@ -37,13 +29,6 @@ export const menuData = [
         disabled: false, // 是否禁用
         roles:['1','10'],
         childList: [
-            {
-                optionName: '用户管理',
-                index: '2-1',
-                routerName: "UserManagement",
-                iconClassName: "el-icon-user",
-                roles:['10','1'],
-            },
             {
                 optionName: '导航分类',
                 index: '2-2',

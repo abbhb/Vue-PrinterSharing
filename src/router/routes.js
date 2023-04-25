@@ -4,7 +4,6 @@ import index from "@/views/index";
 import login from "@/views/login/login";
 import UserInfo from "@/views/user/UserInfo";
 import PrintersForPDF from "@/views/print/PrintersForPDF.vue";
-import UserManagement from "@/views/admin/UserManagement.vue";
 import TempRegistration from "@/views/login/TempRegistration.vue";
 import dh from "@/views/dh/dh.vue";
 import navfenlei from "@/views/nav/navfenlei.vue";
@@ -13,7 +12,7 @@ import docindex from "@/views/doc/docindex.vue";
 import myHistoryPrints from "@/views/print/MyHistoryPrints.vue";
 import allUserHistoryPrints from "@/views/admin/AllUserHistoryPrints.vue";
 import files from "@/views/files/Files.vue";
-import safeCenter from "@/views/user/SafeCenter.vue";
+
 import en from "@/views/redirect/en.vue";
 import gitee from "@/views/redirect/gitee.vue";
 import ipcview1 from "@/views/ipc/ipcview1.vue";
@@ -139,16 +138,6 @@ export default [
 				}
 			},
 			{
-				path: '/UserManagement',
-				name: 'UserManagement',
-				component: UserManagement,
-				meta:{
-					requireAuth: true,
-					needrole:true,
-					roles:[10,1]
-				}
-			},
-			{
 				path: '/navfenlei',
 				name: 'navfenlei',
 				component: navfenlei,
@@ -204,15 +193,7 @@ export default [
 					roles:[10,1]
 				}
 			},
-			{
-				path: '/safecenter',
-				name: 'safecenter',
-				component: safeCenter,
-				meta:{
-					requireAuth: true,
-					needrole:false
-				}
-			},
+
 
 		]
 	},

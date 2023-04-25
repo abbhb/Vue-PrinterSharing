@@ -11,7 +11,7 @@ import './assets/scss/global.scss'
 //全局变量
 let globl = {
   isNeedZoom:false,
-  Version:'2.0.0',
+  Version:'3.0.1',
 }
 Vue.config.productionTip = false;
 Vue.prototype.$globl=globl

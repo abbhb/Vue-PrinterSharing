@@ -110,7 +110,9 @@ export default {
     methods: {
         async init() {
             this.myloading = true;
-            const res = await Api.getNavList()
+            let params = {}
+            params.userId=this.userInfo.id
+            const res = await Api.getNavList(params)
             if (String(res.code) === '1') {
                 // console.log(res.data)
                 this.myloadingstatus = 'success'

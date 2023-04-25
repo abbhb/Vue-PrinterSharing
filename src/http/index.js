@@ -7,10 +7,6 @@ export function inject(service) {
         (config) => {
             // console.log(config, 'config')
             config.headers['Content-Type'] = 'application/json' // 关键所在
-            config.headers.Authorization = localStorage.getItem("token")
-            config.headers.userId = localStorage.getItem('userId')
-            // console.log(sessionStorage.getItem("token"))
-            // 可以进行token验证
             return config;
         },
         (error) => {
@@ -21,18 +17,6 @@ export function inject(service) {
     service.interceptors.response.use(
         (response) => {
             console.log(response)
-            switch (response.data.status) {
-                case 900:
-                    //可能是token过期，清除它
-
-                    sessionStorage.clear()
-                    localStorage.clear()
-                    router.replace({ //跳转到登录页面
-                        path: '/login',
-                        // 将跳转的路由path作为参数，登录成功后跳转到该路由
-                        query: { redirect: router.currentRoute.value.fullPath }
-                    });
-            }
             switch(response.status){
 
                 //token校验
@@ -57,16 +41,6 @@ export function inject(service) {
                 case 401:
 
                     error.message = '未授权，请重新登录(401)';
-                    sessionStorage.clear()
-                    localStorage.clear()
-                    router.replace({ //跳转到登录页面
-                        path: '/login',
-                        // 将跳转的路由path作为参数，登录成功后跳转到该路由
-                        query: { redirect: router.currentRoute.fullPath }
-                    });
-                    break;
-                case 900:
-                    error.message = '未授权，请重新登录(900)';
                     sessionStorage.clear()
                     localStorage.clear()
                     router.replace({ //跳转到登录页面

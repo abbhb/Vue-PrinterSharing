@@ -45,8 +45,6 @@ export default {
                 localStorage.setItem('userInfo', JSON.stringify(res.data))
                 localStorage.setItem("permission", res.data.permission)
                 localStorage.setItem('userId', String(res.data.id))
-                localStorage.setItem('token', res.data.token)
-                this.refreshMyUserList(res.data)
                 if (this.$route.path.indexOf("login") == -1) {
                     //说明此时不是在login处调用,刷新即可!信息已经返回了
                     window.location.reload()
@@ -61,35 +59,12 @@ export default {
     },
     methods: {
         ButtonCAS(){
-            window.location.href ='http://'+window.location.hostname+':55554/?service='+window.location.href
-        },
-        refreshMyUserList(data){
-            const myAllUser = JSON.parse(localStorage.getItem('myAllUser'))
-            let list = []
-            let par = {}
-            par.id = data.id
-            par.token = data.token
-            par.name = data.name
-            par.avatar = data.avatar
-            par.username = data.username
-            list.push(par)
-            if (myAllUser) {
-                for (let i = 0; i < myAllUser.length; i++) {
-                    if (myAllUser[i].id === data.id) {
-                        continue;
-                    }
-                    let par = {}
-                    par.id = myAllUser[i].id
-                    par.token = myAllUser[i].token
-                    par.name = myAllUser[i].name
-                    par.avatar = myAllUser[i].avatar
-                    par.username = myAllUser[i].username
-                    list.push(par)
-                }
+            let asa = window.location.href
+            if (asa.indexOf('#')){
+                asa = asa.substring(0,asa.indexOf('#'))
             }
-            localStorage.setItem('myAllUser', JSON.stringify(list))
+            window.location.href ='http://'+window.location.hostname+':55554/?service='+asa
         },
-
     }
 }
 </script>

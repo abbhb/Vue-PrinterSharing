@@ -3,7 +3,7 @@
   <iframe v-if="can"
       id="iframeId" :src="urls"  class="iframe"  scrolling="auto">
   </iframe>
-  <span v-else>已为你在新窗口打开</span>
+  <span v-else>已为你在新窗口打开,后续支持一键从文件服务器打印支持的文件格式</span>
 
 </div>
 </template>

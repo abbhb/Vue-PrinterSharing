@@ -32,13 +32,14 @@
                   </el-form-item>
 
                   <el-form-item>
-                      <el-button type="primary" @click="onSubmit" :disabled="(form_serve.id === form.id)&&(form_serve.username === form.username)&&(form_serve.name === form.name)&&(form_serve.sex === form.sex)&&(form_serve.studentId === form.studentId)&&(form_serve.phone === form.phone)&&(form_serve.avatar === form.avatar) ? true:false">更新</el-button>
-                      <el-button @click="reWrite">重置</el-button>
+<!--                      <el-button type="primary" @click="onSubmit" :disabled="(form_serve.id === form.id)&&(form_serve.username === form.username)&&(form_serve.name === form.name)&&(form_serve.sex === form.sex)&&(form_serve.studentId === form.studentId)&&(form_serve.phone === form.phone)&&(form_serve.avatar === form.avatar) ? true:false">更新</el-button>-->
+<!--                      <el-button @click="reWrite">重置</el-button>-->
+                      <el-button type="primary" @click="GOTOCAS">前往CAS更新</el-button>
                   </el-form-item>
               </div>
               <div class="useravatar">
                   <el-form-item label="用户头像">
-                      <MyElUploadImage :avatar.sync="form.avatar"></MyElUploadImage>
+                      <el-image :src="form.avatar" style="width:120px;height:120px;" ></el-image>
                   </el-form-item>
               </div>
 
@@ -54,12 +55,10 @@
 <script>
 import * as Api from "@/api/login";
 import router from "@/router";
-import MyElUploadImage from "@/components/MyElUploadImage.vue";
 
 
 export default {
   name: "UserInfo",
-    components: {MyElUploadImage},
   data(){
     return{
       form:{
@@ -138,6 +137,9 @@ export default {
         this.$message.error("数据错误,请刷新重试!")
       }
     },
+      GOTOCAS(){
+        window.location.href = 'http://'+window.location.hostname+':55554/'
+      },
     async onSubmit() {
       var that = this
       let data = {}

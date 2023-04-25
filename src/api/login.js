@@ -65,21 +65,8 @@ export function createCategorize(data){
     });
 }
 
-export function getUserList(params){
-    return request({
-        url:'/user/get',
-        method:'get',
-        params
-    });
-}
 
-export function hasUserName(params){
-    return request({
-        url:'/user/hasUserName',
-        method:'get',
-        params
-    });
-}
+
 
 export function getNavListForFenlei(params){
     return request({

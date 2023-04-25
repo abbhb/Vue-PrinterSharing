@@ -53,19 +53,26 @@
                             </el-option>
                         </el-select>
                     </div>
-                    <div class="upmargin">
-                        <i>打印页数:</i>
-                        <el-input disabled="true" style="width: 3rem" placeholder="1"></el-input>
-                        <span style="width: 10%;margin-left: 1rem;margin-right: 1rem;">-</span>
-                        <el-input maxlength="3" style="width: 8rem" v-model="needPrintPagesEndIndex"
-                                  placeholder="全部打印为-1"></el-input>
+                    <div style="border: #00cafc 1px solid;padding: 1rem 1rem 1rem 1rem;border-radius: 1rem;margin-top: 1rem">
+                        <div class="upmargin">
+                            <i>打印页码:</i>
+                            <el-input disabled="true" style="width: 3rem" placeholder="1"></el-input>
+                            <span style="width: 10%;margin-left: 1rem;margin-right: 1rem;">-</span>
+                            <el-input type="number" maxlength="3" style="width: 8rem" v-model="needPrintPagesEndIndex"
+                                      placeholder="全部打印为-1"></el-input>
+                        </div>
+
+                        <div class="upmargin">
+                            <span class="texttip">注:输入 </span>
+                            <i style="color: #d96222"> -1</i>
+                            <span class="texttip">就是全部,不要越界！</span>
+                        </div>
+                        <div class="upmargin">
+                            <i style="color: #d96222"> 1-20</i>
+                            <span class="texttip">的文档想打<i style="color: #d96222"> 1-9</i>就输入<i style="color: #d96222"> 9</i>,不要越界(20)！</span>
+                        </div>
                     </div>
 
-                    <div class="upmargin">
-                        <span class="texttip">注:输入 </span>
-                        <i style="color: #d96222"> all</i>
-                        <span class="texttip">就是全部</span>
-                    </div>
                     <div class="upmargin">
                         <el-switch
                                 v-model="isDUPLEX"
@@ -152,8 +159,16 @@ export default {
                 // item1为新值，item2为旧值
 
             }
+        },
+        needPrintPagesEndIndex: {
+            handler(item1, item2){
+                if (item1<-1){
+                    this.needPrintPagesEndIndex = item2
+                }
+            }
         }
     },
+
     methods: {
         exitloading() {
             this.myloading = false;
