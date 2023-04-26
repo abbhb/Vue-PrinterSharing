@@ -138,7 +138,7 @@ export default {
       }
     },
       GOTOCAS(){
-        window.location.href = 'http://'+window.location.hostname+':55554/'
+        window.location.href = 'http://10.15.245.153'+':55554/'
       },
     async onSubmit() {
       var that = this

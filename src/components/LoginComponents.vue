@@ -63,7 +63,8 @@ export default {
             if (asa.indexOf('#')){
                 asa = asa.substring(0,asa.indexOf('#'))
             }
-            window.location.href ='http://'+window.location.hostname+':55554/?service='+asa
+            // window.location.hostname
+            window.location.href ='http://10.15.245.153'+':55554/?service='+asa
         },
     }
 }
