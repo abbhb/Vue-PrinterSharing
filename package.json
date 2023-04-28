@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "fake-progress": "^1.0.4",
     "flv.js": "^1.6.2",
     "image-conversion": "^2.1.1",
+    "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

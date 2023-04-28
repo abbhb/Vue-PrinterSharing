@@ -1,5 +1,7 @@
 
 import router from "@/router";
+// 引用
+import Cookies from 'js-cookie'
 export function inject(service) {
     // request拦截器
     //添加请求拦截器，若token存在则在请求头中加token，不存在也继续请求
@@ -18,7 +20,6 @@ export function inject(service) {
         (response) => {
             console.log(response)
             switch(response.status){
-
                 //token校验
                 case 401:
                     //可能是token过期，清除它
@@ -29,6 +30,19 @@ export function inject(service) {
                         // 将跳转的路由path作为参数，登录成功后跳转到该路由
                         query: { redirect: router.currentRoute.fullPath}
                     });
+                    break;
+                case 900:
+                    //可能是token过期，清除它
+                    Cookies.remove('AccessToken');
+                    Cookies.remove('RefreshToken');
+                    sessionStorage.clear()
+                    localStorage.clear()
+                    router.replace({ //跳转到登录页面
+                        path: '/login',
+                        // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                        query: { redirect: router.currentRoute.fullPath}
+                    });
+                    break;
             }
             // 对返回的数据进行错误码处理
             return response.data
@@ -66,6 +80,19 @@ export function inject(service) {
                 case 504: error.message = '网络超时(504)';
                     break;
                 case 505: error.message = 'HTTP版本不受支持(505)';
+                    break;
+                case 900:
+                    //可能是token过期，清除它
+                    error.message = error.response.msg;
+                    Cookies.remove('AccessToken');
+                    Cookies.remove('RefreshToken');
+                    sessionStorage.clear()
+                    localStorage.clear()
+                    router.replace({ //跳转到登录页面
+                        path: '/login',
+                        // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                        query: { redirect: router.currentRoute.fullPath}
+                    });
                     break;
             }
 
