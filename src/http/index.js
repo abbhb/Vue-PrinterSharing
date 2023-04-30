@@ -1,5 +1,6 @@
 
 import router from "@/router";
+
 export function inject(service) {
     // request拦截器
     //添加请求拦截器，若token存在则在请求头中加token，不存在也继续请求
