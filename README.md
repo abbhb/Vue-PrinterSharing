@@ -9,6 +9,7 @@ npm install
 ```
 npm run serve
 ```
+必须给前端项目配置```/api``反向代理到指定后端定制
 
 ### Compiles and minifies for production
 ```
