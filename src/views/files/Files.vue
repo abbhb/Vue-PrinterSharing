@@ -22,11 +22,7 @@ export default {
   created() {
     if (window.location.href.indexOf('10.15')!==-1){
       this.can = false
-      window.open("http://10.15.247.254:12345")
-    }
-    else if (window.location.href.indexOf('vpn')!==-1){
-      this.can = false
-      window.open("https://webvpn.beihua.edu.cn/http-12345/77726476706e69737468656265737421a1a70fcd727e3a042946dbf9cc/")
+      window.open("http://10.15.245.153")
     }
     else if (window.location.href.indexOf('192.168')!==-1){
       this.can = true
@@ -34,7 +30,7 @@ export default {
       // window.open("http://192.168.12.12")
     }else {
       this.can = false
-      window.open("http://10.15.247.254:12345")
+      window.open("http://10.15.245.153")
     }
     },
   mounted(){

@@ -38,7 +38,8 @@ export default {
     async created() {
         if (window.location.search.startsWith('?ticket=')) {
             // console.log(window.location.search.split("?ticket=")[1])
-            this.ticket = window.location.search.split("?ticket=")[1]
+            const tickets =  window.location.search.split("?ticket=")
+            this.ticket = tickets[tickets.length-1]
             const res = await loginApi(this.ticket)
             if (String(res.code)==='1'){
                 window.location.search=''
@@ -53,8 +54,18 @@ export default {
                     router.push({name: 'dh'})
                 }
 
+            }else {
+                this.$message.error(res.msg)
+                if (window.location.search.indexOf("?") !== -1) {
+                    let wenhao = window.location.href.indexOf("?")
+                    let arraytemp = window.location.href.split("")
+                    arraytemp.splice(wenhao, window.location.search.length)
+                    let sss = arraytemp.join("")
+                    console.log(sss)
+                    window.location.href = sss
+                }
             }
-            this.$message.error(res.msg)
+
         }
     },
     methods: {

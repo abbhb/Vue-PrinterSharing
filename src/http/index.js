@@ -30,6 +30,18 @@ export function inject(service) {
                         query: { redirect: router.currentRoute.fullPath}
                     });
             }
+            switch (response.data.code) {
+                case 900:
+                    this.$message.error('未授权，请重新登录(900)');
+                    sessionStorage.clear()
+                    localStorage.clear()
+                    router.replace({ //跳转到登录页面
+                        path: '/login',
+                        // 将跳转的路由path作为参数，登录成功后跳转到该路由
+                        query: { redirect: router.currentRoute.fullPath }
+                    });
+                    break;
+            }
             // 对返回的数据进行错误码处理
             return response.data
         },
