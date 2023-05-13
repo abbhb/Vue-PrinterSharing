@@ -55,6 +55,7 @@
 <script>
 import * as Api from "@/api/login";
 import router from "@/router";
+import aiServer from "@/config/config";
 
 
 export default {
@@ -138,7 +139,7 @@ export default {
       }
     },
       GOTOCAS(){
-        window.location.href = 'http://10.15.245.153:55554/'
+        window.location.href = 'http://'+aiServer+':55554/'
       },
     async onSubmit() {
       var that = this

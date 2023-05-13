@@ -107,7 +107,7 @@
 <script>
 import ChangeCurrentUser from "@/components/ChangeCurrentUser.vue";
 import {menuData} from "@/views/mencCofig";
-import * as Api from "@/api/login";
+import aiServer from "@/config/config";
 
 export default {
     name: "MainNavFrame",
@@ -261,19 +261,7 @@ export default {
             this.changeUser = true;
         },
         async onLogOut() {
-            const data = await Api.logoutApi()
-            console.log(data)
-
-            if (String(data.code) === '900') {
-                this.$message.success(data.msg);
-                sessionStorage.clear();
-                localStorage.clear();
-                this.$router.push("login");
-            } else if (data.status === 701) {
-                this.$message.error(data.msg);
-
-            }
-
+            window.location.href ='http://'+aiServer+':55554/#/safeLogout'
         },
     }
 }

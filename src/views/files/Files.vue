@@ -11,6 +11,8 @@
 <script>
 
 
+import aiServer from "@/config/config";
+
 export default {
   name: "Files",
   data() {
@@ -22,7 +24,7 @@ export default {
   created() {
     if (window.location.href.indexOf('10.15')!==-1){
       this.can = false
-      window.open("http://10.15.245.153")
+      window.open("http://"+aiServer)
     }
     else if (window.location.href.indexOf('192.168')!==-1){
       this.can = true
@@ -30,7 +32,7 @@ export default {
       // window.open("http://192.168.12.12")
     }else {
       this.can = false
-      window.open("http://10.15.245.153")
+      window.open("http://"+aiServer)
     }
     },
   mounted(){

@@ -26,6 +26,7 @@
  */
 import { loginApi } from "@/api/auth";
 import router from "@/router";
+import aiServer from "@/config/config";
 
 
 export default {
@@ -75,7 +76,7 @@ export default {
                 asa = asa.substring(0,asa.indexOf('#'))
             }
             // window.location.hostname
-            window.location.href ='http://10.15.245.153'+':55554/?service='+asa
+            window.location.href ='http://'+aiServer+':55554/?service='+asa
         },
     }
 }
