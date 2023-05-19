@@ -3,12 +3,12 @@ import request from '../http/request';
 
 
 //此api由之前login升级为cas登录
-export function loginApi(st) {
+export function loginApi(code) {
     return request({
         url:'/user/login',
         method:'post',
         data:{
-            st:st
+            code:code
         }
     })
 }

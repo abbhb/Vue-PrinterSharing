@@ -33,15 +33,15 @@ export default {
     name: "LoginComponents",
     data() {
         return {
-            ticket:'',
+            code:'',
         }
     },
     async created() {
-        if (window.location.search.startsWith('?ticket=')) {
-            // console.log(window.location.search.split("?ticket=")[1])
-            const tickets =  window.location.search.split("?ticket=")
-            this.ticket = tickets[tickets.length-1]
-            const res = await loginApi(this.ticket)
+        if (window.location.search.indexOf('code=')!==-1) {
+            // console.log(window.location.search.split("?code=")[1])
+            const codes =  window.location.search.split("code=")
+            this.code = (codes[codes.length-1]).split("&")[0]
+            const res = await loginApi(this.code)
             if (String(res.code)==='1'){
                 window.location.search=''
                 localStorage.setItem('userInfo', JSON.stringify(res.data))
@@ -76,7 +76,7 @@ export default {
                 asa = asa.substring(0,asa.indexOf('#'))
             }
             // window.location.hostname
-            window.location.href ='http://'+aiServer+':55554/?service='+asa
+            window.location.href ='http://'+aiServer+':55554/?response_type=code&client_id=93519f52770144c7afa01c1f76409d81'
         },
     }
 }
